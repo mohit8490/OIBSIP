@@ -145,41 +145,41 @@ The application is developed using Java Swing and provides separate screens for:
 The project follows a simple layered architecture.
 
 ```text
-                    ┌─────────────────────┐
-                    │       Main.java     │
-                    └──────────┬──────────┘
-                               │
-                               ↓
-                    ┌─────────────────────┐
-                    │      UI Layer       │
-                    │    Java Swing       │
-                    ├─────────────────────┤
-                    │ LoginFrame          │
-                    │ DashboardFrame      │
-                    │ ReservationFrame    │
-                    │ CancellationFrame  │
-                    └──────────┬──────────┘
-                               │
-                               ↓
-                    ┌─────────────────────┐
-                    │      DAO Layer      │
-                    ├─────────────────────┤
-                    │ UserDAO             │
-                    │ TrainDAO            │
-                    │ ReservationDAO      │
-                    └──────────┬──────────┘
-                               │
-                               ↓
-                    ┌─────────────────────┐
-                    │ Database Connection │
-                    │       JDBC          │
-                    └──────────┬──────────┘
-                               │
-                               ↓
-                    ┌─────────────────────┐
-                    │       MySQL         │
-                    │ oibsip_reservation  │
-                    └─────────────────────┘
+                    ┌─────────────────────┐
+                    │       Main.java     │
+                    └──────────┬──────────┘
+                               │
+                               ↓
+                    ┌─────────────────────┐
+                    │      UI Layer       │
+                    │    Java Swing       │
+                    ├─────────────────────┤
+                    │ LoginFrame          │
+                    │ DashboardFrame      │
+                    │ ReservationFrame    │
+                    │ CancellationFrame  │
+                    └──────────┬──────────┘
+                               │
+                               ↓
+                    ┌─────────────────────┐
+                    │      DAO Layer      │
+                    ├─────────────────────┤
+                    │ UserDAO             │
+                    │ TrainDAO            │
+                    │ ReservationDAO      │
+                    └──────────┬──────────┘
+                               │
+                               ↓
+                    ┌─────────────────────┐
+                    │ Database Connection │
+                    │       JDBC          │
+                    └──────────┬──────────┘
+                               │
+                               ↓
+                    ┌─────────────────────┐
+                    │       MySQL         │
+                    │ oibsip_reservation  │
+                    └─────────────────────┘
 ```
 
 ---
@@ -190,50 +190,50 @@ The project follows a simple layered architecture.
 Java-Task1-OnlineReservationSystem/
 │
 ├── database/
-│   └── oibsip_reservation.sql
+│   └── oibsip_reservation.sql
 │
 ├── screenshots/
-│   ├── 01-loginPage.png
-│   ├── 02-loginSuccess.png
-│   ├── 03-Dashboard.png
-│   ├── 04-ReservationPage.png
-│   ├── 05-ReservationSuccess.png
-│   ├── 06-SearchReservation.png
-│   ├── 07-ReservationCancelPage.png
-│   ├── 08-ReservationCancelSuccess.png
-│   ├── 09-logoutPage.png
-│   ├── 10-loginFailPage.png
-│   ├── 11-mySqlDatabase.png
-│   ├── 12-mySqlTrains.png
-│   └── 13-mySqlReservations.png
+│   ├── 01-loginPage.png
+│   ├── 02-loginSuccess.png
+│   ├── 03-Dashboard.png
+│   ├── 04-ReservationPage.png
+│   ├── 05-ReservationSuccess.png
+│   ├── 06-SearchReservation.png
+│   ├── 07-ReservationCancelPage.png
+│   ├── 08-ReservationCancelSuccess.png
+│   ├── 09-logoutPage.png
+│   ├── 10-loginFailPage.png
+│   ├── 11-mySqlDatabase.png
+│   ├── 12-mySqlTrains.png
+│   └── 13-mySqlReservations.png
 │
 ├── src/
-│   └── main/
-│       └── java/
-│           └── com/
-│               └── oibsip/
-│                   └── reservation/
-│                       │
-│                       ├── Main.java
-│                       │
-│                       ├── database/
-│                       │   └── DatabaseConnection.java
-│                       │
-│                       ├── model/
-│                       │   ├── User.java
-│                       │   ├── Train.java
-│                       │   └── Reservation.java
-│                       │
-│                       ├── dao/
-│                       │   ├── UserDAO.java
-│                       │   ├── TrainDAO.java
-│                       │   └── ReservationDAO.java
-│                       │
-│                       └── ui/
-│                           ├── LoginFrame.java
-│                           ├── DashboardFrame.java
-│                           ├── ReservationFrame.java
-│                           └── CancellationFrame.java
+│   └── main/
+│       └── java/
+│           └── com/
+│               └── oibsip/
+│                   └── reservation/
+│                       │
+│                       ├── Main.java
+│                       │
+│                       ├── database/
+│                       │   └── DatabaseConnection.java
+│                       │
+│                       ├── model/
+│                       │   ├── User.java
+│                       │   ├── Train.java
+│                       │   └── Reservation.java
+│                       │
+│                       ├── dao/
+│                       │   ├── UserDAO.java
+│                       │   ├── TrainDAO.java
+│                       │   └── ReservationDAO.java
+│                       │
+│                       └── ui/
+│                           ├── LoginFrame.java
+│                           ├── DashboardFrame.java
+│                           ├── ReservationFrame.java
+│                           └── CancellationFrame.java
 │
 ├── .gitignore
 ├── pom.xml
@@ -353,10 +353,10 @@ The `reservations` table contains a foreign key referencing the `trains` table.
 
 ```text
 trains
-   │
-   │ train_number
-   │
-   ↓
+   │
+   │ train_number
+   │
+   ↓
 reservations
 ```
 
@@ -382,10 +382,10 @@ Before running the project, make sure the following software is installed:
 ## Step 1 — Clone the Repository
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
+git clone https://github.com/mohit8490/OIBSIP.git
 ```
 
-Replace `YOUR_GITHUB_REPOSITORY_URL` with the GitHub repository URL.
+GitHub Repository: Java-Task1-OnlineReservationSystem
 
 Then enter the project directory:
 
@@ -492,32 +492,32 @@ The application will start and display the login window.
 # 🔄 Application Workflow
 
 ```text
-                 ┌───────────────┐
-                 │     Login     │
-                 └───────┬───────┘
-                         │
-                  Valid Credentials
-                         │
-                         ↓
-                 ┌───────────────┐
-                 │   Dashboard   │
-                 └───────┬───────┘
-                         │
-             ┌───────────┼───────────┐
-             │           │           │
-             ↓           ↓           ↓
-          Booking      Search      Logout
-             │           │
-             ↓           ↓
-        Reservation   Reservation
-             │           │
-             ↓           ↓
-          Generate     Display
-            PNR        Details
-             │           │
-             └─────┬─────┘
-                   ↓
-              Cancellation
+                 ┌───────────────┐
+                 │     Login     │
+                 └───────┬───────┘
+                         │
+                  Valid Credentials
+                         │
+                         ↓
+                 ┌───────────────┐
+                 │   Dashboard   │
+                 └───────┬───────┘
+                         │
+             ┌───────────┼───────────┐
+             │           │           │
+             ↓           ↓           ↓
+          Booking      Search      Logout
+             │           │
+             ↓           ↓
+        Reservation   Reservation
+             │           │
+             ↓           ↓
+          Generate     Display
+            PNR        Details
+             │           │
+             └─────┬─────┘
+                   ↓
+              Cancellation
 ```
 
 ---
@@ -526,27 +526,27 @@ The application will start and display the login window.
 
 ```text
 Login
-  ↓
+  ↓
 Dashboard
-  ↓
+  ↓
 Book Reservation
-  ↓
+  ↓
 Enter Passenger Name
-  ↓
+  ↓
 Select Train
-  ↓
+  ↓
 Select Class
-  ↓
+  ↓
 Enter Journey Date
-  ↓
+  ↓
 Enter Source
-  ↓
+  ↓
 Enter Destination
-  ↓
+  ↓
 Book Reservation
-  ↓
+  ↓
 PNR Generated
-  ↓
+  ↓
 Reservation Saved in MySQL
 ```
 
@@ -556,21 +556,21 @@ Reservation Saved in MySQL
 
 ```text
 Dashboard
-   ↓
+   ↓
 Search / Cancel Reservation
-   ↓
+   ↓
 Enter PNR
-   ↓
+   ↓
 Search
-   ↓
+   ↓
 Reservation Found
-   ↓
+   ↓
 Display Details
-   ↓
+   ↓
 Cancel Reservation
-   ↓
+   ↓
 Confirmation
-   ↓
+   ↓
 Reservation Deleted
 ```
 
