@@ -10,7 +10,7 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>My Fines - Digital Library</title>
+    <title>My Fines - DigiLibrary</title>
 
     <link rel="stylesheet"
           href="/css/style.css">
@@ -20,258 +20,745 @@
 
 <body>
 
-<div class="container"
-     style="max-width: 1000px;">
 
-    <!-- ================================================= -->
-    <!-- PAGE TITLE -->
-    <!-- ================================================= -->
+<!-- =========================================================
+     SIDEBAR
+     ========================================================= -->
 
-    <h1>My Fines</h1>
+<div class="sidebar">
 
 
-    <!-- ================================================= -->
-    <!-- WELCOME -->
-    <!-- ================================================= -->
+    <!-- LOGO -->
 
-    <p>
+    <div class="logo">
 
-        Welcome,
+        <span class="logo-icon">📖</span>
 
-        <strong th:text="${user.name}">
-            User
-        </strong>
-
-    </p>
-
-
-    <br>
-
-
-    <!-- ================================================= -->
-    <!-- FINE TABLE -->
-    <!-- ================================================= -->
-
-    <table border="1"
-           width="100%"
-           cellpadding="10">
-
-        <thead>
-
-        <tr>
-
-            <th>ID</th>
-
-            <th>Book</th>
-
-            <th>Issue Date</th>
-
-            <th>Due Date</th>
-
-            <th>Return Date</th>
-
-            <th>Fine Amount</th>
-
-            <th>Status</th>
-
-            <th>Action</th>
-
-        </tr>
-
-        </thead>
-
-
-        <tbody>
-
-        <tr th:each="fine : ${fines}">
-
-
-            <!-- ID -->
-
-            <td th:text="${fine.id}">
-                1
-            </td>
-
-
-            <!-- BOOK -->
-
-            <td th:text="${fine.issue.book.title}">
-                Book Title
-            </td>
-
-
-            <!-- ISSUE DATE -->
-
-            <td th:text="${fine.issue.issueDate}">
-                Date
-            </td>
-
-
-            <!-- DUE DATE -->
-
-            <td th:text="${fine.issue.dueDate}">
-                Date
-            </td>
-
-
-            <!-- RETURN DATE -->
-
-            <td>
-
-                <span th:if="${fine.issue.returnDate != null}"
-                      th:text="${fine.issue.returnDate}">
-                    Date
-                </span>
-
-                <span th:if="${fine.issue.returnDate == null}">
-                    Not Returned
-                </span>
-
-            </td>
-
-
-            <!-- FINE AMOUNT -->
-
-            <td>
-
-                ₹<span th:text="${fine.amount}">
-                    0.0
-                </span>
-
-            </td>
-
-
-            <!-- STATUS -->
-
-            <td>
-
-                <span th:if="${fine.paid}">
-                    PAID
-                </span>
-
-                <span th:if="${!fine.paid}">
-                    UNPAID
-                </span>
-
-            </td>
-
-
-            <!-- ACTION -->
-
-            <td>
-
-                <form
-                    th:if="${!fine.paid}"
-                    th:action="@{/user/fines/pay/{id}(id=${fine.id})}"
-                    method="post">
-
-                    <button type="submit">
-
-                        Pay Fine
-
-                    </button>
-
-                </form>
-
-
-                <span th:if="${fine.paid}">
-
-                    Payment Completed
-
-                </span>
-
-            </td>
-
-        </tr>
-
-
-        <!-- ================================================= -->
-        <!-- NO FINES -->
-        <!-- ================================================= -->
-
-        <tr th:if="${#lists.isEmpty(fines)}">
-
-            <td colspan="8"
-                style="text-align: center;">
-
-                No fines found.
-
-            </td>
-
-        </tr>
-
-        </tbody>
-
-    </table>
-
-
-    <br>
-
-
-    <!-- ================================================= -->
-    <!-- NAVIGATION -->
-    <!-- ================================================= -->
-
-    <div class="button-group">
-
-        <a href="/user/dashboard"
-           class="btn">
-
-            Dashboard
-
-        </a>
-
-
-        <a href="/user/books"
-           class="btn">
-
-            Browse Books
-
-        </a>
-
-
-        <a href="/user/my-books"
-           class="btn">
-
-            My Books
-
-        </a>
-
-
-        <a href="/user/reservations"
-           class="btn">
-
-            My Reservations
-
-        </a>
-
-
-        <a href="/user/notifications"
-           class="btn">
-
-            Notifications
-
-        </a>
-
-
-        <a href="/user/query"
-           class="btn">
-
-            Ask a Query
-
-        </a>
-
-
-        <a href="/logout"
-           class="btn">
-
-            Logout
-
-        </a>
+        DigiLibrary
 
     </div>
 
+
+    <div class="nav-title">
+        Main Menu
+    </div>
+
+
+    <!-- DASHBOARD -->
+
+    <a href="/user/dashboard">
+
+        📊
+
+        <span>
+            Dashboard
+        </span>
+
+    </a>
+
+
+    <!-- BROWSE BOOKS -->
+
+    <a href="/user/books">
+
+        📚
+
+        <span>
+            Browse Books
+        </span>
+
+    </a>
+
+
+    <!-- MY BOOKS -->
+
+    <a href="/user/my-books">
+
+        📖
+
+        <span>
+            My Books
+        </span>
+
+    </a>
+
+
+    <!-- RESERVATIONS -->
+
+    <a href="/user/reservations">
+
+        📋
+
+        <span>
+            Reservations
+        </span>
+
+    </a>
+
+
+    <!-- NOTIFICATIONS -->
+
+    <a href="/user/notifications">
+
+        🔔
+
+        <span>
+            Notifications
+        </span>
+
+        <span th:if="${unreadCount > 0}"
+              th:text="${unreadCount}">
+
+            0
+
+        </span>
+
+    </a>
+
+
+    <!-- FINES -->
+
+    <a href="/user/fines"
+       class="active">
+
+        💰
+
+        <span>
+            My Fines
+        </span>
+
+    </a>
+
+
+    <!-- QUERY -->
+
+    <a href="/user/query">
+
+        ❓
+
+        <span>
+            Ask a Query
+        </span>
+
+    </a>
+
+
+    <!-- LOGOUT -->
+
+    <a href="/logout"
+       class="logout">
+
+        🚪
+
+        <span>
+            Logout
+        </span>
+
+    </a>
+
+
 </div>
+
+
+
+<!-- =========================================================
+     MAIN
+     ========================================================= -->
+
+<div class="main">
+
+
+    <!-- =====================================================
+         TOPBAR
+         ===================================================== -->
+
+    <div class="topbar">
+
+
+        <h2>
+            My Fines
+        </h2>
+
+
+        <div class="topbar-right">
+
+
+            <a href="/user/notifications"
+               class="notification-icon">
+
+                🔔
+
+            </a>
+
+
+            <div class="profile">
+
+
+                <div class="profile-avatar">
+
+                    👤
+
+                </div>
+
+
+                <span th:text="${user.name}">
+
+                    User
+
+                </span>
+
+
+                <span>
+                    ▾
+                </span>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         CONTENT
+         ===================================================== -->
+
+    <div class="content">
+
+
+        <!-- PAGE TITLE -->
+
+        <h1 class="page-title">
+
+            My Fines
+
+        </h1>
+
+
+        <p class="page-subtitle">
+
+            View your library fines and payment status.
+
+        </p>
+
+
+        <div class="breadcrumb">
+
+            Home / My Fines
+
+        </div>
+
+
+
+        <!-- =================================================
+             SUMMARY CARDS
+             ================================================= -->
+
+        <div class="card-grid">
+
+
+            <!-- TOTAL FINES -->
+
+            <div class="stat-card stat-blue">
+
+                <div class="stat-label">
+
+                    Total Fines
+
+                </div>
+
+
+                <div class="stat-value"
+                     th:text="${#lists.size(fines)}">
+
+                    0
+
+                </div>
+
+            </div>
+
+
+            <!-- UNPAID -->
+
+            <div class="stat-card stat-red">
+
+                <div class="stat-label">
+
+                    Unpaid Fines
+
+                </div>
+
+
+                <div class="stat-value">
+
+                    <span th:text="${#lists.size(fines.?[paid == false])}">
+
+                        0
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- PAID -->
+
+            <div class="stat-card stat-green">
+
+                <div class="stat-label">
+
+                    Paid Fines
+
+                </div>
+
+
+                <div class="stat-value">
+
+                    <span th:text="${#lists.size(fines.?[paid == true])}">
+
+                        0
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- NOTIFICATIONS -->
+
+            <div class="stat-card stat-orange">
+
+                <div class="stat-label">
+
+                    Notifications
+
+                </div>
+
+
+                <div class="stat-value"
+                     th:text="${unreadCount}">
+
+                    0
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             FINE TABLE
+             ================================================= -->
+
+        <div class="panel">
+
+
+            <div class="panel-title">
+
+                Fine History
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+
+                <table>
+
+
+                    <thead>
+
+                    <tr>
+
+                        <th>
+                            ID
+                        </th>
+
+                        <th>
+                            Book
+                        </th>
+
+                        <th>
+                            Issue Date
+                        </th>
+
+                        <th>
+                            Due Date
+                        </th>
+
+                        <th>
+                            Return Date
+                        </th>
+
+                        <th>
+                            Fine Amount
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                    </thead>
+
+
+
+                    <tbody>
+
+
+                    <!-- =================================================
+                         FINE ROW
+                         ================================================= -->
+
+                    <tr th:each="fine : ${fines}">
+
+
+                        <!-- ID -->
+
+                        <td th:text="${fine.id}">
+
+                            1
+
+                        </td>
+
+
+                        <!-- BOOK -->
+
+                        <td>
+
+                            <strong th:text="${fine.issue.book.title}">
+
+                                Book Title
+
+                            </strong>
+
+                        </td>
+
+
+                        <!-- ISSUE DATE -->
+
+                        <td th:text="${fine.issue.issueDate}">
+
+                            Date
+
+                        </td>
+
+
+                        <!-- DUE DATE -->
+
+                        <td th:text="${fine.issue.dueDate}">
+
+                            Date
+
+                        </td>
+
+
+                        <!-- RETURN DATE -->
+
+                        <td>
+
+
+                            <span th:if="${fine.issue.returnDate != null}"
+                                  th:text="${fine.issue.returnDate}">
+
+                                Date
+
+                            </span>
+
+
+                            <span th:if="${fine.issue.returnDate == null}">
+
+                                Not Returned
+
+                            </span>
+
+
+                        </td>
+
+
+                        <!-- FINE AMOUNT -->
+
+                        <td>
+
+                            <strong>
+
+                                ₹<span th:text="${fine.amount}">
+
+                                    0.0
+
+                                </span>
+
+                            </strong>
+
+                        </td>
+
+
+                        <!-- STATUS -->
+
+                        <td>
+
+
+                            <span th:if="${fine.paid}"
+                                  class="badge badge-green">
+
+                                PAID
+
+                            </span>
+
+
+                            <span th:if="${!fine.paid}"
+                                  class="badge badge-red">
+
+                                UNPAID
+
+                            </span>
+
+
+                        </td>
+
+
+                        <!-- ACTION -->
+
+                        <td>
+
+
+                            <!-- PAY FINE -->
+
+                            <form th:if="${!fine.paid}"
+                                  th:action="@{/user/fines/pay/{id}(id=${fine.id})}"
+                                  method="post">
+
+
+                                <button type="submit"
+                                        class="btn-small btn-success"
+                                        onclick="return confirm('Are you sure you want to pay this fine?');">
+
+                                    💳 Pay Fine
+
+                                </button>
+
+
+                            </form>
+
+
+                            <!-- PAYMENT COMPLETED -->
+
+                            <span th:if="${fine.paid}"
+                                  class="badge badge-blue">
+
+                                ✓ Payment Completed
+
+                            </span>
+
+
+                        </td>
+
+
+                    </tr>
+
+
+
+                    <!-- =================================================
+                         NO FINES
+                         ================================================= -->
+
+                    <tr th:if="${#lists.isEmpty(fines)}">
+
+
+                        <td colspan="8"
+                            class="empty-state">
+
+
+                            <div style="font-size: 40px;">
+
+                                💰
+
+                            </div>
+
+
+                            <br>
+
+
+                            <strong>
+
+                                No Fines Found
+
+                            </strong>
+
+
+                            <p style="font-size: 9px;
+                                      color: #94a3b8;">
+
+                                You currently have no library fines.
+
+                            </p>
+
+
+                        </td>
+
+
+                    </tr>
+
+
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             INFORMATION
+             ================================================= -->
+
+        <div class="panel">
+
+
+            <div class="panel-title">
+
+                About Library Fines
+
+            </div>
+
+
+            <p style="font-size: 10px;
+                      color: #718096;
+                      line-height: 1.7;">
+
+                Fines may be applied when a book is returned
+                after its due date. Unpaid fines can be paid
+                from this page using the Pay Fine button.
+
+            </p>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             QUICK NAVIGATION
+             ================================================= -->
+
+        <div class="panel">
+
+
+            <div class="panel-title">
+
+                Quick Navigation
+
+            </div>
+
+
+            <div class="quick-actions">
+
+
+                <a href="/user/dashboard"
+                   class="blue">
+
+                    📊 Dashboard
+
+                </a>
+
+
+                <a href="/user/books"
+                   class="green">
+
+                    📚 Browse Books
+
+                </a>
+
+
+                <a href="/user/my-books"
+                   class="purple">
+
+                    📖 My Books
+
+                </a>
+
+
+                <a href="/user/reservations"
+                   class="orange">
+
+                    📋 Reservations
+
+                </a>
+
+
+                <a href="/user/notifications"
+                   class="blue">
+
+                    🔔 Notifications
+
+                </a>
+
+
+                <a href="/user/query"
+                   class="green">
+
+                    ❓ Ask a Query
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             BOTTOM NAVIGATION
+             ================================================= -->
+
+        <div style="margin-top: 20px;">
+
+
+            <a href="/user/dashboard"
+               class="btn">
+
+                📊 Dashboard
+
+            </a>
+
+
+            <a href="/logout"
+               class="btn btn-danger">
+
+                🚪 Logout
+
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
 
 </body>
 

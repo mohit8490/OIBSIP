@@ -10,7 +10,7 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>Issued Books - Digital Library</title>
+    <title>Issued Books - DigiLibrary</title>
 
     <link rel="stylesheet"
           href="/css/style.css">
@@ -20,260 +20,784 @@
 
 <body>
 
-<div class="container"
-     style="max-width: 1200px;">
 
-    <!-- ================================================= -->
-    <!-- PAGE TITLE -->
-    <!-- ================================================= -->
+<!-- =========================================================
+     SIDEBAR
+     ========================================================= -->
 
-    <h1>Issued Books</h1>
+<div class="sidebar">
 
+    <div class="logo">
 
-    <!-- ================================================= -->
-    <!-- WELCOME -->
-    <!-- ================================================= -->
+        <span class="logo-icon">📖</span>
 
-    <p>
-
-        Welcome,
-
-        <strong th:text="${admin.name}">
-            Administrator
-        </strong>
-
-    </p>
-
-
-    <!-- ================================================= -->
-    <!-- ISSUED BOOKS TABLE -->
-    <!-- ================================================= -->
-
-    <table border="1"
-           width="100%"
-           cellpadding="10">
-
-        <thead>
-
-        <tr>
-
-            <th>Issue ID</th>
-
-            <th>User</th>
-
-            <th>Email</th>
-
-            <th>Book ID</th>
-
-            <th>Book</th>
-
-            <th>Author</th>
-
-            <th>Issue Date</th>
-
-            <th>Due Date</th>
-
-            <th>Return Date</th>
-
-            <th>Status</th>
-
-        </tr>
-
-        </thead>
-
-
-        <tbody>
-
-        <tr th:each="issue : ${issues}">
-
-            <!-- ISSUE ID -->
-
-            <td th:text="${issue.id}">
-                1
-            </td>
-
-
-            <!-- USER -->
-
-            <td th:text="${issue.user.username}">
-                user
-            </td>
-
-
-            <!-- EMAIL -->
-
-            <td th:text="${issue.user.email}">
-                user@example.com
-            </td>
-
-
-            <!-- BOOK ID -->
-
-            <td th:text="${issue.book.id}">
-                1
-            </td>
-
-
-            <!-- BOOK -->
-
-            <td th:text="${issue.book.title}">
-                Clean Code
-            </td>
-
-
-            <!-- AUTHOR -->
-
-            <td th:text="${issue.book.author}">
-                Robert C. Martin
-            </td>
-
-
-            <!-- ISSUE DATE -->
-
-            <td th:text="${issue.issueDate}">
-                2026-08-23
-            </td>
-
-
-            <!-- DUE DATE -->
-
-            <td th:text="${issue.dueDate}">
-                2026-09-06
-            </td>
-
-
-            <!-- RETURN DATE -->
-
-            <td>
-
-                <span th:if="${issue.returnDate != null}"
-                      th:text="${issue.returnDate}">
-
-                    2026-08-30
-
-                </span>
-
-
-                <span th:if="${issue.returnDate == null}">
-
-                    -
-
-                </span>
-
-            </td>
-
-
-            <!-- STATUS -->
-
-            <td th:text="${issue.status}">
-                ISSUED
-            </td>
-
-        </tr>
-
-
-        <!-- ================================================= -->
-        <!-- NO ISSUES -->
-        <!-- ================================================= -->
-
-        <tr th:if="${#lists.isEmpty(issues)}">
-
-            <td colspan="10"
-                style="text-align:center;">
-
-                No issued book records found.
-
-            </td>
-
-        </tr>
-
-        </tbody>
-
-    </table>
-
-
-    <br>
-
-
-    <!-- ================================================= -->
-    <!-- NAVIGATION -->
-    <!-- ================================================= -->
-
-    <div class="button-group">
-
-
-        <!-- DASHBOARD -->
-
-        <a href="/admin/dashboard"
-           class="btn">
-
-            ← Admin Dashboard
-
-        </a>
-
-
-        <!-- MANAGE BOOKS -->
-
-        <a href="/admin/books"
-           class="btn">
-
-            Manage Books
-
-        </a>
-
-
-        <!-- RESERVATIONS -->
-
-        <a href="/admin/reservations"
-           class="btn">
-
-            Reservations
-
-        </a>
-
-
-        <!-- FINES -->
-
-        <a href="/admin/fines"
-           class="btn">
-
-            Fine Management
-
-        </a>
-
-
-        <!-- MEMBERS -->
-
-        <a href="/admin/members"
-           class="btn">
-
-            Members
-
-        </a>
-
-
-        <!-- QUERIES -->
-
-        <a href="/admin/queries"
-           class="btn">
-
-            Queries
-
-        </a>
-
-
-        <!-- LOGOUT -->
-
-        <a href="/logout"
-           class="btn">
-
-            Logout
-
-        </a>
+        DigiLibrary
 
     </div>
 
+
+    <div class="nav-title">
+        Administration
+    </div>
+
+
+    <a href="/admin/dashboard">
+
+        📊
+
+        <span>
+            Dashboard
+        </span>
+
+    </a>
+
+
+    <a href="/admin/books">
+
+        📚
+
+        <span>
+            Manage Books
+        </span>
+
+    </a>
+
+
+    <a href="/admin/issued-books"
+       class="active">
+
+        📖
+
+        <span>
+            Issued Books
+        </span>
+
+    </a>
+
+
+    <a href="/admin/reservations">
+
+        📋
+
+        <span>
+            Reservations
+        </span>
+
+    </a>
+
+
+    <a href="/admin/members">
+
+        👥
+
+        <span>
+            Members
+        </span>
+
+    </a>
+
+
+    <a href="/admin/fines">
+
+        💰
+
+        <span>
+            Fine Management
+        </span>
+
+    </a>
+
+
+    <a href="/admin/queries">
+
+        ❓
+
+        <span>
+            User Queries
+        </span>
+
+    </a>
+
+
+    <a href="/logout"
+       class="logout">
+
+        🚪
+
+        <span>
+            Logout
+        </span>
+
+    </a>
+
 </div>
+
+
+
+<!-- =========================================================
+     MAIN
+     ========================================================= -->
+
+<div class="main">
+
+
+    <!-- =====================================================
+         TOPBAR
+         ===================================================== -->
+
+    <div class="topbar">
+
+
+        <h2>
+            Issued Books
+        </h2>
+
+
+        <div class="topbar-right">
+
+
+            <div class="profile">
+
+
+                <div class="profile-avatar">
+
+                    👨‍💼
+
+                </div>
+
+
+                <span th:text="${admin.name}">
+
+                    Admin
+
+                </span>
+
+
+                <span>
+                    ▾
+                </span>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         CONTENT
+         ===================================================== -->
+
+    <div class="content">
+
+
+        <!-- PAGE TITLE -->
+
+        <h1 class="page-title">
+
+            Issued Books
+
+        </h1>
+
+
+        <p class="page-subtitle">
+
+            Track books currently issued to library members.
+
+        </p>
+
+
+        <div class="breadcrumb">
+
+            Home / Issued Books
+
+        </div>
+
+
+
+        <!-- =================================================
+             SUMMARY
+             ================================================= -->
+
+        <div class="card-grid">
+
+
+            <!-- TOTAL RECORDS -->
+
+            <div class="stat-card stat-blue">
+
+
+                <div class="stat-icon">
+
+                    📖
+
+                </div>
+
+
+                <div class="stat-label">
+
+                    Total Issue Records
+
+                </div>
+
+
+                <div class="stat-value"
+                     th:text="${#lists.size(issues)}">
+
+                    0
+
+                </div>
+
+
+                <p>
+
+                    Total book issue records
+
+                </p>
+
+
+            </div>
+
+
+
+            <!-- ACTIVE -->
+
+            <div class="stat-card stat-green">
+
+
+                <div class="stat-icon">
+
+                    ✓
+
+                </div>
+
+
+                <div class="stat-label">
+
+                    Currently Issued
+
+                </div>
+
+
+                <div class="stat-value"
+                     th:text="${#lists.size(issues.?[status == 'ISSUED'])}">
+
+                    0
+
+                </div>
+
+
+                <p>
+
+                    Books currently with users
+
+                </p>
+
+
+            </div>
+
+
+
+            <!-- RETURNED -->
+
+            <div class="stat-card stat-purple">
+
+
+                <div class="stat-icon">
+
+                    ↩
+
+                </div>
+
+
+                <div class="stat-label">
+
+                    Returned
+
+                </div>
+
+
+                <div class="stat-value"
+                     th:text="${#lists.size(issues.?[status == 'RETURNED'])}">
+
+                    0
+
+                </div>
+
+
+                <p>
+
+                    Books already returned
+
+                </p>
+
+
+            </div>
+
+
+
+            <!-- OVERDUE -->
+
+            <div class="stat-card stat-orange">
+
+
+                <div class="stat-icon">
+
+                    ⚠️
+
+                </div>
+
+
+                <div class="stat-label">
+
+                    Issue Management
+
+                </div>
+
+
+                <div class="stat-value">
+
+                    📚
+
+                </div>
+
+
+                <p>
+
+                    Monitor issued books
+
+                </p>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             ISSUED BOOK TABLE
+             ================================================= -->
+
+        <div class="panel">
+
+
+            <div class="panel-title">
+
+                Issue Records
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+
+                <table>
+
+
+                    <thead>
+
+                    <tr>
+
+                        <th>
+                            Issue ID
+                        </th>
+
+                        <th>
+                            User
+                        </th>
+
+                        <th>
+                            Email
+                        </th>
+
+                        <th>
+                            Book
+                        </th>
+
+                        <th>
+                            Author
+                        </th>
+
+                        <th>
+                            Issue Date
+                        </th>
+
+                        <th>
+                            Due Date
+                        </th>
+
+                        <th>
+                            Return Date
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                    </tr>
+
+                    </thead>
+
+
+
+                    <tbody>
+
+
+                    <!-- =================================================
+                         ISSUE ROW
+                         ================================================= -->
+
+                    <tr th:each="issue : ${issues}">
+
+
+                        <!-- ISSUE ID -->
+
+                        <td th:text="${issue.id}">
+
+                            1
+
+                        </td>
+
+
+                        <!-- USER -->
+
+                        <td>
+
+                            <strong th:text="${issue.user.username}">
+
+                                username
+
+                            </strong>
+
+                        </td>
+
+
+                        <!-- EMAIL -->
+
+                        <td th:text="${issue.user.email}">
+
+                            email@example.com
+
+                        </td>
+
+
+                        <!-- BOOK -->
+
+                        <td>
+
+                            <strong th:text="${issue.book.title}">
+
+                                Book Title
+
+                            </strong>
+
+                        </td>
+
+
+                        <!-- AUTHOR -->
+
+                        <td th:text="${issue.book.author}">
+
+                            Author
+
+                        </td>
+
+
+                        <!-- ISSUE DATE -->
+
+                        <td th:text="${issue.issueDate}">
+
+                            2026-08-29
+
+                        </td>
+
+
+                        <!-- DUE DATE -->
+
+                        <td th:text="${issue.dueDate}">
+
+                            2026-09-12
+
+                        </td>
+
+
+                        <!-- RETURN DATE -->
+
+                        <td>
+
+
+                            <span th:if="${issue.returnDate != null}"
+                                  th:text="${issue.returnDate}">
+
+                                2026-09-01
+
+                            </span>
+
+
+                            <span th:if="${issue.returnDate == null}">
+
+                                Not Returned
+
+                            </span>
+
+
+                        </td>
+
+
+                        <!-- STATUS -->
+
+                        <td>
+
+
+                            <span th:if="${issue.status == 'ISSUED'}"
+                                  class="badge badge-green">
+
+                                ISSUED
+
+                            </span>
+
+
+                            <span th:if="${issue.status == 'RETURNED'}"
+                                  class="badge badge-blue">
+
+                                RETURNED
+
+                            </span>
+
+
+                            <span th:if="${issue.status != 'ISSUED' and issue.status != 'RETURNED'}"
+                                  class="badge badge-orange"
+                                  th:text="${issue.status}">
+
+                                STATUS
+
+                            </span>
+
+
+                        </td>
+
+
+                    </tr>
+
+
+
+                    <!-- =================================================
+                         NO RECORDS
+                         ================================================= -->
+
+                    <tr th:if="${#lists.isEmpty(issues)}">
+
+
+                        <td colspan="9"
+                            class="empty-state">
+
+
+                            <div style="font-size:40px;">
+
+                                📖
+
+                            </div>
+
+
+                            <br>
+
+
+                            <strong>
+
+                                No Issue Records Found
+
+                            </strong>
+
+
+                            <p style="font-size:9px;
+                                      color:#94a3b8;">
+
+                                No books have been issued yet.
+
+                            </p>
+
+
+                        </td>
+
+
+                    </tr>
+
+
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             INFORMATION PANEL
+             ================================================= -->
+
+        <div class="panel">
+
+
+            <div class="panel-title">
+
+                Issue Management
+
+            </div>
+
+
+            <div style="display:grid;
+                        grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+                        gap:15px;">
+
+
+                <!-- ACTIVE -->
+
+                <div style="padding:15px;
+                            border:1px solid #e2e8f0;
+                            border-radius:10px;">
+
+
+                    <strong>
+
+                        📖 Active Issues
+
+                    </strong>
+
+
+                    <p style="font-size:9px;
+                              color:#718096;
+                              line-height:1.6;">
+
+                        These books are currently issued
+                        to library members.
+
+                    </p>
+
+
+                </div>
+
+
+
+                <!-- RETURNED -->
+
+                <div style="padding:15px;
+                            border:1px solid #e2e8f0;
+                            border-radius:10px;">
+
+
+                    <strong>
+
+                        ✓ Returned Books
+
+                    </strong>
+
+
+                    <p style="font-size:9px;
+                              color:#718096;
+                              line-height:1.6;">
+
+                        These records represent books
+                        that have already been returned.
+
+                    </p>
+
+
+                </div>
+
+
+
+                <!-- DUE DATE -->
+
+                <div style="padding:15px;
+                            border:1px solid #e2e8f0;
+                            border-radius:10px;">
+
+
+                    <strong>
+
+                        📅 Due Dates
+
+                    </strong>
+
+
+                    <p style="font-size:9px;
+                              color:#718096;
+                              line-height:1.6;">
+
+                        Check due dates to identify
+                        books that may require attention.
+
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             NAVIGATION
+             ================================================= -->
+
+        <div style="margin-top:20px;">
+
+
+            <a href="/admin/dashboard"
+               class="btn">
+
+                📊 Dashboard
+
+            </a>
+
+
+            <a href="/admin/books"
+               class="btn">
+
+                📚 Manage Books
+
+            </a>
+
+
+            <a href="/admin/fines"
+               class="btn">
+
+                💰 Fine Management
+
+            </a>
+
+
+            <a href="/logout"
+               class="btn btn-danger">
+
+                🚪 Logout
+
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
 
 </body>
 
