@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Register - Digital Library</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>User Registration</h1>
+
+    <div th:if="${error}"
+         class="error-message"
+         th:text="${error}">
+    </div>
+
+    <form action="/register"
+          method="post"
+          th:object="${user}">
+
+        <label>Name</label>
+
+        <input type="text"
+               th:field="*{name}"
+               placeholder="Enter your name"
+               required>
+
+        <label>Email</label>
+
+        <input type="email"
+               th:field="*{email}"
+               placeholder="Enter your email"
+               required>
+
+        <label>Username</label>
+
+        <input type="text"
+               th:field="*{username}"
+               placeholder="Choose a username"
+               required>
+
+        <label>Password</label>
+
+        <input type="password"
+               th:field="*{password}"
+               placeholder="Choose a password"
+               required>
+
+        <input type="hidden"
+               th:field="*{role}"
+               value="USER">
+
+        <button type="submit">
+            Register
+        </button>
+
+    </form>
+
+    <p>
+        Already have an account?
+        <a href="/login">
+            Login here
+        </a>
+    </p>
+
+    <p>
+        <a href="/">
+            ← Back to Home
+        </a>
+    </p>
+
+</div>
+
+</body>
+</html>

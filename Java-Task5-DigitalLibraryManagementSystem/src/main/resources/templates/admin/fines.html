@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Fine Management - Digital Library</title>
+
+    <link rel="stylesheet"
+          href="/css/style.css">
+
+</head>
+
+
+<body>
+
+<div class="container"
+     style="max-width: 1100px;">
+
+    <!-- ================================================= -->
+    <!-- PAGE TITLE -->
+    <!-- ================================================= -->
+
+    <h1>Fine Management</h1>
+
+
+    <!-- ================================================= -->
+    <!-- WELCOME -->
+    <!-- ================================================= -->
+
+    <p>
+
+        Welcome,
+
+        <strong th:text="${admin.name}">
+            Admin
+        </strong>
+
+    </p>
+
+
+    <!-- ================================================= -->
+    <!-- SUMMARY -->
+    <!-- ================================================= -->
+
+    <div>
+
+        <p>
+
+            <strong>
+                Total Unpaid Fine:
+            </strong>
+
+            ₹<span th:text="${totalUnpaid}">
+                0
+            </span>
+
+        </p>
+
+
+        <p>
+
+            <strong>
+                Total Paid Fine:
+            </strong>
+
+            ₹<span th:text="${totalPaid}">
+                0
+            </span>
+
+        </p>
+
+    </div>
+
+
+    <br>
+
+
+    <!-- ================================================= -->
+    <!-- FINES TABLE -->
+    <!-- ================================================= -->
+
+    <table border="1"
+           width="100%"
+           cellpadding="10">
+
+        <thead>
+
+        <tr>
+
+            <th>Fine ID</th>
+
+            <th>User</th>
+
+            <th>Email</th>
+
+            <th>Book</th>
+
+            <th>Issue ID</th>
+
+            <th>Amount</th>
+
+            <th>Status</th>
+
+            <th>Created At</th>
+
+        </tr>
+
+        </thead>
+
+
+        <tbody>
+
+        <!-- ================================================= -->
+        <!-- FINE ROW -->
+        <!-- ================================================= -->
+
+        <tr th:each="fine : ${fines}">
+
+
+            <!-- FINE ID -->
+
+            <td th:text="${fine.id}">
+                1
+            </td>
+
+
+            <!-- USER -->
+
+            <td th:text="${fine.user.username}">
+                username
+            </td>
+
+
+            <!-- EMAIL -->
+
+            <td th:text="${fine.user.email}">
+                email@example.com
+            </td>
+
+
+            <!-- BOOK -->
+
+            <td th:text="${fine.issue.book.title}">
+                Book Title
+            </td>
+
+
+            <!-- ISSUE ID -->
+
+            <td th:text="${fine.issue.id}">
+                1
+            </td>
+
+
+            <!-- AMOUNT -->
+
+            <td>
+
+                ₹<span th:text="${fine.amount}">
+                    0
+                </span>
+
+            </td>
+
+
+            <!-- STATUS -->
+
+            <td>
+
+                <span th:if="${fine.paid}">
+                    PAID
+                </span>
+
+                <span th:if="${!fine.paid}">
+                    UNPAID
+                </span>
+
+            </td>
+
+
+            <!-- CREATED AT -->
+
+            <td th:text="${fine.createdAt}">
+                Date
+            </td>
+
+
+        </tr>
+
+
+        <!-- ================================================= -->
+        <!-- NO FINES -->
+        <!-- ================================================= -->
+
+        <tr th:if="${#lists.isEmpty(fines)}">
+
+            <td colspan="8"
+                style="text-align: center;">
+
+                No fines found.
+
+            </td>
+
+        </tr>
+
+        </tbody>
+
+    </table>
+
+
+    <br>
+
+
+    <!-- ================================================= -->
+    <!-- NAVIGATION -->
+    <!-- ================================================= -->
+
+    <div class="button-group">
+
+        <a href="/admin/dashboard"
+           class="btn">
+
+            Dashboard
+
+        </a>
+
+
+        <a href="/admin/books"
+           class="btn">
+
+            Manage Books
+
+        </a>
+
+
+        <a href="/admin/members"
+           class="btn">
+
+            Members
+
+        </a>
+
+
+        <a href="/admin/issued-books"
+           class="btn">
+
+            Issued Books
+
+        </a>
+
+
+        <a href="/admin/queries"
+           class="btn">
+
+            Queries
+
+        </a>
+
+
+        <a href="/logout"
+           class="btn">
+
+            Logout
+
+        </a>
+
+    </div>
+
+
+</div>
+
+</body>
+
+</html>

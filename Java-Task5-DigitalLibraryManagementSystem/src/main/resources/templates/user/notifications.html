@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Notifications - Digital Library</title>
+
+    <link rel="stylesheet"
+          href="/css/style.css">
+
+</head>
+
+
+<body>
+
+<div class="container"
+     style="max-width: 900px;">
+
+
+    <!-- ================================================= -->
+    <!-- PAGE TITLE -->
+    <!-- ================================================= -->
+
+    <h1>Notifications</h1>
+
+
+    <!-- ================================================= -->
+    <!-- WELCOME -->
+    <!-- ================================================= -->
+
+    <p>
+
+        Welcome,
+
+        <strong th:text="${user.name}">
+            User
+        </strong>
+
+    </p>
+
+
+    <!-- ================================================= -->
+    <!-- UNREAD COUNT -->
+    <!-- ================================================= -->
+
+    <p>
+
+        <strong>
+            Unread Notifications:
+        </strong>
+
+        <span th:text="${unreadCount}">
+            0
+        </span>
+
+    </p>
+
+
+    <!-- ================================================= -->
+    <!-- MARK ALL AS READ -->
+    <!-- ================================================= -->
+
+    <form th:if="${unreadCount > 0}"
+          action="/user/notifications/read-all"
+          method="post">
+
+        <button type="submit">
+            Mark All as Read
+        </button>
+
+    </form>
+
+
+    <br>
+
+
+    <!-- ================================================= -->
+    <!-- NOTIFICATIONS LIST -->
+    <!-- ================================================= -->
+
+    <div th:if="${!#lists.isEmpty(notifications)}">
+
+
+        <div th:each="notification : ${notifications}"
+             style="border: 1px solid #ccc;
+                    padding: 15px;
+                    margin-bottom: 12px;">
+
+
+            <!-- ========================================= -->
+            <!-- UNREAD NOTIFICATION -->
+            <!-- ========================================= -->
+
+            <div th:if="${!notification.read}">
+
+                <p>
+
+                    <strong>
+                        🔔 New Notification
+                    </strong>
+
+                </p>
+
+
+                <p>
+
+                    <span th:text="${notification.message}">
+                        Notification message
+                    </span>
+
+                </p>
+
+
+                <p>
+
+                    <small
+                        th:text="${notification.createdAt}">
+                        Date
+                    </small>
+
+                </p>
+
+
+                <!-- MARK AS READ -->
+
+                <form
+                    th:action="@{/user/notifications/read/{id}(id=${notification.id})}"
+                    method="post">
+
+                    <button type="submit">
+                        Mark as Read
+                    </button>
+
+                </form>
+
+
+                <br>
+
+
+                <!-- DELETE -->
+
+                <form
+                    th:action="@{/user/notifications/delete/{id}(id=${notification.id})}"
+                    method="post">
+
+                    <button type="submit">
+                        Delete
+                    </button>
+
+                </form>
+
+            </div>
+
+
+            <!-- ========================================= -->
+            <!-- READ NOTIFICATION -->
+            <!-- ========================================= -->
+
+            <div th:if="${notification.read}">
+
+                <p>
+
+                    <strong>
+                        ✓ Notification
+                    </strong>
+
+                </p>
+
+
+                <p>
+
+                    <span th:text="${notification.message}">
+                        Notification message
+                    </span>
+
+                </p>
+
+
+                <p>
+
+                    <small
+                        th:text="${notification.createdAt}">
+                        Date
+                    </small>
+
+                </p>
+
+
+                <p>
+                    ✓ Read
+                </p>
+
+
+                <!-- DELETE -->
+
+                <form
+                    th:action="@{/user/notifications/delete/{id}(id=${notification.id})}"
+                    method="post">
+
+                    <button type="submit">
+                        Delete
+                    </button>
+
+                </form>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- NO NOTIFICATIONS -->
+    <!-- ================================================= -->
+
+    <div th:if="${#lists.isEmpty(notifications)}">
+
+        <p>
+            You have no notifications.
+        </p>
+
+    </div>
+
+
+    <br>
+
+
+    <!-- ================================================= -->
+    <!-- NAVIGATION -->
+    <!-- ================================================= -->
+
+    <div class="button-group">
+
+
+        <a href="/user/books"
+           class="btn">
+
+            Browse Books
+
+        </a>
+
+
+        <a href="/user/my-books"
+           class="btn">
+
+            My Books
+
+        </a>
+
+
+        <a href="/user/reservations"
+           class="btn">
+
+            My Reservations
+
+        </a>
+
+
+        <a href="/user/fines"
+           class="btn">
+
+            My Fines
+
+        </a>
+
+
+        <a href="/user/dashboard"
+           class="btn">
+
+            Dashboard
+
+        </a>
+
+
+        <a href="/logout"
+           class="btn">
+
+            Logout
+
+        </a>
+
+
+    </div>
+
+
+</div>
+
+</body>
+
+</html>

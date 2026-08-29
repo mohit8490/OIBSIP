@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>User Dashboard - Digital Library</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+
+</head>
+
+
+<body>
+
+    <div class="container">
+
+
+        <!-- ================================================= -->
+        <!-- PAGE TITLE -->
+        <!-- ================================================= -->
+
+        <h1>User Dashboard</h1>
+
+
+        <!-- ================================================= -->
+        <!-- WELCOME -->
+        <!-- ================================================= -->
+
+        <p>
+
+            Welcome,
+
+            <strong th:text="${user.name}">
+                User
+            </strong>
+
+        </p>
+
+
+        <!-- ================================================= -->
+        <!-- USER INFORMATION -->
+        <!-- ================================================= -->
+
+        <div>
+
+            <p>
+                <strong>Username:</strong>
+
+                <span th:text="${user.username}">
+                    username
+                </span>
+            </p>
+
+
+            <p>
+                <strong>Email:</strong>
+
+                <span th:text="${user.email}">
+                    email@example.com
+                </span>
+            </p>
+
+
+            <p>
+                <strong>Role:</strong>
+
+                <span th:text="${user.role}">
+                    USER
+                </span>
+            </p>
+
+        </div>
+
+
+        <br>
+
+
+        <!-- ================================================= -->
+        <!-- USER MENU -->
+        <!-- ================================================= -->
+
+        <div class="button-group">
+
+
+            <!-- BOOK CATALOGUE -->
+
+            <a href="/user/books" class="btn">
+
+                Browse Books
+
+            </a>
+
+
+            <!-- MY BOOKS -->
+
+            <a href="/user/my-books" class="btn">
+
+                My Books
+
+            </a>
+
+
+            <!-- MY RESERVATIONS -->
+
+            <a href="/user/reservations" class="btn">
+
+                My Reservations
+
+            </a>
+
+
+            <!-- NOTIFICATIONS -->
+
+            <a href="/user/notifications" class="btn">
+
+                🔔 Notifications
+                <span th:if="${unreadCount > 0}" th:text="' (' + ${unreadCount} + ')'">
+                    (0)
+                </span>
+
+            </a>
+
+
+            <!-- MY FINES -->
+
+            <a href="/user/fines" class="btn">
+
+                My Fines
+
+            </a>
+
+
+            <!-- QUERY -->
+
+            <a href="/user/query" class="btn">
+
+                Ask a Query
+
+            </a>
+
+
+            <!-- LOGOUT -->
+
+            <a href="/logout" class="btn">
+
+                Logout
+
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+</body>
+
+</html>

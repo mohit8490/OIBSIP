@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Ask a Query - Digital Library</title>
+
+    <link rel="stylesheet"
+          href="/css/style.css">
+
+</head>
+
+
+<body>
+
+<div class="container"
+     style="max-width: 1000px;">
+
+
+    <!-- ================================================= -->
+    <!-- PAGE TITLE -->
+    <!-- ================================================= -->
+
+    <h1>Ask a Query</h1>
+
+
+    <!-- ================================================= -->
+    <!-- WELCOME -->
+    <!-- ================================================= -->
+
+    <p>
+
+        Welcome,
+
+        <strong th:text="${user.name}">
+            User
+        </strong>
+
+    </p>
+
+
+    <!-- ================================================= -->
+    <!-- SUCCESS MESSAGE -->
+    <!-- ================================================= -->
+
+    <div th:if="${success}"
+         class="success-message"
+         style="margin: 15px 0;
+                padding: 12px;
+                border: 1px solid #28a745;">
+
+        <strong>Success:</strong>
+
+        <span th:text="${success}">
+            Query submitted successfully.
+        </span>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- ERROR MESSAGE -->
+    <!-- ================================================= -->
+
+    <div th:if="${error}"
+         class="error-message"
+         style="margin: 15px 0;
+                padding: 12px;
+                border: 1px solid #dc3545;">
+
+        <strong>Error:</strong>
+
+        <span th:text="${error}">
+            Something went wrong.
+        </span>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- SUBMIT QUERY -->
+    <!-- ================================================= -->
+
+    <h2>Submit Your Query</h2>
+
+
+    <form action="/user/query"
+          method="post">
+
+
+        <!-- QUESTION -->
+
+        <label for="message">
+            Your Question
+        </label>
+
+        <br>
+
+
+        <textarea id="message"
+                  name="message"
+                  rows="5"
+                  cols="60"
+                  placeholder="Enter your question..."
+                  required></textarea>
+
+
+        <br>
+        <br>
+
+
+        <!-- SUBMIT BUTTON -->
+
+        <button type="submit">
+
+            Submit Query
+
+        </button>
+
+
+    </form>
+
+
+    <br>
+
+
+    <!-- ================================================= -->
+    <!-- MY QUERIES -->
+    <!-- ================================================= -->
+
+    <h2>My Queries</h2>
+
+
+    <table border="1"
+           width="100%"
+           cellpadding="10">
+
+
+        <thead>
+
+        <tr>
+
+            <th>ID</th>
+
+            <th>Question</th>
+
+            <th>Response</th>
+
+            <th>Status</th>
+
+            <th>Created At</th>
+
+        </tr>
+
+        </thead>
+
+
+        <tbody>
+
+
+        <!-- ================================================= -->
+        <!-- QUERY ROW -->
+        <!-- ================================================= -->
+
+        <tr th:each="query : ${queries}">
+
+
+            <!-- ID -->
+
+            <td th:text="${query.id}">
+
+                1
+
+            </td>
+
+
+            <!-- QUESTION -->
+
+            <td th:text="${query.message}">
+
+                Question
+
+            </td>
+
+
+            <!-- RESPONSE -->
+
+            <td>
+
+
+                <span th:if="${query.response != null}"
+                      th:text="${query.response}">
+
+                    Response
+
+                </span>
+
+
+                <span th:if="${query.response == null}">
+
+                    Waiting for admin response
+
+                </span>
+
+
+            </td>
+
+
+            <!-- STATUS -->
+
+            <td th:text="${query.status}">
+
+                PENDING
+
+            </td>
+
+
+            <!-- CREATED AT -->
+
+            <td th:text="${query.createdAt}">
+
+                Date
+
+            </td>
+
+
+        </tr>
+
+
+        <!-- ================================================= -->
+        <!-- NO QUERIES -->
+        <!-- ================================================= -->
+
+        <tr th:if="${#lists.isEmpty(queries)}">
+
+            <td colspan="5"
+                style="text-align: center;">
+
+                You have not submitted any queries yet.
+
+            </td>
+
+        </tr>
+
+
+        </tbody>
+
+
+    </table>
+
+
+    <br>
+
+
+    <!-- ================================================= -->
+    <!-- NAVIGATION -->
+    <!-- ================================================= -->
+
+    <div class="button-group">
+
+
+        <a href="/user/dashboard"
+           class="btn">
+
+            Dashboard
+
+        </a>
+
+
+        <a href="/user/books"
+           class="btn">
+
+            Browse Books
+
+        </a>
+
+
+        <a href="/user/my-books"
+           class="btn">
+
+            My Books
+
+        </a>
+
+
+        <a href="/user/reservations"
+           class="btn">
+
+            My Reservations
+
+        </a>
+
+
+        <a href="/user/notifications"
+           class="btn">
+
+            Notifications
+
+        </a>
+
+
+        <a href="/user/fines"
+           class="btn">
+
+            My Fines
+
+        </a>
+
+
+        <a href="/logout"
+           class="btn">
+
+            Logout
+
+        </a>
+
+
+    </div>
+
+
+</div>
+
+</body>
+
+</html>

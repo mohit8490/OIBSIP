@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Book - Digital Library</title>
+
+    <link rel="stylesheet"
+          href="/css/style.css">
+
+</head>
+
+
+<body>
+
+<div class="container"
+     style="max-width: 700px;">
+
+    <!-- ================================================= -->
+    <!-- PAGE TITLE -->
+    <!-- ================================================= -->
+
+    <h1>Edit Book</h1>
+
+
+    <!-- ================================================= -->
+    <!-- WELCOME -->
+    <!-- ================================================= -->
+
+    <p>
+
+        Welcome,
+
+        <strong th:text="${admin.name}">
+            Admin
+        </strong>
+
+    </p>
+
+
+    <!-- ================================================= -->
+    <!-- ERROR MESSAGE -->
+    <!-- ================================================= -->
+
+    <div th:if="${error}"
+         class="error-message">
+
+        <strong>Error:</strong>
+
+        <span th:text="${error}">
+            Something went wrong.
+        </span>
+
+    </div>
+
+
+    <br>
+
+
+    <!-- ================================================= -->
+    <!-- EDIT BOOK FORM -->
+    <!-- ================================================= -->
+
+    <form th:action="@{/admin/books/edit/{id}(id=${book.id})}"
+          method="post"
+          th:object="${book}">
+
+
+        <!-- ================================================= -->
+        <!-- BOOK ID -->
+        <!-- ================================================= -->
+
+        <p>
+
+            <strong>Book ID:</strong>
+
+            <span th:text="${book.id}">
+                1
+            </span>
+
+        </p>
+
+
+        <!-- ================================================= -->
+        <!-- TITLE -->
+        <!-- ================================================= -->
+
+        <label for="title">
+            Book Title
+        </label>
+
+        <br>
+
+        <input type="text"
+               id="title"
+               th:field="*{title}"
+               placeholder="Enter book title"
+               required>
+
+        <br><br>
+
+
+        <!-- ================================================= -->
+        <!-- AUTHOR -->
+        <!-- ================================================= -->
+
+        <label for="author">
+            Author
+        </label>
+
+        <br>
+
+        <input type="text"
+               id="author"
+               th:field="*{author}"
+               placeholder="Enter author name"
+               required>
+
+        <br><br>
+
+
+        <!-- ================================================= -->
+        <!-- ISBN -->
+        <!-- ================================================= -->
+
+        <label for="isbn">
+            ISBN
+        </label>
+
+        <br>
+
+        <input type="text"
+               id="isbn"
+               th:field="*{isbn}"
+               placeholder="Enter ISBN"
+               required>
+
+        <br><br>
+
+
+        <!-- ================================================= -->
+        <!-- CATEGORY -->
+        <!-- ================================================= -->
+
+        <label for="category">
+            Category
+        </label>
+
+        <br>
+
+        <select id="category"
+                th:field="*{category}"
+                required>
+
+            <option value="">
+                Select Category
+            </option>
+
+            <option value="Programming">
+                Programming
+            </option>
+
+            <option value="Computer Science">
+                Computer Science
+            </option>
+
+            <option value="Database">
+                Database
+            </option>
+
+            <option value="Fiction">
+                Fiction
+            </option>
+
+        </select>
+
+        <br><br>
+
+
+        <!-- ================================================= -->
+        <!-- TOTAL QUANTITY -->
+        <!-- ================================================= -->
+
+        <label for="quantity">
+            Total Quantity
+        </label>
+
+        <br>
+
+        <input type="number"
+               id="quantity"
+               th:field="*{quantity}"
+               min="1"
+               required>
+
+        <br><br>
+
+
+        <!-- ================================================= -->
+        <!-- AVAILABLE QUANTITY -->
+        <!-- ================================================= -->
+
+        <p>
+
+            <strong>
+                Current Available Quantity:
+            </strong>
+
+            <span th:text="${book.availableQuantity}">
+                0
+            </span>
+
+        </p>
+
+        <p>
+            Available quantity will be calculated automatically
+            after updating the total quantity.
+        </p>
+
+
+        <br>
+
+
+        <!-- ================================================= -->
+        <!-- UPDATE -->
+        <!-- ================================================= -->
+
+        <button type="submit">
+
+            Update Book
+
+        </button>
+
+
+        <!-- ================================================= -->
+        <!-- CANCEL -->
+        <!-- ================================================= -->
+
+        <a href="/admin/books"
+           class="btn">
+
+            Cancel
+
+        </a>
+
+    </form>
+
+
+    <br>
+
+
+    <!-- ================================================= -->
+    <!-- NAVIGATION -->
+    <!-- ================================================= -->
+
+    <div class="button-group">
+
+
+        <a href="/admin/dashboard"
+           class="btn">
+
+            Dashboard
+
+        </a>
+
+
+        <a href="/admin/books"
+           class="btn">
+
+            Manage Books
+
+        </a>
+
+
+        <a href="/admin/issued-books"
+           class="btn">
+
+            Issued Books
+
+        </a>
+
+
+        <a href="/admin/reservations"
+           class="btn">
+
+            Reservations
+
+        </a>
+
+
+        <a href="/admin/fines"
+           class="btn">
+
+            Fine Management
+
+        </a>
+
+
+        <a href="/admin/queries"
+           class="btn">
+
+            Queries
+
+        </a>
+
+
+        <a href="/logout"
+           class="btn">
+
+            Logout
+
+        </a>
+
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

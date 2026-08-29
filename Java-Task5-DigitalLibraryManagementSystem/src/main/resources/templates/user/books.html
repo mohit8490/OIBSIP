@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Book Catalogue - Digital Library</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+
+</head>
+
+
+<body>
+
+    <div class="container" style="max-width: 1000px;">
+
+
+        <!-- ================================================= -->
+        <!-- PAGE TITLE -->
+        <!-- ================================================= -->
+
+        <h1>Book Catalogue</h1>
+
+        <p>
+            Welcome,
+
+            <strong th:text="${user.name}">
+                User
+            </strong>
+        </p>
+
+
+        <!-- ================================================= -->
+        <!-- SUCCESS MESSAGE -->
+        <!-- ================================================= -->
+
+        <div th:if="${success}" class="success-message" style="margin: 15px 0;
+                padding: 12px;
+                border: 1px solid #28a745;">
+
+            <strong>Success:</strong>
+
+            <span th:text="${success}">
+                Operation successful.
+            </span>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- ERROR MESSAGE -->
+        <!-- ================================================= -->
+
+        <div th:if="${error}" class="error-message" style="margin: 15px 0;
+                padding: 12px;
+                border: 1px solid #dc3545;">
+
+            <strong>Error:</strong>
+
+            <span th:text="${error}">
+                Something went wrong.
+            </span>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- SEARCH -->
+        <!-- ================================================= -->
+
+        <form action="/user/books" method="get">
+
+            <label>
+                Search by Title or Author
+            </label>
+
+            <input type="text" name="keyword" th:value="${keyword}" placeholder="Enter book title or author">
+
+            <button type="submit">
+                Search
+            </button>
+
+        </form>
+
+
+        <br>
+
+
+        <!-- ================================================= -->
+        <!-- CATEGORY -->
+        <!-- ================================================= -->
+
+        <form action="/user/books" method="get">
+
+            <label>
+                Browse by Category
+            </label>
+
+            <select name="category">
+
+                <option value="">
+                    Select Category
+                </option>
+
+                <option value="Programming" th:selected="${category == 'Programming'}">
+                    Programming
+                </option>
+
+                <option value="Computer Science" th:selected="${category == 'Computer Science'}">
+                    Computer Science
+                </option>
+
+                <option value="Database" th:selected="${category == 'Database'}">
+                    Database
+                </option>
+
+                <option value="Fiction" th:selected="${category == 'Fiction'}">
+                    Fiction
+                </option>
+
+            </select>
+
+            <button type="submit">
+                Browse
+            </button>
+
+        </form>
+
+
+        <br>
+
+
+        <!-- ================================================= -->
+        <!-- BOOK TABLE -->
+        <!-- ================================================= -->
+
+        <table border="1" width="100%" cellpadding="10">
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Title</th>
+
+                    <th>Author</th>
+
+                    <th>ISBN</th>
+
+                    <th>Category</th>
+
+                    <th>Total</th>
+
+                    <th>Available</th>
+
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+
+                <!-- ================================================= -->
+                <!-- BOOK ROW -->
+                <!-- ================================================= -->
+
+                <tr th:each="book : ${books}">
+
+
+                    <!-- ID -->
+
+                    <td th:text="${book.id}">
+                        1
+                    </td>
+
+
+                    <!-- TITLE -->
+
+                    <td th:text="${book.title}">
+                        Book Title
+                    </td>
+
+
+                    <!-- AUTHOR -->
+
+                    <td th:text="${book.author}">
+                        Author
+                    </td>
+
+
+                    <!-- ISBN -->
+
+                    <td th:text="${book.isbn}">
+                        ISBN
+                    </td>
+
+
+                    <!-- CATEGORY -->
+
+                    <td th:text="${book.category}">
+                        Category
+                    </td>
+
+
+                    <!-- TOTAL -->
+
+                    <td th:text="${book.quantity}">
+                        5
+                    </td>
+
+
+                    <!-- AVAILABLE -->
+
+                    <td th:text="${book.availableQuantity}">
+                        5
+                    </td>
+
+
+                    <!-- ================================================= -->
+                    <!-- ACTION -->
+                    <!-- ================================================= -->
+
+                    <td>
+
+
+                        <!-- ============================================= -->
+                        <!-- 1. ALREADY ISSUED -->
+                        <!-- ============================================= -->
+
+                        <span th:if="${issuedBookIds.contains(book.id)}">
+
+                            Already Issued
+
+                        </span>
+
+
+                        <!-- ============================================= -->
+                        <!-- 2. AVAILABLE AND NOT ISSUED -->
+                        <!-- ============================================= -->
+
+                        <form th:if="${book.availableQuantity != null
+                            and book.availableQuantity > 0
+                            and !issuedBookIds.contains(book.id)}" th:action="@{/user/books/issue/{id}(id=${book.id})}"
+                            method="post">
+
+                            <button type="submit">
+                                Issue Book
+                            </button>
+
+                        </form>
+
+
+                        <!-- ============================================= -->
+                        <!-- 3. BOOK NOT AVAILABLE -->
+                        <!-- ============================================= -->
+
+                        <div th:if="${book.availableQuantity != null
+                            and book.availableQuantity == 0
+                            and !issuedBookIds.contains(book.id)}">
+
+
+                            <span>
+                                Not Available
+                            </span>
+
+
+                            <br>
+
+
+                            <!-- ========================================= -->
+                            <!-- 3A. ALREADY RESERVED -->
+                            <!-- ========================================= -->
+
+                            <span th:if="${reservedBookIds.contains(book.id)}">
+
+                                Already Reserved
+
+                            </span>
+
+
+                            <!-- ========================================= -->
+                            <!-- 3B. NOT RESERVED -->
+                            <!-- ========================================= -->
+
+                            <form th:if="${!reservedBookIds.contains(book.id)}"
+                                th:action="@{/user/books/reserve/{id}(id=${book.id})}" method="post">
+
+                                <button type="submit">
+                                    Reserve Book
+                                </button>
+
+                            </form>
+
+
+                        </div>
+
+
+                    </td>
+
+
+                </tr>
+
+
+                <!-- ================================================= -->
+                <!-- NO BOOKS -->
+                <!-- ================================================= -->
+
+                <tr th:if="${#lists.isEmpty(books)}">
+
+                    <td colspan="8" style="text-align: center;">
+
+                        No books found.
+
+                    </td>
+
+                </tr>
+
+
+            </tbody>
+
+        </table>
+
+
+        <br>
+
+
+        <!-- ================================================= -->
+        <!-- NAVIGATION -->
+        <!-- ================================================= -->
+
+        <div class="button-group">
+
+
+            <a href="/user/my-books" class="btn">
+
+                My Books
+
+            </a>
+
+
+            <a href="/user/reservations" class="btn">
+
+                My Reservations
+
+            </a>
+
+
+            <a href="/user/notifications" class="btn">
+
+                🔔 Notifications
+                <span th:if="${unreadCount > 0}" th:text="' (' + ${unreadCount} + ')'">
+                    (0)
+                </span>
+
+            </a>
+
+
+            <a href="/user/fines" class="btn">
+
+                My Fines
+
+            </a>
+
+
+            <a href="/user/dashboard" class="btn">
+
+                Dashboard
+
+            </a>
+
+
+            <a href="/logout" class="btn">
+
+                Logout
+
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+</body>
+
+</html>
