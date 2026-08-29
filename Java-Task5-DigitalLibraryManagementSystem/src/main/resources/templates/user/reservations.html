@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Reservations - Digital Library</title>
+
+    <link rel="stylesheet"
+          href="/css/style.css">
+</head>
+
+<body>
+
+<div class="container"
+     style="max-width: 1100px;">
+
+    <h1>My Reservations</h1>
+
+    <p>
+        Welcome,
+        <strong th:text="${user.name}">
+            User
+        </strong>
+    </p>
+
+
+    <!-- ERROR MESSAGE -->
+
+    <div th:if="${error}"
+         class="error-message"
+         style="margin: 15px 0; padding: 12px; border: 1px solid #dc3545;">
+
+        <strong>Error:</strong>
+
+        <span th:text="${error}">
+            Something went wrong.
+        </span>
+
+    </div>
+
+
+    <!-- SUCCESS MESSAGE -->
+
+    <div th:if="${success}"
+         style="margin: 15px 0; padding: 12px; border: 1px solid green;">
+
+        <strong th:text="${success}">
+            Success
+        </strong>
+
+    </div>
+
+
+    <!-- RESERVATIONS TABLE -->
+
+    <table border="1"
+           width="100%"
+           cellpadding="10">
+
+        <thead>
+
+        <tr>
+
+            <th>Reservation ID</th>
+
+            <th>Book ID</th>
+
+            <th>Book</th>
+
+            <th>Author</th>
+
+            <th>Reservation Date</th>
+
+            <th>Status</th>
+
+            <th>Action</th>
+
+        </tr>
+
+        </thead>
+
+
+        <tbody>
+
+        <tr th:each="reservation : ${reservations}">
+
+            <!-- RESERVATION ID -->
+
+            <td th:text="${reservation.id}">
+                1
+            </td>
+
+
+            <!-- BOOK ID -->
+
+            <td th:text="${reservation.book.id}">
+                1
+            </td>
+
+
+            <!-- BOOK TITLE -->
+
+            <td th:text="${reservation.book.title}">
+                Book Title
+            </td>
+
+
+            <!-- AUTHOR -->
+
+            <td th:text="${reservation.book.author}">
+                Author
+            </td>
+
+
+            <!-- RESERVATION DATE -->
+
+            <td th:text="${reservation.reservationDate}">
+                2026-08-23
+            </td>
+
+
+            <!-- STATUS -->
+
+            <td th:text="${reservation.status}">
+                ACTIVE
+            </td>
+
+
+            <!-- ACTION -->
+
+            <td>
+
+                <!-- ACTIVE -->
+
+                <form
+                    th:if="${reservation.status == 'ACTIVE'}"
+                    th:action="@{/user/reservations/cancel/{id}(id=${reservation.id})}"
+                    method="post">
+
+                    <button type="submit">
+                        Cancel Reservation
+                    </button>
+
+                </form>
+
+
+                <!-- CANCELLED -->
+
+                <span th:if="${reservation.status == 'CANCELLED'}">
+
+                    Cancelled
+
+                </span>
+
+            </td>
+
+        </tr>
+
+
+        <!-- NO RESERVATIONS -->
+
+        <tr th:if="${#lists.isEmpty(reservations)}">
+
+            <td colspan="7"
+                style="text-align:center;">
+
+                You have no reservations.
+
+            </td>
+
+        </tr>
+
+        </tbody>
+
+    </table>
+
+
+    <br>
+
+
+    <!-- NAVIGATION -->
+
+    <div class="button-group">
+
+        <a href="/user/books"
+           class="btn">
+
+            Browse Books
+
+        </a>
+
+
+        <a href="/user/my-books"
+           class="btn">
+
+            My Books
+
+        </a>
+
+
+        <a href="/user/fines"
+           class="btn">
+
+            My Fines
+
+        </a>
+
+
+        <a href="/user/dashboard"
+           class="btn">
+
+            Dashboard
+
+        </a>
+
+
+        <a href="/logout"
+           class="btn">
+
+            Logout
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

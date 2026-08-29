@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard - Digital Library</title>
+
+    <link rel="stylesheet"
+          href="/css/style.css">
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <!-- ================================================= -->
+    <!-- PAGE TITLE -->
+    <!-- ================================================= -->
+
+    <h1>Admin Dashboard</h1>
+
+
+    <!-- ================================================= -->
+    <!-- WELCOME -->
+    <!-- ================================================= -->
+
+    <p>
+
+        Welcome,
+
+        <strong th:text="${admin.name}">
+            Admin
+        </strong>
+
+    </p>
+
+
+    <!-- ================================================= -->
+    <!-- ADMIN INFORMATION -->
+    <!-- ================================================= -->
+
+    <div>
+
+        <p>
+
+            <strong>Username:</strong>
+
+            <span th:text="${admin.username}">
+                admin
+            </span>
+
+        </p>
+
+
+        <p>
+
+            <strong>Email:</strong>
+
+            <span th:text="${admin.email}">
+                admin@example.com
+            </span>
+
+        </p>
+
+
+        <p>
+
+            <strong>Role:</strong>
+
+            <span th:text="${admin.role}">
+                ADMIN
+            </span>
+
+        </p>
+
+    </div>
+
+
+    <br>
+
+
+    <!-- ================================================= -->
+    <!-- LIBRARY SUMMARY -->
+    <!-- ================================================= -->
+
+    <h2>Library Summary</h2>
+
+
+    <div>
+
+        <!-- TOTAL BOOKS -->
+
+        <p>
+
+            <strong>
+                Total Books:
+            </strong>
+
+            <span th:text="${totalBooks}">
+                0
+            </span>
+
+        </p>
+
+
+        <!-- TOTAL USERS -->
+
+        <p>
+
+            <strong>
+                Total Members:
+            </strong>
+
+            <span th:text="${totalUsers}">
+                0
+            </span>
+
+        </p>
+
+
+        <!-- ISSUED BOOKS -->
+
+        <p>
+
+            <strong>
+                Currently Issued Books:
+            </strong>
+
+            <span th:text="${totalIssuedBooks}">
+                0
+            </span>
+
+        </p>
+
+
+        <!-- TOTAL FINES -->
+
+        <p>
+
+            <strong>
+                Total Fine Records:
+            </strong>
+
+            <span th:text="${totalFines}">
+                0
+            </span>
+
+        </p>
+
+
+        <!-- UNPAID FINES -->
+
+        <p>
+
+            <strong>
+                Unpaid Fine Records:
+            </strong>
+
+            <span th:text="${unpaidFines}">
+                0
+            </span>
+
+        </p>
+
+
+        <!-- UNPAID FINE AMOUNT -->
+
+        <p>
+
+            <strong>
+                Total Unpaid Fine Amount:
+            </strong>
+
+            ₹<span th:text="${unpaidFineAmount}">
+                0
+            </span>
+
+        </p>
+
+    </div>
+
+
+    <br>
+
+
+    <!-- ================================================= -->
+    <!-- ADMIN MENU -->
+    <!-- ================================================= -->
+
+    <div class="button-group">
+
+
+        <!-- MANAGE BOOKS -->
+
+        <a href="/admin/books"
+           class="btn">
+
+            Manage Books
+
+        </a>
+
+
+        <!-- ISSUED BOOKS -->
+
+        <a href="/admin/issued-books"
+           class="btn">
+
+            Issued Books
+
+        </a>
+
+
+        <!-- RESERVATIONS -->
+
+        <a href="/admin/reservations"
+           class="btn">
+
+            Reservations
+
+        </a>
+
+
+        <!-- MEMBERS -->
+
+        <a href="/admin/members"
+           class="btn">
+
+            Members
+
+        </a>
+
+
+        <!-- FINES -->
+
+        <a href="/admin/fines"
+           class="btn">
+
+            Fine Management
+
+        </a>
+
+
+        <!-- QUERIES -->
+
+        <a href="/admin/queries"
+           class="btn">
+
+            User Queries
+
+        </a>
+
+
+        <!-- LOGOUT -->
+
+        <a href="/logout"
+           class="btn">
+
+            Logout
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

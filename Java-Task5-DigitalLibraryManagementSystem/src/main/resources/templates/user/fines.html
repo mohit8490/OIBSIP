@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Fines - Digital Library</title>
+
+    <link rel="stylesheet"
+          href="/css/style.css">
+
+</head>
+
+
+<body>
+
+<div class="container"
+     style="max-width: 1000px;">
+
+    <!-- ================================================= -->
+    <!-- PAGE TITLE -->
+    <!-- ================================================= -->
+
+    <h1>My Fines</h1>
+
+
+    <!-- ================================================= -->
+    <!-- WELCOME -->
+    <!-- ================================================= -->
+
+    <p>
+
+        Welcome,
+
+        <strong th:text="${user.name}">
+            User
+        </strong>
+
+    </p>
+
+
+    <br>
+
+
+    <!-- ================================================= -->
+    <!-- FINE TABLE -->
+    <!-- ================================================= -->
+
+    <table border="1"
+           width="100%"
+           cellpadding="10">
+
+        <thead>
+
+        <tr>
+
+            <th>ID</th>
+
+            <th>Book</th>
+
+            <th>Issue Date</th>
+
+            <th>Due Date</th>
+
+            <th>Return Date</th>
+
+            <th>Fine Amount</th>
+
+            <th>Status</th>
+
+            <th>Action</th>
+
+        </tr>
+
+        </thead>
+
+
+        <tbody>
+
+        <tr th:each="fine : ${fines}">
+
+
+            <!-- ID -->
+
+            <td th:text="${fine.id}">
+                1
+            </td>
+
+
+            <!-- BOOK -->
+
+            <td th:text="${fine.issue.book.title}">
+                Book Title
+            </td>
+
+
+            <!-- ISSUE DATE -->
+
+            <td th:text="${fine.issue.issueDate}">
+                Date
+            </td>
+
+
+            <!-- DUE DATE -->
+
+            <td th:text="${fine.issue.dueDate}">
+                Date
+            </td>
+
+
+            <!-- RETURN DATE -->
+
+            <td>
+
+                <span th:if="${fine.issue.returnDate != null}"
+                      th:text="${fine.issue.returnDate}">
+                    Date
+                </span>
+
+                <span th:if="${fine.issue.returnDate == null}">
+                    Not Returned
+                </span>
+
+            </td>
+
+
+            <!-- FINE AMOUNT -->
+
+            <td>
+
+                ₹<span th:text="${fine.amount}">
+                    0.0
+                </span>
+
+            </td>
+
+
+            <!-- STATUS -->
+
+            <td>
+
+                <span th:if="${fine.paid}">
+                    PAID
+                </span>
+
+                <span th:if="${!fine.paid}">
+                    UNPAID
+                </span>
+
+            </td>
+
+
+            <!-- ACTION -->
+
+            <td>
+
+                <form
+                    th:if="${!fine.paid}"
+                    th:action="@{/user/fines/pay/{id}(id=${fine.id})}"
+                    method="post">
+
+                    <button type="submit">
+
+                        Pay Fine
+
+                    </button>
+
+                </form>
+
+
+                <span th:if="${fine.paid}">
+
+                    Payment Completed
+
+                </span>
+
+            </td>
+
+        </tr>
+
+
+        <!-- ================================================= -->
+        <!-- NO FINES -->
+        <!-- ================================================= -->
+
+        <tr th:if="${#lists.isEmpty(fines)}">
+
+            <td colspan="8"
+                style="text-align: center;">
+
+                No fines found.
+
+            </td>
+
+        </tr>
+
+        </tbody>
+
+    </table>
+
+
+    <br>
+
+
+    <!-- ================================================= -->
+    <!-- NAVIGATION -->
+    <!-- ================================================= -->
+
+    <div class="button-group">
+
+        <a href="/user/dashboard"
+           class="btn">
+
+            Dashboard
+
+        </a>
+
+
+        <a href="/user/books"
+           class="btn">
+
+            Browse Books
+
+        </a>
+
+
+        <a href="/user/my-books"
+           class="btn">
+
+            My Books
+
+        </a>
+
+
+        <a href="/user/reservations"
+           class="btn">
+
+            My Reservations
+
+        </a>
+
+
+        <a href="/user/notifications"
+           class="btn">
+
+            Notifications
+
+        </a>
+
+
+        <a href="/user/query"
+           class="btn">
+
+            Ask a Query
+
+        </a>
+
+
+        <a href="/logout"
+           class="btn">
+
+            Logout
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Books - Digital Library</title>
+
+    <link rel="stylesheet"
+          href="/css/style.css">
+
+</head>
+
+<body>
+
+<div class="container"
+     style="max-width: 1100px;">
+
+    <h1>My Books</h1>
+
+    <p>
+        Welcome,
+        <strong th:text="${user.name}">
+            User
+        </strong>
+    </p>
+
+
+    <!-- ========================= -->
+    <!-- ERROR -->
+    <!-- ========================= -->
+
+    <div th:if="${error}"
+         class="error-message">
+
+        <strong>Error:</strong>
+
+        <span th:text="${error}">
+            Error
+        </span>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- SUCCESS -->
+    <!-- ========================= -->
+
+    <div th:if="${success}"
+         style="margin: 15px 0;
+                padding: 12px;
+                border: 1px solid #28a745;">
+
+        <strong th:text="${success}">
+            Success
+        </strong>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- BOOK TABLE -->
+    <!-- ========================= -->
+
+    <table border="1"
+           width="100%"
+           cellpadding="10">
+
+        <thead>
+
+        <tr>
+
+            <th>Issue ID</th>
+
+            <th>Book ID</th>
+
+            <th>Book</th>
+
+            <th>Author</th>
+
+            <th>Issue Date</th>
+
+            <th>Due Date</th>
+
+            <th>Return Date</th>
+
+            <th>Status</th>
+
+            <th>Action</th>
+
+        </tr>
+
+        </thead>
+
+
+        <tbody>
+
+        <tr th:each="issue : ${issues}">
+
+            <!-- ISSUE ID -->
+
+            <td th:text="${issue.id}">
+                1
+            </td>
+
+
+            <!-- BOOK ID -->
+
+            <td th:text="${issue.book.id}">
+                1
+            </td>
+
+
+            <!-- BOOK NAME -->
+
+            <td th:text="${issue.book.title}">
+                Effective Java
+            </td>
+
+
+            <!-- AUTHOR -->
+
+            <td th:text="${issue.book.author}">
+                Joshua Bloch
+            </td>
+
+
+            <!-- ISSUE DATE -->
+
+            <td th:text="${issue.issueDate}">
+                2026-08-23
+            </td>
+
+
+            <!-- DUE DATE -->
+
+            <td th:text="${issue.dueDate}">
+                2026-09-06
+            </td>
+
+
+            <!-- RETURN DATE -->
+
+            <td>
+
+                <span th:if="${issue.returnDate != null}"
+                      th:text="${issue.returnDate}">
+                    2026-08-30
+                </span>
+
+                <span th:if="${issue.returnDate == null}">
+                    -
+                </span>
+
+            </td>
+
+
+            <!-- STATUS -->
+
+            <td th:text="${issue.status}">
+                ISSUED
+            </td>
+
+
+            <!-- ACTION -->
+
+            <td>
+
+                <form th:if="${issue.status == 'ISSUED'}"
+                      th:action="@{/user/books/return/{id}(id=${issue.id})}"
+                      method="post">
+
+                    <button type="submit">
+
+                        Return
+
+                    </button>
+
+                </form>
+
+
+                <span th:if="${issue.status == 'RETURNED'}">
+
+                    Returned
+
+                </span>
+
+            </td>
+
+        </tr>
+
+
+        <!-- ========================= -->
+        <!-- NO BOOKS -->
+        <!-- ========================= -->
+
+        <tr th:if="${#lists.isEmpty(issues)}">
+
+            <td colspan="9"
+                style="text-align: center;">
+
+                You have not issued any books.
+
+            </td>
+
+        </tr>
+
+        </tbody>
+
+    </table>
+
+
+    <br>
+
+
+    <!-- ========================= -->
+    <!-- NAVIGATION -->
+    <!-- ========================= -->
+
+    <div class="button-group">
+
+        <a href="/user/books"
+           class="btn">
+
+            Browse Books
+
+        </a>
+
+
+        <a href="/user/reservations"
+           class="btn">
+
+            My Reservations
+
+        </a>
+
+
+        <a href="/user/fines"
+           class="btn">
+
+            My Fines
+
+        </a>
+
+
+        <a href="/user/dashboard"
+           class="btn">
+
+            Dashboard
+
+        </a>
+
+
+        <a href="/logout"
+           class="btn">
+
+            Logout
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
