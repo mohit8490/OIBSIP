@@ -1,220 +1,1156 @@
 <!DOCTYPE html>
 
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-    <title>Manage Queries - Digital Library</title>
+    <title>User Queries - DigiLibrary</title>
 
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet"
+          href="/css/style.css">
+
+
+    <!-- =====================================================
+         ADMIN PROFILE DROPDOWN
+         ===================================================== -->
+
+    <style>
+
+        .profile {
+            position: relative;
+            cursor: pointer;
+        }
+
+
+        .profile-dropdown {
+            display: none;
+            position: absolute;
+            top: 52px;
+            right: 0;
+            width: 260px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            z-index: 1000;
+        }
+
+
+        .profile-dropdown.show {
+            display: block;
+        }
+
+
+        .profile-dropdown-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 12px;
+        }
+
+
+        .profile-info {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 8px 0;
+            font-size: 11px;
+        }
+
+
+        .profile-info span {
+            color: #64748b;
+        }
+
+
+        .profile-info strong {
+            color: #0f172a;
+            text-align: right;
+            word-break: break-word;
+        }
+
+
+        .profile-divider {
+            height: 1px;
+            background: #e2e8f0;
+            margin: 10px 0;
+        }
+
+
+        .profile-logout {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 9px 12px;
+            border-radius: 8px;
+            background: #ef4444;
+            color: #ffffff;
+            text-align: center;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+
+        .profile-logout:hover {
+            opacity: 0.9;
+        }
+
+
+        @media (max-width: 600px) {
+
+            .profile-dropdown {
+                right: -10px;
+                width: 240px;
+            }
+
+        }
+
+    </style>
 
 </head>
 
 
 <body>
 
-    <div class="container" style="max-width: 1100px;">
 
-        <!-- ================================================= -->
+<!-- =========================================================
+     SIDEBAR
+     ========================================================= -->
+
+<div class="sidebar">
+
+
+    <!-- LOGO -->
+
+    <div class="logo">
+
+        <span class="logo-icon">
+
+            📖
+
+        </span>
+
+        DigiLibrary
+
+    </div>
+
+
+    <div class="nav-title">
+
+        Administration
+
+    </div>
+
+
+    <!-- DASHBOARD -->
+
+    <a href="/admin/dashboard">
+
+        📊
+
+        <span>
+
+            Dashboard
+
+        </span>
+
+    </a>
+
+
+    <!-- BOOKS -->
+
+    <a href="/admin/books">
+
+        📚
+
+        <span>
+
+            Manage Books
+
+        </span>
+
+    </a>
+
+
+    <!-- ISSUED BOOKS -->
+
+    <a href="/admin/issued-books">
+
+        📖
+
+        <span>
+
+            Issued Books
+
+        </span>
+
+    </a>
+
+
+    <!-- RESERVATIONS -->
+
+    <a href="/admin/reservations">
+
+        📋
+
+        <span>
+
+            Reservations
+
+        </span>
+
+    </a>
+
+
+    <!-- MEMBERS -->
+
+    <a href="/admin/members">
+
+        👥
+
+        <span>
+
+            Members
+
+        </span>
+
+    </a>
+
+
+    <!-- FINES -->
+
+    <a href="/admin/fines">
+
+        💰
+
+        <span>
+
+            Fine Management
+
+        </span>
+
+    </a>
+
+
+    <!-- QUERIES -->
+
+    <a href="/admin/queries"
+       class="active">
+
+        ❓
+
+        <span>
+
+            User Queries
+
+        </span>
+
+    </a>
+
+
+    <!-- SIDEBAR LOGOUT -->
+
+    <a href="/logout"
+       class="logout">
+
+        🚪
+
+        <span>
+
+            Logout
+
+        </span>
+
+    </a>
+
+
+</div>
+
+
+
+<!-- =========================================================
+     MAIN
+     ========================================================= -->
+
+<div class="main">
+
+
+    <!-- =====================================================
+         TOPBAR
+         ===================================================== -->
+
+    <div class="topbar">
+
+
+        <h2>
+
+            User Queries
+
+        </h2>
+
+
+        <div class="topbar-right">
+
+
+            <!-- =================================================
+                 ADMIN PROFILE
+                 ================================================= -->
+
+            <div class="profile"
+                 onclick="toggleAdminProfile(event)">
+
+
+                <div class="profile-avatar">
+
+                    👨‍💼
+
+                </div>
+
+
+                <span th:text="${admin.name}">
+
+                    Admin
+
+                </span>
+
+
+                <span>
+
+                    ▾
+
+                </span>
+
+
+                <!-- =================================================
+                     ADMIN INFORMATION DROPDOWN
+                     ================================================= -->
+
+                <div class="profile-dropdown"
+                     id="adminProfileDropdown"
+                     onclick="event.stopPropagation();">
+
+
+                    <div class="profile-dropdown-title">
+
+                        My Account
+
+                    </div>
+
+
+                    <!-- NAME -->
+
+                    <div class="profile-info">
+
+                        <span>
+
+                            Name
+
+                        </span>
+
+                        <strong th:text="${admin.name}">
+
+                            Admin
+
+                        </strong>
+
+                    </div>
+
+
+                    <!-- USERNAME -->
+
+                    <div class="profile-info">
+
+                        <span>
+
+                            Username
+
+                        </span>
+
+                        <strong th:text="${admin.username}">
+
+                            admin
+
+                        </strong>
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="profile-info">
+
+                        <span>
+
+                            Email
+
+                        </span>
+
+                        <strong th:text="${admin.email}">
+
+                            admin@example.com
+
+                        </strong>
+
+                    </div>
+
+
+                    <!-- ROLE -->
+
+                    <div class="profile-info">
+
+                        <span>
+
+                            Role
+
+                        </span>
+
+                        <strong th:text="${admin.role}">
+
+                            ADMIN
+
+                        </strong>
+
+                    </div>
+
+
+                    <div class="profile-divider"></div>
+
+
+                    <!-- LOGOUT -->
+
+                    <a href="/logout"
+                       class="profile-logout">
+
+                        🚪 Logout
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         CONTENT
+         ===================================================== -->
+
+    <div class="content">
+
+
         <!-- PAGE TITLE -->
-        <!-- ================================================= -->
 
-        <h1>Manage User Queries</h1>
+        <h1 class="page-title">
+
+            User Queries
+
+        </h1>
 
 
-        <!-- ================================================= -->
-        <!-- WELCOME -->
-        <!-- ================================================= -->
+        <p class="page-subtitle">
 
-        <p>
-
-            Welcome,
-
-            <strong th:text="${admin.name}">
-                Admin
-            </strong>
+            Review questions submitted by library members
+            and provide helpful responses.
 
         </p>
 
 
-        <br>
+        <div class="breadcrumb">
+
+            Home / User Queries
+
+        </div>
 
 
-        <!-- ================================================= -->
-        <!-- QUERY TABLE -->
-        <!-- ================================================= -->
 
-        <table border="1" width="100%" cellpadding="10">
+        <!-- =================================================
+             SUMMARY CARDS
+             ================================================= -->
 
-            <thead>
-
-                <tr>
-
-                    <th>ID</th>
-
-                    <th>User</th>
-
-                    <th>Message</th>
-
-                    <th>Response</th>
-
-                    <th>Status</th>
-
-                    <th>Created At</th>
-
-                    <th>Action</th>
-
-                </tr>
-
-            </thead>
+        <div class="card-grid">
 
 
-            <tbody>
+            <!-- TOTAL -->
 
-                <tr th:each="query : ${queries}">
-
-
-                    <!-- ID -->
-
-                    <td th:text="${query.id}">
-                        1
-                    </td>
+            <div class="stat-card stat-blue">
 
 
-                    <!-- USER -->
+                <div class="stat-icon">
 
-                    <td th:text="${query.user.username}">
-                        username
-                    </td>
+                    ❓
 
-
-                    <!-- MESSAGE -->
-
-                    <td th:text="${query.message}">
-                        User query
-                    </td>
+                </div>
 
 
-                    <!-- RESPONSE -->
+                <div class="stat-label">
 
-                    <td>
+                    Total Queries
 
-                        <span th:if="${query.response != null}" th:text="${query.response}">
-                            Response
+                </div>
+
+
+                <div class="stat-value"
+                     th:text="${#lists.size(queries)}">
+
+                    0
+
+                </div>
+
+
+                <p>
+
+                    All submitted queries
+
+                </p>
+
+
+            </div>
+
+
+
+            <!-- PENDING -->
+
+            <div class="stat-card stat-orange">
+
+
+                <div class="stat-icon">
+
+                    ⏳
+
+                </div>
+
+
+                <div class="stat-label">
+
+                    Pending Queries
+
+                </div>
+
+
+                <div class="stat-value"
+                     th:text="${#lists.size(queries.?[status == 'PENDING'])}">
+
+                    0
+
+                </div>
+
+
+                <p>
+
+                    Awaiting admin response
+
+                </p>
+
+
+            </div>
+
+
+
+            <!-- ANSWERED -->
+
+            <div class="stat-card stat-green">
+
+
+                <div class="stat-icon">
+
+                    ✓
+
+                </div>
+
+
+                <div class="stat-label">
+
+                    Answered Queries
+
+                </div>
+
+
+                <div class="stat-value"
+                     th:text="${#lists.size(queries.?[status == 'ANSWERED'])}">
+
+                    0
+
+                </div>
+
+
+                <p>
+
+                    Queries already answered
+
+                </p>
+
+
+            </div>
+
+
+
+            <!-- SUPPORT -->
+
+            <div class="stat-card stat-purple">
+
+
+                <div class="stat-icon">
+
+                    💬
+
+                </div>
+
+
+                <div class="stat-label">
+
+                    Query Support
+
+                </div>
+
+
+                <div class="stat-value">
+
+                    ✓
+
+                </div>
+
+
+                <p>
+
+                    Member support centre
+
+                </p>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             QUERY LIST
+             ================================================= -->
+
+        <div class="panel">
+
+
+            <div class="panel-title">
+
+                Submitted Queries
+
+            </div>
+
+
+
+            <!-- =================================================
+                 QUERY CARDS
+                 ================================================= -->
+
+            <div th:if="${!#lists.isEmpty(queries)}">
+
+
+                <div th:each="query : ${queries}"
+                     style="border:1px solid #e2e8f0;
+                            border-radius:12px;
+                            padding:20px;
+                            margin-bottom:15px;
+                            background:#ffffff;">
+
+
+                    <!-- =============================================
+                         QUERY HEADER
+                         ============================================= -->
+
+                    <div style="display:flex;
+                                justify-content:space-between;
+                                align-items:flex-start;
+                                gap:15px;
+                                flex-wrap:wrap;">
+
+
+                        <div>
+
+
+                            <div style="font-size:10px;
+                                        color:#94a3b8;
+                                        margin-bottom:5px;">
+
+                                QUERY #
+
+                                <span th:text="${query.id}">
+
+                                    1
+
+                                </span>
+
+                            </div>
+
+
+                            <h3 style="margin:0;
+                                       font-size:14px;
+                                       color:#1e293b;">
+
+                                <span th:text="${query.user.username}">
+
+                                    username
+
+                                </span>
+
+                            </h3>
+
+
+                            <p style="margin:4px 0 0;
+                                      font-size:9px;
+                                      color:#64748b;"
+                               th:text="${query.user.email}">
+
+                                email@example.com
+
+                            </p>
+
+
+                        </div>
+
+
+
+                        <!-- STATUS -->
+
+                        <div>
+
+
+                            <span th:if="${query.status == 'PENDING'}"
+                                  class="badge badge-orange">
+
+                                ⏳ PENDING
+
+                            </span>
+
+
+                            <span th:if="${query.status == 'ANSWERED'}"
+                                  class="badge badge-green">
+
+                                ✓ ANSWERED
+
+                            </span>
+
+
+                            <span th:if="${query.status != 'PENDING' and query.status != 'ANSWERED'}"
+                                  class="badge badge-blue"
+                                  th:text="${query.status}">
+
+                                STATUS
+
+                            </span>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- =============================================
+                         QUESTION
+                         ============================================= -->
+
+                    <div style="margin-top:18px;
+                                padding:15px;
+                                background:#f8fafc;
+                                border-radius:10px;">
+
+
+                        <div style="font-size:9px;
+                                    color:#64748b;
+                                    font-weight:600;
+                                    text-transform:uppercase;
+                                    margin-bottom:7px;">
+
+                            User Question
+
+                        </div>
+
+
+                        <div style="font-size:11px;
+                                    color:#334155;
+                                    line-height:1.7;
+                                    white-space:pre-wrap;"
+                             th:text="${query.message}">
+
+                            User question goes here.
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- =============================================
+                         CREATED DATE
+                         ============================================= -->
+
+                    <div style="margin-top:10px;
+                                font-size:9px;
+                                color:#94a3b8;">
+
+                        Submitted:
+
+                        <span th:text="${query.createdAt}">
+
+                            2026-08-29
+
                         </span>
 
-                        <span th:if="${query.response == null}">
-                            No response yet
-                        </span>
-
-                    </td>
+                    </div>
 
 
-                    <!-- STATUS -->
 
-                    <td th:text="${query.status}">
-                        PENDING
-                    </td>
+                    <!-- =============================================
+                         EXISTING RESPONSE
+                         ============================================= -->
+
+                    <div th:if="${query.response != null}"
+                         style="margin-top:15px;
+                                padding:15px;
+                                background:#f0fdf4;
+                                border:1px solid #bbf7d0;
+                                border-radius:10px;">
 
 
-                    <!-- CREATED AT -->
+                        <div style="font-size:9px;
+                                    color:#166534;
+                                    font-weight:600;
+                                    text-transform:uppercase;
+                                    margin-bottom:7px;">
 
-                    <td th:text="${query.createdAt}">
-                        Date
-                    </td>
+                            ✓ Admin Response
+
+                        </div>
 
 
-                    <!-- ACTION -->
+                        <div style="font-size:11px;
+                                    color:#166534;
+                                    line-height:1.7;
+                                    white-space:pre-wrap;"
+                             th:text="${query.response}">
 
-                    <td>
+                            Admin response
 
-                        <form th:if="${query.response == null}"
-                            th:action="@{/admin/queries/respond/{id}(id=${query.id})}" method="post">
+                        </div>
 
-                            <textarea name="response" rows="3" cols="25" placeholder="Enter response"
-                                required></textarea>
 
-                            <br><br>
+                    </div>
 
-                            <button type="submit">
-                                Respond
+
+
+                    <!-- =============================================
+                         RESPONSE FORM
+                         ============================================= -->
+
+                    <div th:if="${query.status == 'PENDING'}"
+                         style="margin-top:18px;
+                                padding-top:18px;
+                                border-top:1px solid #e2e8f0;">
+
+
+                        <div style="font-size:11px;
+                                    font-weight:600;
+                                    color:#1e293b;
+                                    margin-bottom:10px;">
+
+                            💬 Respond to this query
+
+                        </div>
+
+
+                        <form th:action="@{/admin/queries/respond/{id}(id=${query.id})}"
+                              method="post">
+
+
+                            <textarea name="response"
+                                      rows="4"
+                                      placeholder="Write your response to the user..."
+                                      required
+                                      style="width:100%;
+                                             box-sizing:border-box;
+                                             resize:vertical;
+                                             margin-bottom:10px;"></textarea>
+
+
+                            <button type="submit"
+                                    class="btn">
+
+                                ✓ Send Response
+
                             </button>
+
 
                         </form>
 
 
-                        <span th:if="${query.response != null}">
-                            Responded
+                    </div>
+
+
+
+                    <!-- =============================================
+                         COMPLETED
+                         ============================================= -->
+
+                    <div th:if="${query.status == 'ANSWERED'}"
+                         style="margin-top:15px;
+                                padding-top:15px;
+                                border-top:1px solid #e2e8f0;">
+
+
+                        <span class="badge badge-green">
+
+                            ✓ Response Sent Successfully
+
                         </span>
 
-                    </td>
 
-                </tr>
-
-
-                <!-- ================================================= -->
-                <!-- NO QUERIES -->
-                <!-- ================================================= -->
-
-                <tr th:if="${#lists.isEmpty(queries)}">
-
-                    <td colspan="7" style="text-align: center;">
-
-                        No queries found.
-
-                    </td>
-
-                </tr>
-
-            </tbody>
-
-        </table>
+                    </div>
 
 
-        <br>
+                </div>
 
 
-        <!-- ================================================= -->
-        <!-- NAVIGATION -->
-        <!-- ================================================= -->
+            </div>
 
-        <div class="button-group">
 
-            <a href="/admin/dashboard" class="btn">
-                Dashboard
-            </a>
 
-            <a href="/admin/books" class="btn">
-                Manage Books
-            </a>
+            <!-- =================================================
+                 NO QUERIES
+                 ================================================= -->
 
-            <a href="/admin/issued-books" class="btn">
-                Issued Books
-            </a>
+            <div th:if="${#lists.isEmpty(queries)}"
+                 class="empty-state">
 
-            <a href="/admin/fines" class="btn">
-                Fine Management
-            </a>
 
-            <a href="/admin/members" class="btn">
-                Members
-            </a>
+                <div style="font-size:40px;">
 
-            <a href="/admin/reservations" class="btn">
-                Reservations
-            </a>
+                    ❓
 
-            <a href="/logout" class="btn">
-                Logout
-            </a>
+                </div>
+
+
+                <br>
+
+
+                <strong>
+
+                    No User Queries
+
+                </strong>
+
+
+                <p style="font-size:9px;
+                          color:#94a3b8;">
+
+                    There are currently no questions
+                    submitted by library members.
+
+                </p>
+
+
+            </div>
+
 
         </div>
 
+
+
+        <!-- =================================================
+             QUERY INFORMATION
+             ================================================= -->
+
+        <div class="panel">
+
+
+            <div class="panel-title">
+
+                Query Management
+
+            </div>
+
+
+            <div style="display:grid;
+                        grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+                        gap:15px;">
+
+
+                <!-- PENDING -->
+
+                <div style="padding:15px;
+                            border:1px solid #e2e8f0;
+                            border-radius:10px;">
+
+
+                    <strong>
+
+                        ⏳ Pending Queries
+
+                    </strong>
+
+
+                    <p style="font-size:9px;
+                              color:#718096;
+                              line-height:1.6;">
+
+                        Answer pending questions using
+                        the response box provided for each query.
+
+                    </p>
+
+
+                </div>
+
+
+
+                <!-- ANSWERED -->
+
+                <div style="padding:15px;
+                            border:1px solid #e2e8f0;
+                            border-radius:10px;">
+
+
+                    <strong>
+
+                        ✓ Answered Queries
+
+                    </strong>
+
+
+                    <p style="font-size:9px;
+                              color:#718096;
+                              line-height:1.6;">
+
+                        Once a response is submitted, the
+                        query status changes to ANSWERED.
+
+                    </p>
+
+
+                </div>
+
+
+
+                <!-- NOTIFICATION -->
+
+                <div style="padding:15px;
+                            border:1px solid #e2e8f0;
+                            border-radius:10px;">
+
+
+                    <strong>
+
+                        🔔 User Notification
+
+                    </strong>
+
+
+                    <p style="font-size:9px;
+                              color:#718096;
+                              line-height:1.6;">
+
+                        The user receives a notification
+                        after the admin responds.
+
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =====================================================
+             QUICK NAVIGATION REMOVED
+             ===================================================== -->
+
+
+        <!-- =====================================================
+             BOTTOM NAVIGATION REMOVED
+             
+             Dashboard / Members / Logout
+             ===================================================== -->
+
+
     </div>
+
+
+</div>
+
+
+
+<!-- =========================================================
+     ADMIN PROFILE JAVASCRIPT
+     ========================================================= -->
+
+<script>
+
+    function toggleAdminProfile(event) {
+
+        event.stopPropagation();
+
+        const dropdown =
+            document.getElementById("adminProfileDropdown");
+
+
+        if (dropdown) {
+
+            dropdown.classList.toggle("show");
+
+        }
+
+    }
+
+
+    document.addEventListener(
+        "click",
+        function(event) {
+
+            const profile =
+                document.querySelector(".profile");
+
+            const dropdown =
+                document.getElementById("adminProfileDropdown");
+
+
+            if (
+                profile &&
+                dropdown &&
+                !profile.contains(event.target)
+            ) {
+
+                dropdown.classList.remove("show");
+
+            }
+
+        }
+    );
+
+</script>
+
 
 </body>
 

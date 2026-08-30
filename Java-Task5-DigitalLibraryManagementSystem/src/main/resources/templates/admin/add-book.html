@@ -10,271 +10,926 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>Add Book - Digital Library</title>
+    <title>Add Book - DigiLibrary</title>
 
     <link rel="stylesheet"
           href="/css/style.css">
+
+
+    <!-- =====================================================
+         ADMIN PROFILE DROPDOWN
+         ===================================================== -->
+
+    <style>
+
+        .profile {
+            position: relative;
+            cursor: pointer;
+        }
+
+
+        .profile-dropdown {
+            display: none;
+            position: absolute;
+            top: 52px;
+            right: 0;
+            width: 260px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            z-index: 1000;
+        }
+
+
+        .profile-dropdown.show {
+            display: block;
+        }
+
+
+        .profile-dropdown-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 12px;
+        }
+
+
+        .profile-info {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 8px 0;
+            font-size: 11px;
+        }
+
+
+        .profile-info span {
+            color: #64748b;
+        }
+
+
+        .profile-info strong {
+            color: #0f172a;
+            text-align: right;
+            word-break: break-word;
+        }
+
+
+        .profile-divider {
+            height: 1px;
+            background: #e2e8f0;
+            margin: 10px 0;
+        }
+
+
+        .profile-logout {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 9px 12px;
+            border-radius: 8px;
+            background: #ef4444;
+            color: #ffffff;
+            text-align: center;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+
+        .profile-logout:hover {
+            opacity: 0.9;
+        }
+
+
+        @media (max-width: 600px) {
+
+            .profile-dropdown {
+                right: -10px;
+                width: 240px;
+            }
+
+        }
+
+    </style>
 
 </head>
 
 
 <body>
 
-<div class="container"
-     style="max-width: 700px;">
 
-    <!-- ================================================= -->
-    <!-- PAGE TITLE -->
-    <!-- ================================================= -->
+<!-- =========================================================
+     SIDEBAR
+     ========================================================= -->
 
-    <h1>Add New Book</h1>
+<div class="sidebar">
 
 
-    <!-- ================================================= -->
-    <!-- WELCOME -->
-    <!-- ================================================= -->
+    <!-- LOGO -->
 
-    <p>
+    <div class="logo">
 
-        Welcome,
+        <span class="logo-icon">
 
-        <strong th:text="${admin.name}">
-            Admin
-        </strong>
+            📖
 
-    </p>
-
-
-    <!-- ================================================= -->
-    <!-- ERROR MESSAGE -->
-    <!-- ================================================= -->
-
-    <div th:if="${error}"
-         class="error-message">
-
-        <strong>Error:</strong>
-
-        <span th:text="${error}">
-            Something went wrong.
         </span>
+
+        DigiLibrary
 
     </div>
 
 
-    <br>
+    <div class="nav-title">
+
+        Administration
+
+    </div>
 
 
-    <!-- ================================================= -->
-    <!-- ADD BOOK FORM -->
-    <!-- ================================================= -->
+    <!-- DASHBOARD -->
 
-    <form action="/admin/books/add"
-          method="post"
-          th:object="${book}">
+    <a href="/admin/dashboard">
 
+        📊
 
-        <!-- ================================================= -->
-        <!-- TITLE -->
-        <!-- ================================================= -->
-
-        <label for="title">
-            Book Title
-        </label>
-
-        <br>
-
-        <input type="text"
-               id="title"
-               th:field="*{title}"
-               placeholder="Enter book title"
-               required>
-
-        <br><br>
-
-
-        <!-- ================================================= -->
-        <!-- AUTHOR -->
-        <!-- ================================================= -->
-
-        <label for="author">
-            Author
-        </label>
-
-        <br>
-
-        <input type="text"
-               id="author"
-               th:field="*{author}"
-               placeholder="Enter author name"
-               required>
-
-        <br><br>
-
-
-        <!-- ================================================= -->
-        <!-- ISBN -->
-        <!-- ================================================= -->
-
-        <label for="isbn">
-            ISBN
-        </label>
-
-        <br>
-
-        <input type="text"
-               id="isbn"
-               th:field="*{isbn}"
-               placeholder="Enter ISBN"
-               required>
-
-        <br><br>
-
-
-        <!-- ================================================= -->
-        <!-- CATEGORY -->
-        <!-- ================================================= -->
-
-        <label for="category">
-            Category
-        </label>
-
-        <br>
-
-        <select id="category"
-                th:field="*{category}"
-                required>
-
-            <option value="">
-                Select Category
-            </option>
-
-            <option value="Programming">
-                Programming
-            </option>
-
-            <option value="Computer Science">
-                Computer Science
-            </option>
-
-            <option value="Database">
-                Database
-            </option>
-
-            <option value="Fiction">
-                Fiction
-            </option>
-
-        </select>
-
-        <br><br>
-
-
-        <!-- ================================================= -->
-        <!-- QUANTITY -->
-        <!-- ================================================= -->
-
-        <label for="quantity">
-            Quantity
-        </label>
-
-        <br>
-
-        <input type="number"
-               id="quantity"
-               th:field="*{quantity}"
-               min="1"
-               placeholder="Enter quantity"
-               required>
-
-        <br><br>
-
-
-        <!-- ================================================= -->
-        <!-- SUBMIT -->
-        <!-- ================================================= -->
-
-        <button type="submit">
-            Add Book
-        </button>
-
-
-        <a href="/admin/books"
-           class="btn">
-
-            Cancel
-
-        </a>
-
-    </form>
-
-
-    <br>
-
-
-    <!-- ================================================= -->
-    <!-- NAVIGATION -->
-    <!-- ================================================= -->
-
-    <div class="button-group">
-
-        <a href="/admin/dashboard"
-           class="btn">
+        <span>
 
             Dashboard
 
-        </a>
+        </span>
+
+    </a>
 
 
-        <a href="/admin/books"
-           class="btn">
+    <!-- MANAGE BOOKS -->
+
+    <a href="/admin/books"
+       class="active">
+
+        📚
+
+        <span>
 
             Manage Books
 
-        </a>
+        </span>
+
+    </a>
 
 
-        <a href="/admin/issued-books"
-           class="btn">
+    <!-- ISSUED BOOKS -->
+
+    <a href="/admin/issued-books">
+
+        📖
+
+        <span>
 
             Issued Books
 
-        </a>
+        </span>
+
+    </a>
 
 
-        <a href="/admin/reservations"
-           class="btn">
+    <!-- RESERVATIONS -->
+
+    <a href="/admin/reservations">
+
+        📋
+
+        <span>
 
             Reservations
 
-        </a>
+        </span>
+
+    </a>
 
 
-        <a href="/admin/fines"
-           class="btn">
+    <!-- MEMBERS -->
+
+    <a href="/admin/members">
+
+        👥
+
+        <span>
+
+            Members
+
+        </span>
+
+    </a>
+
+
+    <!-- FINES -->
+
+    <a href="/admin/fines">
+
+        💰
+
+        <span>
 
             Fine Management
 
-        </a>
+        </span>
+
+    </a>
 
 
-        <a href="/admin/queries"
-           class="btn">
+    <!-- QUERIES -->
 
-            Queries
+    <a href="/admin/queries">
 
-        </a>
+        ❓
+
+        <span>
+
+            User Queries
+
+        </span>
+
+    </a>
 
 
-        <a href="/logout"
-           class="btn">
+    <!-- SIDEBAR LOGOUT -->
+
+    <a href="/logout"
+       class="logout">
+
+        🚪
+
+        <span>
 
             Logout
 
-        </a>
+        </span>
+
+    </a>
+
+
+</div>
+
+
+
+<!-- =========================================================
+     MAIN
+     ========================================================= -->
+
+<div class="main">
+
+
+    <!-- =====================================================
+         TOPBAR
+         ===================================================== -->
+
+    <div class="topbar">
+
+
+        <h2>
+
+            Add Book
+
+        </h2>
+
+
+        <!-- =================================================
+             ADMIN PROFILE
+             ================================================= -->
+
+        <div class="topbar-right">
+
+
+            <div class="profile"
+                 onclick="toggleAdminProfile(event)">
+
+
+                <div class="profile-avatar">
+
+                    👨‍💼
+
+                </div>
+
+
+                <span th:text="${admin.name}">
+
+                    Admin
+
+                </span>
+
+
+                <span>
+
+                    ▾
+
+                </span>
+
+
+                <!-- =================================================
+                     ADMIN INFORMATION
+                     ================================================= -->
+
+                <div class="profile-dropdown"
+                     id="adminProfileDropdown"
+                     onclick="event.stopPropagation();">
+
+
+                    <div class="profile-dropdown-title">
+
+                        My Account
+
+                    </div>
+
+
+                    <!-- NAME -->
+
+                    <div class="profile-info">
+
+                        <span>
+
+                            Name
+
+                        </span>
+
+                        <strong th:text="${admin.name}">
+
+                            Admin
+
+                        </strong>
+
+                    </div>
+
+
+                    <!-- USERNAME -->
+
+                    <div class="profile-info">
+
+                        <span>
+
+                            Username
+
+                        </span>
+
+                        <strong th:text="${admin.username}">
+
+                            admin
+
+                        </strong>
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="profile-info">
+
+                        <span>
+
+                            Email
+
+                        </span>
+
+                        <strong th:text="${admin.email}">
+
+                            admin@example.com
+
+                        </strong>
+
+                    </div>
+
+
+                    <!-- ROLE -->
+
+                    <div class="profile-info">
+
+                        <span>
+
+                            Role
+
+                        </span>
+
+                        <strong th:text="${admin.role}">
+
+                            ADMIN
+
+                        </strong>
+
+                    </div>
+
+
+                    <div class="profile-divider"></div>
+
+
+                    <!-- LOGOUT -->
+
+                    <a href="/logout"
+                       class="profile-logout">
+
+                        🚪 Logout
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
 
     </div>
 
+
+
+    <!-- =====================================================
+         CONTENT
+         ===================================================== -->
+
+    <div class="content">
+
+
+        <!-- PAGE TITLE -->
+
+        <h1 class="page-title">
+
+            Add New Book
+
+        </h1>
+
+
+        <p class="page-subtitle">
+
+            Add a new book to the digital library.
+
+        </p>
+
+
+        <div class="breadcrumb">
+
+            Home / Manage Books / Add Book
+
+        </div>
+
+
+
+        <!-- =================================================
+             ERROR MESSAGE
+             ================================================= -->
+
+        <div th:if="${error}"
+             class="error-message"
+             style="margin-bottom:20px;">
+
+            <strong>
+
+                ⚠ Error:
+
+            </strong>
+
+            <span th:text="${error}">
+
+                Unable to add book.
+
+            </span>
+
+        </div>
+
+
+
+        <!-- =================================================
+             SUCCESS MESSAGE
+             ================================================= -->
+
+        <div th:if="${success}"
+             class="success-message"
+             style="margin-bottom:20px;">
+
+            <strong>
+
+                ✓ Success:
+
+            </strong>
+
+            <span th:text="${success}">
+
+                Book added successfully.
+
+            </span>
+
+        </div>
+
+
+
+        <!-- =================================================
+             BOOK INFORMATION
+             ================================================= -->
+
+        <div class="panel">
+
+
+            <div class="panel-title">
+
+                📚 Book Information
+
+            </div>
+
+
+            <form th:action="@{/admin/books/add}"
+                  method="post"
+                  th:object="${book}">
+
+
+                <!-- =================================================
+                     TITLE
+                     ================================================= -->
+
+                <div class="form-group">
+
+
+                    <label for="title">
+
+                        Book Title
+
+                    </label>
+
+
+                    <input type="text"
+                           id="title"
+                           th:field="*{title}"
+                           placeholder="Enter book title"
+                           required>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     AUTHOR
+                     ================================================= -->
+
+                <div class="form-group">
+
+
+                    <label for="author">
+
+                        Author
+
+                    </label>
+
+
+                    <input type="text"
+                           id="author"
+                           th:field="*{author}"
+                           placeholder="Enter author name"
+                           required>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     ISBN
+                     ================================================= -->
+
+                <div class="form-group">
+
+
+                    <label for="isbn">
+
+                        ISBN
+
+                    </label>
+
+
+                    <input type="text"
+                           id="isbn"
+                           th:field="*{isbn}"
+                           placeholder="Enter ISBN"
+                           required>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     CATEGORY
+                     ================================================= -->
+
+                <div class="form-group">
+
+
+                    <label for="category">
+
+                        Category
+
+                    </label>
+
+
+                    <input type="text"
+                           id="category"
+                           th:field="*{category}"
+                           placeholder="Enter book category"
+                           required>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     TOTAL QUANTITY
+                     ================================================= -->
+
+                <div class="form-group">
+
+
+                    <label for="quantity">
+
+                        Total Quantity
+
+                    </label>
+
+
+                    <input type="number"
+                           id="quantity"
+                           th:field="*{quantity}"
+                           min="1"
+                           placeholder="Enter total copies"
+                           required>
+
+
+                    <small>
+
+                        Enter the total number of copies
+                        available for this book.
+
+                    </small>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     AVAILABLE QUANTITY
+                     ================================================= -->
+
+                <div class="form-group">
+
+
+                    <label for="availableQuantity">
+
+                        Available Quantity
+
+                    </label>
+
+
+                    <input type="number"
+                           id="availableQuantity"
+                           th:field="*{availableQuantity}"
+                           min="0"
+                           placeholder="Enter available copies"
+                           required>
+
+
+                    <small>
+
+                        Available copies should not be greater
+                        than the total quantity.
+
+                    </small>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     FORM ACTIONS
+                     ================================================= -->
+
+                <div style="display:flex;
+                            gap:10px;
+                            flex-wrap:wrap;
+                            margin-top:25px;">
+
+
+                    <!-- ADD BOOK -->
+
+                    <button type="submit"
+                            class="btn">
+
+                        ✓ Add Book
+
+                    </button>
+
+
+                    <!-- BACK -->
+
+                    <a href="/admin/books"
+                       class="btn"
+                       style="background:#64748b;">
+
+                        ← Back to Books
+
+                    </a>
+
+
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             ADD BOOK GUIDELINES
+             ================================================= -->
+
+        <div class="panel">
+
+
+            <div class="panel-title">
+
+                💡 Add Book Guidelines
+
+            </div>
+
+
+            <div style="display:grid;
+                        grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+                        gap:15px;">
+
+
+                <!-- BOOK DETAILS -->
+
+                <div style="padding:15px;
+                            border:1px solid #e2e8f0;
+                            border-radius:10px;">
+
+
+                    <strong>
+
+                        📖 Book Details
+
+                    </strong>
+
+
+                    <p style="font-size:9px;
+                              color:#718096;
+                              line-height:1.6;">
+
+                        Enter the correct title, author,
+                        ISBN and category.
+
+                    </p>
+
+
+                </div>
+
+
+
+                <!-- QUANTITY -->
+
+                <div style="padding:15px;
+                            border:1px solid #e2e8f0;
+                            border-radius:10px;">
+
+
+                    <strong>
+
+                        📦 Quantity
+
+                    </strong>
+
+
+                    <p style="font-size:9px;
+                              color:#718096;
+                              line-height:1.6;">
+
+                        Total quantity represents all copies
+                        owned by the library.
+
+                    </p>
+
+
+                </div>
+
+
+
+                <!-- AVAILABLE -->
+
+                <div style="padding:15px;
+                            border:1px solid #e2e8f0;
+                            border-radius:10px;">
+
+
+                    <strong>
+
+                        ✓ Available Copies
+
+                    </strong>
+
+
+                    <p style="font-size:9px;
+                              color:#718096;
+                              line-height:1.6;">
+
+                        Available quantity represents copies
+                        that can currently be issued.
+
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =====================================================
+             QUICK NAVIGATION REMOVED
+             ===================================================== -->
+
+
+        <!-- =====================================================
+             BOTTOM NAVIGATION REMOVED
+             ===================================================== -->
+
+
+    </div>
+
+
 </div>
+
+
+
+<!-- =========================================================
+     ADMIN PROFILE JAVASCRIPT
+     ========================================================= -->
+
+<script>
+
+    function toggleAdminProfile(event) {
+
+        event.stopPropagation();
+
+
+        const dropdown =
+            document.getElementById("adminProfileDropdown");
+
+
+        if (dropdown) {
+
+            dropdown.classList.toggle("show");
+
+        }
+
+    }
+
+
+    document.addEventListener(
+        "click",
+        function(event) {
+
+            const profile =
+                document.querySelector(".profile");
+
+
+            const dropdown =
+                document.getElementById("adminProfileDropdown");
+
+
+            if (
+                profile &&
+                dropdown &&
+                !profile.contains(event.target)
+            ) {
+
+                dropdown.classList.remove("show");
+
+            }
+
+        }
+    );
+
+</script>
+
 
 </body>
 

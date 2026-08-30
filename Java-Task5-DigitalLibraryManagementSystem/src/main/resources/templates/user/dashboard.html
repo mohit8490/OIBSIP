@@ -1,162 +1,971 @@
 <!DOCTYPE html>
 
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>User Dashboard - Digital Library</title>
 
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet"
+          href="/css/style.css">
 
 </head>
 
 
 <body>
 
-    <div class="container">
+
+<!-- =========================================================
+     SIDEBAR
+     ========================================================= -->
+
+<div class="sidebar">
 
 
-        <!-- ================================================= -->
-        <!-- PAGE TITLE -->
-        <!-- ================================================= -->
+    <!-- LOGO -->
 
-        <h1>User Dashboard</h1>
+    <div class="logo">
 
+        <span class="logo-icon">📖</span>
 
-        <!-- ================================================= -->
-        <!-- WELCOME -->
-        <!-- ================================================= -->
+        DigiLibrary
 
-        <p>
-
-            Welcome,
-
-            <strong th:text="${user.name}">
-                User
-            </strong>
-
-        </p>
+    </div>
 
 
-        <!-- ================================================= -->
-        <!-- USER INFORMATION -->
-        <!-- ================================================= -->
+    <!-- NAVIGATION -->
+
+    <div class="nav-title">
+        Main Menu
+    </div>
+
+
+    <!-- DASHBOARD -->
+
+    <a href="/user/dashboard"
+       class="active">
+
+        📊
+
+        <span>
+            Dashboard
+        </span>
+
+    </a>
+
+
+    <!-- BROWSE BOOKS -->
+
+    <a href="/user/books">
+
+        📚
+
+        <span>
+            Browse Books
+        </span>
+
+    </a>
+
+
+    <!-- MY BOOKS -->
+
+    <a href="/user/my-books">
+
+        📖
+
+        <span>
+            My Books
+        </span>
+
+    </a>
+
+
+    <!-- RESERVATIONS -->
+
+    <a href="/user/reservations">
+
+        📋
+
+        <span>
+            Reservations
+        </span>
+
+    </a>
+
+
+    <!-- NOTIFICATIONS -->
+
+    <a href="/user/notifications">
+
+        🔔
+
+        <span>
+            Notifications
+        </span>
+
+        <span th:if="${unreadCount > 0}"
+              th:text="${unreadCount}">
+
+            0
+
+        </span>
+
+    </a>
+
+
+    <!-- FINES -->
+
+    <a href="/user/fines">
+
+        💰
+
+        <span>
+            My Fines
+        </span>
+
+    </a>
+
+
+    <!-- QUERY -->
+
+    <a href="/user/query">
+
+        ❓
+
+        <span>
+            Ask a Query
+        </span>
+
+    </a>
+
+
+    <!-- LOGOUT -->
+
+    <a href="/logout"
+       class="logout">
+
+        🚪
+
+        <span>
+            Logout
+        </span>
+
+    </a>
+
+
+</div>
+
+
+<!-- =========================================================
+     MAIN CONTENT
+     ========================================================= -->
+
+<div class="main">
+
+
+    <!-- =====================================================
+         TOP BAR
+         ===================================================== -->
+
+    <div class="topbar">
+
 
         <div>
 
-            <p>
-                <strong>Username:</strong>
-
-                <span th:text="${user.username}">
-                    username
-                </span>
-            </p>
-
-
-            <p>
-                <strong>Email:</strong>
-
-                <span th:text="${user.email}">
-                    email@example.com
-                </span>
-            </p>
-
-
-            <p>
-                <strong>Role:</strong>
-
-                <span th:text="${user.role}">
-                    USER
-                </span>
-            </p>
+            <h2>
+                User Dashboard
+            </h2>
 
         </div>
 
 
-        <br>
+        <div class="topbar-right">
 
 
-        <!-- ================================================= -->
-        <!-- USER MENU -->
-        <!-- ================================================= -->
+            <!-- NOTIFICATION -->
 
-        <div class="button-group">
+            <a href="/user/notifications"
+               class="notification-icon">
 
-
-            <!-- BOOK CATALOGUE -->
-
-            <a href="/user/books" class="btn">
-
-                Browse Books
+                🔔
 
             </a>
 
 
-            <!-- MY BOOKS -->
+            <!-- PROFILE -->
 
-            <a href="/user/my-books" class="btn">
-
-                My Books
-
-            </a>
+            <div class="profile">
 
 
-            <!-- MY RESERVATIONS -->
-
-            <a href="/user/reservations" class="btn">
-
-                My Reservations
-
-            </a>
+                <button type="button"
+                        class="profile-button"
+                        onclick="toggleProfileMenu()">
 
 
-            <!-- NOTIFICATIONS -->
+                    <div class="profile-avatar">
 
-            <a href="/user/notifications" class="btn">
+                        👤
 
-                🔔 Notifications
-                <span th:if="${unreadCount > 0}" th:text="' (' + ${unreadCount} + ')'">
-                    (0)
-                </span>
-
-            </a>
+                    </div>
 
 
-            <!-- MY FINES -->
+                    <span th:text="${user.name}">
 
-            <a href="/user/fines" class="btn">
+                        User
 
-                My Fines
-
-            </a>
+                    </span>
 
 
-            <!-- QUERY -->
-
-            <a href="/user/query" class="btn">
-
-                Ask a Query
-
-            </a>
+                    <span>
+                        ▾
+                    </span>
 
 
-            <!-- LOGOUT -->
+                </button>
 
-            <a href="/logout" class="btn">
 
-                Logout
+                <!-- =================================================
+                     PROFILE DROPDOWN
+                     ================================================= -->
 
-            </a>
+                <div id="profileMenu"
+                     class="profile-dropdown">
+
+
+                    <div class="profile-dropdown-title">
+
+                        My Account
+
+                    </div>
+
+
+                    <!-- USERNAME -->
+
+                    <div class="profile-info">
+
+                        <span>
+                            Username
+                        </span>
+
+                        <strong th:text="${user.username}">
+
+                            user
+
+                        </strong>
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="profile-info">
+
+                        <span>
+                            Email
+                        </span>
+
+                        <strong th:text="${user.email}">
+
+                            user@library.com
+
+                        </strong>
+
+                    </div>
+
+
+                    <!-- ROLE -->
+
+                    <div class="profile-info">
+
+                        <span>
+                            Role
+                        </span>
+
+                        <strong th:text="${user.role}">
+
+                            USER
+
+                        </strong>
+
+                    </div>
+
+
+                    <!-- NOTIFICATIONS -->
+
+                    <div class="profile-info">
+
+                        <span>
+                            Unread Notifications
+                        </span>
+
+                        <strong th:text="${unreadCount}">
+
+                            0
+
+                        </strong>
+
+                    </div>
+
+
+                    <div class="profile-divider"></div>
+
+
+                    <!-- LOGOUT -->
+
+                    <a href="/logout"
+                       class="profile-logout">
+
+                        🚪 Logout
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
 
 
         </div>
 
 
     </div>
+
+
+    <!-- =====================================================
+         PAGE CONTENT
+         ===================================================== -->
+
+    <div class="content">
+
+
+        <!-- =================================================
+             PAGE TITLE
+             ================================================= -->
+
+        <h1 class="page-title">
+
+            Welcome back,
+
+            <span th:text="${user.name}">
+
+                User
+
+            </span>
+
+            👋
+
+        </h1>
+
+
+        <p class="page-subtitle">
+
+            Here's what's happening with your library account today.
+
+        </p>
+
+
+        <div class="breadcrumb">
+
+            Home / Dashboard
+
+        </div>
+
+
+        <!-- =================================================
+             QUICK ACTIONS
+             ================================================= -->
+
+        <div class="panel">
+
+
+            <div class="panel-title">
+
+                Quick Actions
+
+            </div>
+
+
+            <div class="quick-actions">
+
+
+                <!-- BROWSE -->
+
+                <a href="/user/books"
+                   class="blue">
+
+                    📚 Browse Books
+
+                </a>
+
+
+                <!-- MY BOOKS -->
+
+                <a href="/user/my-books"
+                   class="green">
+
+                    📖 My Books
+
+                </a>
+
+
+                <!-- RESERVATIONS -->
+
+                <a href="/user/reservations"
+                   class="orange">
+
+                    📋 Reservations
+
+                </a>
+
+
+                <!-- QUERY -->
+
+                <a href="/user/query"
+                   class="purple">
+
+                    ❓ Ask a Query
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =================================================
+             USER MENU
+             ================================================= -->
+
+        <div class="panel">
+
+
+            <div class="panel-title">
+
+                Library Services
+
+            </div>
+
+
+            <div class="card-grid">
+
+
+                <!-- =================================================
+                     BROWSE BOOKS
+                     ================================================= -->
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+
+                        Books
+
+                    </div>
+
+
+                    <div style="
+                        font-size:10px;
+                        color:#64748b;
+                        line-height:1.5;
+                        margin-top:5px;
+                    ">
+
+                        Browse the available books
+                        and find your next read.
+
+                    </div>
+
+
+                    <div class="stat-value">
+
+                        📚
+
+                    </div>
+
+
+                    <br>
+
+
+                    <a href="/user/books"
+                       class="btn">
+
+                        Browse Books
+
+                    </a>
+
+                </div>
+
+
+                <!-- =================================================
+                     MY BOOKS
+                     ================================================= -->
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+
+                        Issued Books
+
+                    </div>
+
+
+                    <div style="
+                        font-size:10px;
+                        color:#64748b;
+                        line-height:1.5;
+                        margin-top:5px;
+                    ">
+
+                        View the books currently
+                        issued to your account.
+
+                    </div>
+
+
+                    <div class="stat-value">
+
+                        📖
+
+                    </div>
+
+
+                    <br>
+
+
+                    <a href="/user/my-books"
+                       class="btn">
+
+                        My Books
+
+                    </a>
+
+                </div>
+
+
+                <!-- =================================================
+                     RESERVATIONS
+                     ================================================= -->
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+
+                        Reservations
+
+                    </div>
+
+
+                    <div style="
+                        font-size:10px;
+                        color:#64748b;
+                        line-height:1.5;
+                        margin-top:5px;
+                    ">
+
+                        Check your active reservations
+                        and book status.
+
+                    </div>
+
+
+                    <div class="stat-value">
+
+                        📋
+
+                    </div>
+
+
+                    <br>
+
+
+                    <a href="/user/reservations"
+                       class="btn">
+
+                        My Reservations
+
+                    </a>
+
+                </div>
+
+
+                <!-- =================================================
+                     NOTIFICATIONS
+                     ================================================= -->
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+
+                        Notifications
+
+                    </div>
+
+
+                    <div style="
+                        font-size:10px;
+                        color:#64748b;
+                        line-height:1.5;
+                        margin-top:5px;
+                    ">
+
+                        Stay updated with important
+                        library notifications.
+
+                    </div>
+
+
+                    <div class="stat-value">
+
+                        🔔
+
+                    </div>
+
+
+                    <br>
+
+
+                    <a href="/user/notifications"
+                       class="btn">
+
+                        Notifications
+
+                        <span th:if="${unreadCount > 0}"
+                              th:text="' (' + ${unreadCount} + ')'">
+
+                            (0)
+
+                        </span>
+
+                    </a>
+
+                </div>
+
+
+                <!-- =================================================
+                     FINES
+                     ================================================= -->
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+
+                        Fines
+
+                    </div>
+
+
+                    <div style="
+                        font-size:10px;
+                        color:#64748b;
+                        line-height:1.5;
+                        margin-top:5px;
+                    ">
+
+                        Check your fine records
+                        and pending payments.
+
+                    </div>
+
+
+                    <div class="stat-value">
+
+                        💰
+
+                    </div>
+
+
+                    <br>
+
+
+                    <a href="/user/fines"
+                       class="btn">
+
+                        My Fines
+
+                    </a>
+
+                </div>
+
+
+                <!-- =================================================
+                     QUERY / HELP
+                     ================================================= -->
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+
+                        Help
+
+                    </div>
+
+
+                    <div style="
+                        font-size:10px;
+                        color:#64748b;
+                        line-height:1.5;
+                        margin-top:5px;
+                    ">
+
+                        Need help?
+                        Send a query to the
+                        library administrator.
+
+                    </div>
+
+
+                    <div class="stat-value">
+
+                        ❓
+
+                    </div>
+
+
+                    <br>
+
+
+                    <a href="/user/query"
+                       class="btn">
+
+                        Ask a Query
+
+                    </a>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =================================================
+             LIBRARY INFORMATION
+             ================================================= -->
+
+        <div class="panel"
+             style="margin-top:20px;">
+
+
+            <div class="panel-title">
+
+                📚 Your Library
+
+            </div>
+
+
+            <div style="
+                display:grid;
+                grid-template-columns:repeat(3, minmax(0, 1fr));
+                gap:15px;
+            ">
+
+
+                <!-- DISCOVER -->
+
+                <div style="
+                    padding:16px;
+                    border:1px solid #e2e8f0;
+                    border-radius:10px;
+                    background:#f8fafc;
+                ">
+
+
+                    <strong style="
+                        font-size:13px;
+                        color:#0f172a;
+                    ">
+
+                        📖 Discover
+
+                    </strong>
+
+
+                    <p style="
+                        margin:7px 0 0;
+                        font-size:10px;
+                        color:#64748b;
+                        line-height:1.6;
+                    ">
+
+                        Explore the library collection
+                        and discover books that match
+                        your interests.
+
+                    </p>
+
+
+                </div>
+
+
+                <!-- STAY UPDATED -->
+
+                <div style="
+                    padding:16px;
+                    border:1px solid #e2e8f0;
+                    border-radius:10px;
+                    background:#f8fafc;
+                ">
+
+
+                    <strong style="
+                        font-size:13px;
+                        color:#0f172a;
+                    ">
+
+                        🔔 Stay Updated
+
+                    </strong>
+
+
+                    <p style="
+                        margin:7px 0 0;
+                        font-size:10px;
+                        color:#64748b;
+                        line-height:1.6;
+                    ">
+
+                        Keep an eye on notifications
+                        for query responses, reservations
+                        and other updates.
+
+                    </p>
+
+
+                </div>
+
+
+                <!-- NEED HELP -->
+
+                <div style="
+                    padding:16px;
+                    border:1px solid #e2e8f0;
+                    border-radius:10px;
+                    background:#f8fafc;
+                ">
+
+
+                    <strong style="
+                        font-size:13px;
+                        color:#0f172a;
+                    ">
+
+                        💬 Need Help?
+
+                    </strong>
+
+
+                    <p style="
+                        margin:7px 0 0;
+                        font-size:10px;
+                        color:#64748b;
+                        line-height:1.6;
+                    ">
+
+                        Have a question about books,
+                        reservations or your account?
+                        Ask the library administrator.
+
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+            <!-- ACCOUNT STATUS -->
+
+            <div style="
+                margin-top:15px;
+                padding:11px 14px;
+                border-radius:8px;
+                background:#f1f5f9;
+                color:#64748b;
+                font-size:10px;
+            ">
+
+
+                ✓
+
+
+                <strong style="
+                    color:#334155;
+                ">
+
+                    Library account ready.
+
+                </strong>
+
+
+                Use the menu above to manage
+                your books, reservations,
+                notifications and queries.
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+<!-- =========================================================
+     PROFILE DROPDOWN JAVASCRIPT
+     ========================================================= -->
+
+<script>
+
+    function toggleProfileMenu() {
+
+        const menu =
+            document.getElementById("profileMenu");
+
+        menu.classList.toggle("show");
+
+    }
+
+
+    document.addEventListener(
+        "click",
+        function(event) {
+
+            const profile =
+                document.querySelector(".profile");
+
+            const menu =
+                document.getElementById("profileMenu");
+
+
+            if (
+                profile &&
+                !profile.contains(event.target)
+            ) {
+
+                menu.classList.remove("show");
+
+            }
+
+        }
+    );
+
+</script>
+
 
 </body>
 

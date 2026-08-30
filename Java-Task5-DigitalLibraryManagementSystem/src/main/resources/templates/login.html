@@ -1,71 +1,210 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
     <meta charset="UTF-8">
+
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>Login - Digital Library</title>
+    <title>Login - DigiLibrary</title>
 
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet"
+          href="/css/style.css">
 
 </head>
 
+
 <body>
 
-<div class="container">
 
-    <h1>Library Login</h1>
+<!-- =========================================================
+     LOGIN PAGE
+     ========================================================= -->
 
-    <div th:if="${error}"
-         class="error-message"
-         th:text="${error}">
+<div class="login-page">
+
+
+    <!-- =====================================================
+         LOGIN CARD
+         ===================================================== -->
+
+    <div class="login-card">
+
+
+        <!-- =================================================
+             LOGO
+             ================================================= -->
+
+        <div class="login-logo">
+
+            📖 DigiLibrary
+
+        </div>
+
+
+        <!-- =================================================
+             TITLE
+             ================================================= -->
+
+        <h1>
+
+            Welcome Back!
+
+        </h1>
+
+
+        <p class="login-subtitle">
+
+            Login to continue to your digital library
+
+        </p>
+
+
+
+        <!-- =================================================
+             ERROR MESSAGE
+             ================================================= -->
+
+        <div th:if="${error}"
+             class="error-message"
+             th:text="${error}">
+
+            Invalid username or password.
+
+        </div>
+
+
+
+        <!-- =================================================
+             SUCCESS MESSAGE
+             ================================================= -->
+
+        <div th:if="${success}"
+             class="success-message"
+             th:text="${success}">
+
+            Registration successful.
+
+        </div>
+
+
+
+        <!-- =================================================
+             LOGIN FORM
+             ================================================= -->
+
+        <form action="/login"
+              method="post">
+
+
+            <!-- USERNAME -->
+
+            <div class="form-group">
+
+                <label for="username">
+
+                    Username
+
+                </label>
+
+
+                <input type="text"
+                       id="username"
+                       name="username"
+                       placeholder="Enter username"
+                       autocomplete="username"
+                       required>
+
+            </div>
+
+
+
+            <!-- PASSWORD -->
+
+            <div class="form-group">
+
+                <label for="password">
+
+                    Password
+
+                </label>
+
+
+                <input type="password"
+                       id="password"
+                       name="password"
+                       placeholder="Enter password"
+                       autocomplete="current-password"
+                       required>
+
+            </div>
+
+
+
+            <!-- LOGIN -->
+
+            <button type="submit">
+
+                Login
+
+            </button>
+
+
+        </form>
+
+
+
+        <!-- =================================================
+             REGISTER
+             ================================================= -->
+
+        <p style="text-align: center;
+                  margin-top: 20px;
+                  font-size: 10px;
+                  color: #718096;">
+
+            Don't have an account?
+
+            <a href="/register"
+               style="color: #1769ff;
+                      font-weight: 600;">
+
+                Register here
+
+            </a>
+
+        </p>
+
+
+
+        <!-- =================================================
+             BACK TO HOME
+             ================================================= -->
+
+        <p style="text-align: center;
+                  margin-top: 14px;
+                  font-size: 10px;">
+
+            <a href="/"
+               style="color: #64748b;">
+
+                ← Back to Home
+
+            </a>
+
+        </p>
+
+
     </div>
 
-    <div th:if="${success}"
-         class="success-message"
-         th:text="${success}">
-    </div>
-
-    <form action="/login"
-          method="post">
-
-        <label>Username</label>
-
-        <input type="text"
-               name="username"
-               placeholder="Enter username"
-               required>
-
-        <label>Password</label>
-
-        <input type="password"
-               name="password"
-               placeholder="Enter password"
-               required>
-
-        <button type="submit">
-            Login
-        </button>
-
-    </form>
-
-    <p>
-        Don't have an account?
-        <a href="/register">
-            Register here
-        </a>
-    </p>
-
-    <p>
-        <a href="/">
-            ← Back to Home
-        </a>
-    </p>
 
 </div>
 
+
 </body>
+
 </html>

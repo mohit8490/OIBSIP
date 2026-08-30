@@ -16,13 +16,21 @@ public class ReservationService {
 
     private final BookReservationRepository reservationRepository;
     private final IssueRepository issueRepository;
+    private final NotificationService notificationService;
+
+
+    // =====================================================
+    // CONSTRUCTOR
+    // =====================================================
 
     public ReservationService(
             BookReservationRepository reservationRepository,
-            IssueRepository issueRepository) {
+            IssueRepository issueRepository,
+            NotificationService notificationService) {
 
         this.reservationRepository = reservationRepository;
         this.issueRepository = issueRepository;
+        this.notificationService = notificationService;
     }
 
 
@@ -156,6 +164,24 @@ public class ReservationService {
                     reservationRepository.save(
                             reservation
                     );
+
+
+                    // =============================================
+                    // NOTIFY USER
+                    // =============================================
+
+                    String message =
+                            "Good news! The book \""
+                                    + book.getTitle()
+                                    + "\" you reserved is now available."
+                                    + " You can issue it from the library.";
+
+
+                    notificationService.createNotification(
+                            user,
+                            message
+                    );
+
                 });
     }
 
@@ -214,9 +240,11 @@ public class ReservationService {
                                 )
                         );
 
+
         reservation.setStatus(
                 "CANCELLED"
         );
+
 
         reservationRepository.save(
                 reservation

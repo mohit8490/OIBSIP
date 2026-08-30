@@ -17,10 +17,8 @@ public class NotificationService {
     public NotificationService(
             NotificationRepository notificationRepository) {
 
-        this.notificationRepository =
-                notificationRepository;
+        this.notificationRepository = notificationRepository;
     }
-
 
     // =====================================================
     // CREATE NOTIFICATION
@@ -30,24 +28,31 @@ public class NotificationService {
             User user,
             String message) {
 
-        Notification notification =
-                new Notification();
+        System.out.println("=================================");
+        System.out.println("CREATING NOTIFICATION");
+        System.out.println("USER: " + user.getUsername());
+        System.out.println("MESSAGE: " + message);
+        System.out.println("=================================");
+
+        Notification notification = new Notification();
 
         notification.setUser(user);
-
         notification.setMessage(message);
-
         notification.setRead(false);
-
         notification.setCreatedAt(
-                LocalDateTime.now()
-        );
+                LocalDateTime.now());
 
-        return notificationRepository.save(
-                notification
-        );
+        Notification savedNotification = notificationRepository.save(
+                notification);
+
+        System.out.println("=================================");
+        System.out.println("NOTIFICATION SAVED SUCCESSFULLY");
+        System.out.println("NOTIFICATION ID: "
+                + savedNotification.getId());
+        System.out.println("=================================");
+
+        return savedNotification;
     }
-
 
     // =====================================================
     // GET USER NOTIFICATIONS
@@ -58,10 +63,8 @@ public class NotificationService {
 
         return notificationRepository
                 .findByUserOrderByCreatedAtDesc(
-                        user
-                );
+                        user);
     }
-
 
     // =====================================================
     // GET UNREAD COUNT
@@ -72,10 +75,8 @@ public class NotificationService {
 
         return notificationRepository
                 .countByUserAndReadFalse(
-                        user
-                );
+                        user);
     }
-
 
     // =====================================================
     // MARK SINGLE NOTIFICATION AS READ
@@ -84,22 +85,17 @@ public class NotificationService {
     public void markAsRead(
             Long id) {
 
-        Notification notification =
-                notificationRepository
-                        .findById(id)
-                        .orElseThrow(
-                                () -> new RuntimeException(
-                                        "Notification not found."
-                                )
-                        );
+        Notification notification = notificationRepository
+                .findById(id)
+                .orElseThrow(
+                        () -> new RuntimeException(
+                                "Notification not found."));
 
         notification.setRead(true);
 
         notificationRepository.save(
-                notification
-        );
+                notification);
     }
-
 
     // =====================================================
     // MARK ALL NOTIFICATIONS AS READ
@@ -108,23 +104,18 @@ public class NotificationService {
     public void markAllAsRead(
             User user) {
 
-        List<Notification> notifications =
-                notificationRepository
-                        .findByUserOrderByCreatedAtDesc(
-                                user
-                        );
+        List<Notification> notifications = notificationRepository
+                .findByUserOrderByCreatedAtDesc(
+                        user);
 
-        for (Notification notification :
-                notifications) {
+        for (Notification notification : notifications) {
 
             notification.setRead(true);
         }
 
         notificationRepository.saveAll(
-                notifications
-        );
+                notifications);
     }
-
 
     // =====================================================
     // DELETE NOTIFICATION
@@ -133,17 +124,13 @@ public class NotificationService {
     public void deleteNotification(
             Long id) {
 
-        Notification notification =
-                notificationRepository
-                        .findById(id)
-                        .orElseThrow(
-                                () -> new RuntimeException(
-                                        "Notification not found."
-                                )
-                        );
+        Notification notification = notificationRepository
+                .findById(id)
+                .orElseThrow(
+                        () -> new RuntimeException(
+                                "Notification not found."));
 
         notificationRepository.delete(
-                notification
-        );
+                notification);
     }
 }

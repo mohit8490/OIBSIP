@@ -1,233 +1,780 @@
 <!DOCTYPE html>
+
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>My Reservations - Digital Library</title>
+    <title>My Reservations - DigiLibrary</title>
 
     <link rel="stylesheet"
           href="/css/style.css">
+
 </head>
+
 
 <body>
 
-<div class="container"
-     style="max-width: 1100px;">
 
-    <h1>My Reservations</h1>
+<!-- =========================================================
+     SIDEBAR
+     ========================================================= -->
 
-    <p>
-        Welcome,
-        <strong th:text="${user.name}">
-            User
-        </strong>
-    </p>
+<div class="sidebar">
 
 
-    <!-- ERROR MESSAGE -->
+    <div class="logo">
 
-    <div th:if="${error}"
-         class="error-message"
-         style="margin: 15px 0; padding: 12px; border: 1px solid #dc3545;">
+        <span class="logo-icon">📖</span>
 
-        <strong>Error:</strong>
+        DigiLibrary
 
-        <span th:text="${error}">
-            Something went wrong.
+    </div>
+
+
+    <div class="nav-title">
+        Main Menu
+    </div>
+
+
+    <!-- DASHBOARD -->
+
+    <a href="/user/dashboard">
+
+        📊
+
+        <span>
+            Dashboard
         </span>
 
-    </div>
+    </a>
 
 
-    <!-- SUCCESS MESSAGE -->
+    <!-- BROWSE BOOKS -->
 
-    <div th:if="${success}"
-         style="margin: 15px 0; padding: 12px; border: 1px solid green;">
+    <a href="/user/books">
 
-        <strong th:text="${success}">
-            Success
-        </strong>
+        📚
 
-    </div>
+        <span>
+            Browse Books
+        </span>
 
-
-    <!-- RESERVATIONS TABLE -->
-
-    <table border="1"
-           width="100%"
-           cellpadding="10">
-
-        <thead>
-
-        <tr>
-
-            <th>Reservation ID</th>
-
-            <th>Book ID</th>
-
-            <th>Book</th>
-
-            <th>Author</th>
-
-            <th>Reservation Date</th>
-
-            <th>Status</th>
-
-            <th>Action</th>
-
-        </tr>
-
-        </thead>
+    </a>
 
 
-        <tbody>
+    <!-- MY BOOKS -->
 
-        <tr th:each="reservation : ${reservations}">
+    <a href="/user/my-books">
 
-            <!-- RESERVATION ID -->
+        📖
 
-            <td th:text="${reservation.id}">
-                1
-            </td>
+        <span>
+            My Books
+        </span>
 
-
-            <!-- BOOK ID -->
-
-            <td th:text="${reservation.book.id}">
-                1
-            </td>
+    </a>
 
 
-            <!-- BOOK TITLE -->
+    <!-- RESERVATIONS -->
 
-            <td th:text="${reservation.book.title}">
-                Book Title
-            </td>
+    <a href="/user/reservations"
+       class="active">
 
+        📋
 
-            <!-- AUTHOR -->
+        <span>
+            Reservations
+        </span>
 
-            <td th:text="${reservation.book.author}">
-                Author
-            </td>
-
-
-            <!-- RESERVATION DATE -->
-
-            <td th:text="${reservation.reservationDate}">
-                2026-08-23
-            </td>
+    </a>
 
 
-            <!-- STATUS -->
+    <!-- NOTIFICATIONS -->
 
-            <td th:text="${reservation.status}">
-                ACTIVE
-            </td>
+    <a href="/user/notifications">
 
+        🔔
 
-            <!-- ACTION -->
+        <span>
+            Notifications
+        </span>
 
-            <td>
+        <span th:if="${unreadCount > 0}"
+              th:text="${unreadCount}">
 
-                <!-- ACTIVE -->
+            0
 
-                <form
-                    th:if="${reservation.status == 'ACTIVE'}"
-                    th:action="@{/user/reservations/cancel/{id}(id=${reservation.id})}"
-                    method="post">
+        </span>
 
-                    <button type="submit">
-                        Cancel Reservation
-                    </button>
-
-                </form>
+    </a>
 
 
-                <!-- CANCELLED -->
+    <!-- FINES -->
 
-                <span th:if="${reservation.status == 'CANCELLED'}">
+    <a href="/user/fines">
 
-                    Cancelled
+        💰
+
+        <span>
+            My Fines
+        </span>
+
+    </a>
+
+
+    <!-- QUERY -->
+
+    <a href="/user/query">
+
+        ❓
+
+        <span>
+            Ask a Query
+        </span>
+
+    </a>
+
+
+    <!-- LOGOUT -->
+
+    <a href="/logout"
+       class="logout">
+
+        🚪
+
+        <span>
+            Logout
+        </span>
+
+    </a>
+
+
+</div>
+
+
+
+<!-- =========================================================
+     MAIN
+     ========================================================= -->
+
+<div class="main">
+
+
+    <!-- =====================================================
+         TOPBAR
+         ===================================================== -->
+
+    <div class="topbar">
+
+
+        <h2>
+
+            My Reservations
+
+        </h2>
+
+
+        <div class="topbar-right">
+
+
+            <!-- NOTIFICATIONS -->
+
+            <a href="/user/notifications"
+               class="notification-icon">
+
+                🔔
+
+            </a>
+
+
+            <!-- =================================================
+                 USER PROFILE
+                 ================================================= -->
+
+            <div class="profile"
+                 onclick="toggleProfileMenu()">
+
+
+                <div class="profile-avatar">
+
+                    👤
+
+                </div>
+
+
+                <span th:text="${user.name}">
+
+                    User
 
                 </span>
 
-            </td>
 
-        </tr>
+                <span>
 
+                    ▾
 
-        <!-- NO RESERVATIONS -->
-
-        <tr th:if="${#lists.isEmpty(reservations)}">
-
-            <td colspan="7"
-                style="text-align:center;">
-
-                You have no reservations.
-
-            </td>
-
-        </tr>
-
-        </tbody>
-
-    </table>
+                </span>
 
 
-    <br>
+                <!-- =================================================
+                     PROFILE DROPDOWN
+                     ================================================= -->
+
+                <div class="profile-dropdown"
+                     id="profileDropdown">
 
 
-    <!-- NAVIGATION -->
+                    <div class="profile-dropdown-title">
 
-    <div class="button-group">
+                        My Account
 
-        <a href="/user/books"
-           class="btn">
-
-            Browse Books
-
-        </a>
+                    </div>
 
 
-        <a href="/user/my-books"
-           class="btn">
+                    <!-- USERNAME -->
 
-            My Books
+                    <div class="profile-info">
 
-        </a>
+                        <span>
+                            Username
+                        </span>
 
+                        <strong th:text="${user.username}">
 
-        <a href="/user/fines"
-           class="btn">
+                            user
 
-            My Fines
+                        </strong>
 
-        </a>
-
-
-        <a href="/user/dashboard"
-           class="btn">
-
-            Dashboard
-
-        </a>
+                    </div>
 
 
-        <a href="/logout"
-           class="btn">
+                    <!-- EMAIL -->
 
-            Logout
+                    <div class="profile-info">
 
-        </a>
+                        <span>
+                            Email
+                        </span>
+
+                        <strong th:text="${user.email}">
+
+                            user@library.com
+
+                        </strong>
+
+                    </div>
+
+
+                    <!-- ROLE -->
+
+                    <div class="profile-info">
+
+                        <span>
+                            Role
+                        </span>
+
+                        <strong th:text="${user.role}">
+
+                            USER
+
+                        </strong>
+
+                    </div>
+
+
+                    <!-- UNREAD NOTIFICATIONS -->
+
+                    <div class="profile-info">
+
+                        <span>
+                            Unread Notifications
+                        </span>
+
+                        <strong th:text="${unreadCount}">
+
+                            0
+
+                        </strong>
+
+                    </div>
+
+
+                    <div class="profile-divider"></div>
+
+
+                    <!-- LOGOUT -->
+
+                    <a href="/logout"
+                       class="profile-logout">
+
+                        🚪 Logout
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
 
     </div>
 
+
+
+    <!-- =====================================================
+         CONTENT
+         ===================================================== -->
+
+    <div class="content">
+
+
+        <!-- PAGE TITLE -->
+
+        <h1 class="page-title">
+
+            My Reservations
+
+        </h1>
+
+
+        <p class="page-subtitle">
+
+            View the books you have reserved and their current status.
+
+        </p>
+
+
+        <div class="breadcrumb">
+
+            Home / My Reservations
+
+        </div>
+
+
+
+        <!-- =================================================
+             SUCCESS MESSAGE
+             ================================================= -->
+
+        <div th:if="${success}"
+             class="success-message">
+
+            <strong>
+
+                Success:
+
+            </strong>
+
+            <span th:text="${success}">
+
+                Reservation successful.
+
+            </span>
+
+        </div>
+
+
+
+        <!-- =================================================
+             ERROR MESSAGE
+             ================================================= -->
+
+        <div th:if="${error}"
+             class="error-message">
+
+            <strong>
+
+                Error:
+
+            </strong>
+
+            <span th:text="${error}">
+
+                Something went wrong.
+
+            </span>
+
+        </div>
+
+
+
+        <!-- =================================================
+             SUMMARY
+             ================================================= -->
+
+        <div class="card-grid">
+
+
+            <!-- TOTAL RESERVATIONS -->
+
+            <div class="stat-card stat-blue">
+
+                <div class="stat-label">
+
+                    Total Reservations
+
+                </div>
+
+
+                <div class="stat-value"
+                     th:text="${#lists.size(reservations)}">
+
+                    0
+
+                </div>
+
+            </div>
+
+
+            <!-- ACTIVE RESERVATIONS -->
+
+            <div class="stat-card stat-green">
+
+                <div class="stat-label">
+
+                    Active Reservations
+
+                </div>
+
+
+                <div class="stat-value">
+
+                    <span th:text="${#lists.size(reservations.?[status == 'ACTIVE'])}">
+
+                        0
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- NOTIFICATIONS -->
+
+            <div class="stat-card stat-orange">
+
+                <div class="stat-label">
+
+                    Notifications
+
+                </div>
+
+
+                <div class="stat-value"
+                     th:text="${unreadCount}">
+
+                    0
+
+                </div>
+
+            </div>
+
+
+            <!-- LIBRARY -->
+
+            <div class="stat-card stat-purple">
+
+                <div class="stat-label">
+
+                    Library
+
+                </div>
+
+
+                <div class="stat-value">
+
+                    📚
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             RESERVATION TABLE
+             ================================================= -->
+
+        <div class="panel">
+
+
+            <div class="panel-title">
+
+                Reservation History
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+
+                <table>
+
+
+                    <thead>
+
+                    <tr>
+
+                        <th>
+                            Reservation ID
+                        </th>
+
+                        <th>
+                            Book ID
+                        </th>
+
+                        <th>
+                            Book
+                        </th>
+
+                        <th>
+                            Author
+                        </th>
+
+                        <th>
+                            Reservation Date
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                    </tr>
+
+                    </thead>
+
+
+
+                    <tbody>
+
+
+                    <!-- =================================================
+                         RESERVATION ROW
+                         ================================================= -->
+
+                    <tr th:each="reservation : ${reservations}">
+
+
+                        <!-- RESERVATION ID -->
+
+                        <td th:text="${reservation.id}">
+
+                            1
+
+                        </td>
+
+
+                        <!-- BOOK ID -->
+
+                        <td th:text="${reservation.book.id}">
+
+                            1
+
+                        </td>
+
+
+                        <!-- BOOK -->
+
+                        <td>
+
+                            <strong th:text="${reservation.book.title}">
+
+                                Effective Java
+
+                            </strong>
+
+                        </td>
+
+
+                        <!-- AUTHOR -->
+
+                        <td th:text="${reservation.book.author}">
+
+                            Joshua Bloch
+
+                        </td>
+
+
+                        <!-- RESERVATION DATE -->
+
+                        <td th:text="${reservation.reservationDate}">
+
+                            2026-08-29
+
+                        </td>
+
+
+                        <!-- STATUS -->
+
+                        <td>
+
+
+                            <span th:if="${reservation.status == 'ACTIVE'}"
+                                  class="badge badge-green">
+
+                                ACTIVE
+
+                            </span>
+
+
+                            <span th:if="${reservation.status != 'ACTIVE'}"
+                                  class="badge badge-orange"
+                                  th:text="${reservation.status}">
+
+                                COMPLETED
+
+                            </span>
+
+
+                        </td>
+
+
+                    </tr>
+
+
+
+                    <!-- =================================================
+                         NO RESERVATIONS
+                         ================================================= -->
+
+                    <tr th:if="${#lists.isEmpty(reservations)}">
+
+
+                        <td colspan="6"
+                            class="empty-state">
+
+                            📋
+
+                            <br>
+                            <br>
+
+                            You have no reservations.
+
+                            <br>
+                            <br>
+
+                            <a href="/user/books"
+                               class="btn">
+
+                                Browse Books
+
+                            </a>
+
+                        </td>
+
+
+                    </tr>
+
+
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             INFORMATION
+             ================================================= -->
+
+        <div class="panel">
+
+
+            <div class="panel-title">
+
+                About Reservations
+
+            </div>
+
+
+            <p style="font-size: 10px;
+                      color: #718096;
+                      line-height: 1.7;">
+
+                You can reserve a book when all available
+                copies are currently issued. Once the book
+                becomes available, the library can process
+                your reservation.
+
+            </p>
+
+
+        </div>
+
+
+    </div>
+
+
 </div>
+
+
+
+<!-- =====================================================
+     PROFILE DROPDOWN JAVASCRIPT
+     ===================================================== -->
+
+<script>
+
+    function toggleProfileMenu() {
+
+        const dropdown =
+            document.getElementById("profileDropdown");
+
+        if (dropdown) {
+
+            dropdown.classList.toggle("show");
+
+        }
+
+    }
+
+
+    document.addEventListener(
+        "click",
+        function(event) {
+
+            const profile =
+                document.querySelector(".profile");
+
+            const dropdown =
+                document.getElementById("profileDropdown");
+
+
+            if (
+                profile &&
+                dropdown &&
+                !profile.contains(event.target)
+            ) {
+
+                dropdown.classList.remove("show");
+
+            }
+
+        }
+    );
+
+</script>
+
 
 </body>
 

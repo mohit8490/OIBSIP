@@ -10,292 +10,1131 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>Manage Books - Digital Library</title>
+    <title>Manage Books - DigiLibrary</title>
 
     <link rel="stylesheet"
           href="/css/style.css">
 
+
+    <!-- =====================================================
+         ADMIN PROFILE DROPDOWN
+         ===================================================== -->
+
+    <style>
+
+        .profile {
+            position: relative;
+            cursor: pointer;
+        }
+
+
+        .profile-dropdown {
+            display: none;
+            position: absolute;
+            top: 52px;
+            right: 0;
+            width: 260px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            z-index: 1000;
+        }
+
+
+        .profile-dropdown.show {
+            display: block;
+        }
+
+
+        .profile-dropdown-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            color: #0f172a;
+        }
+
+
+        .profile-info {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 8px 0;
+            font-size: 11px;
+        }
+
+
+        .profile-info span {
+            color: #64748b;
+        }
+
+
+        .profile-info strong {
+            color: #0f172a;
+            text-align: right;
+            word-break: break-word;
+        }
+
+
+        .profile-divider {
+            height: 1px;
+            background: #e2e8f0;
+            margin: 10px 0;
+        }
+
+
+        .profile-logout {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 9px 12px;
+            border-radius: 8px;
+            background: #ef4444;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+
+        .profile-logout:hover {
+            opacity: 0.9;
+        }
+
+
+        @media (max-width: 600px) {
+
+            .profile-dropdown {
+                right: -10px;
+                width: 240px;
+            }
+
+        }
+
+    </style>
+
 </head>
+
 
 <body>
 
-<div class="container"
-     style="max-width: 1100px;">
 
-    <!-- ================================================= -->
-    <!-- PAGE TITLE -->
-    <!-- ================================================= -->
+<!-- =========================================================
+     SIDEBAR
+     ========================================================= -->
 
-    <h1>Manage Books</h1>
+<div class="sidebar">
 
 
-    <!-- ================================================= -->
-    <!-- WELCOME -->
-    <!-- ================================================= -->
+    <div class="logo">
 
-    <p>
+        <span class="logo-icon">📖</span>
 
-        Welcome,
-
-        <strong th:text="${admin.name}">
-            Admin
-        </strong>
-
-    </p>
-
-
-    <!-- ================================================= -->
-    <!-- SUCCESS MESSAGE -->
-    <!-- ================================================= -->
-
-    <div th:if="${success}"
-         class="success-message">
-
-        <strong>Success:</strong>
-
-        <span th:text="${success}">
-            Operation successful.
-        </span>
+        DigiLibrary
 
     </div>
 
 
-    <!-- ================================================= -->
-    <!-- ERROR MESSAGE -->
-    <!-- ================================================= -->
+    <div class="nav-title">
 
-    <div th:if="${error}"
-         class="error-message">
-
-        <strong>Error:</strong>
-
-        <span th:text="${error}">
-            Something went wrong.
-        </span>
+        Administration
 
     </div>
 
 
-    <br>
+    <!-- DASHBOARD -->
 
+    <a href="/admin/dashboard">
 
-    <!-- ================================================= -->
-    <!-- ADD BOOK -->
-    <!-- ================================================= -->
+        📊
 
-    <a href="/admin/books/add"
-       class="btn">
-
-        Add New Book
+        <span>
+            Dashboard
+        </span>
 
     </a>
 
 
-    <br>
-    <br>
+    <!-- MANAGE BOOKS -->
+
+    <a href="/admin/books"
+       class="active">
+
+        📚
+
+        <span>
+            Manage Books
+        </span>
+
+    </a>
 
 
-    <!-- ================================================= -->
-    <!-- BOOK TABLE -->
-    <!-- ================================================= -->
+    <!-- ISSUED BOOKS -->
 
-    <table border="1"
-           width="100%"
-           cellpadding="10">
+    <a href="/admin/issued-books">
 
-        <thead>
+        📖
 
-        <tr>
+        <span>
+            Issued Books
+        </span>
 
-            <th>ID</th>
-
-            <th>Title</th>
-
-            <th>Author</th>
-
-            <th>ISBN</th>
-
-            <th>Category</th>
-
-            <th>Total Quantity</th>
-
-            <th>Available Quantity</th>
-
-            <th>Action</th>
-
-        </tr>
-
-        </thead>
+    </a>
 
 
-        <tbody>
+    <!-- RESERVATIONS -->
 
-        <tr th:each="book : ${books}">
+    <a href="/admin/reservations">
 
+        📋
 
-            <!-- ID -->
+        <span>
+            Reservations
+        </span>
 
-            <td th:text="${book.id}">
-                1
-            </td>
-
-
-            <!-- TITLE -->
-
-            <td th:text="${book.title}">
-                Book Title
-            </td>
+    </a>
 
 
-            <!-- AUTHOR -->
+    <!-- MEMBERS -->
 
-            <td th:text="${book.author}">
-                Author
-            </td>
+    <a href="/admin/members">
 
+        👥
 
-            <!-- ISBN -->
+        <span>
+            Members
+        </span>
 
-            <td th:text="${book.isbn}">
-                ISBN
-            </td>
-
-
-            <!-- CATEGORY -->
-
-            <td th:text="${book.category}">
-                Category
-            </td>
+    </a>
 
 
-            <!-- TOTAL -->
+    <!-- FINES -->
 
-            <td th:text="${book.quantity}">
-                5
-            </td>
+    <a href="/admin/fines">
+
+        💰
+
+        <span>
+            Fine Management
+        </span>
+
+    </a>
 
 
-            <!-- AVAILABLE -->
+    <!-- QUERIES -->
 
-            <td th:text="${book.availableQuantity}">
-                5
-            </td>
+    <a href="/admin/queries">
+
+        ❓
+
+        <span>
+            User Queries
+        </span>
+
+    </a>
 
 
-            <!-- ACTION -->
+    <!-- SIDEBAR LOGOUT -->
 
-            <td>
+    <a href="/logout"
+       class="logout">
 
-                <!-- EDIT -->
+        🚪
 
-                <a th:href="@{/admin/books/edit/{id}(id=${book.id})}"
+        <span>
+            Logout
+        </span>
+
+    </a>
+
+
+</div>
+
+
+
+<!-- =========================================================
+     MAIN
+     ========================================================= -->
+
+<div class="main">
+
+
+    <!-- =====================================================
+         TOPBAR
+         ===================================================== -->
+
+    <div class="topbar">
+
+
+        <h2>
+
+            Manage Books
+
+        </h2>
+
+
+        <div class="topbar-right">
+
+
+            <!-- =================================================
+                 ADMIN PROFILE
+                 ================================================= -->
+
+            <div class="profile"
+                 onclick="toggleAdminProfile(event)">
+
+
+                <div class="profile-avatar">
+
+                    👨‍💼
+
+                </div>
+
+
+                <span th:text="${admin.name}">
+
+                    Admin
+
+                </span>
+
+
+                <span>
+
+                    ▾
+
+                </span>
+
+
+                <!-- =================================================
+                     PROFILE DROPDOWN
+                     ================================================= -->
+
+                <div class="profile-dropdown"
+                     id="adminProfileDropdown"
+                     onclick="event.stopPropagation();">
+
+
+                    <div class="profile-dropdown-title">
+
+                        My Account
+
+                    </div>
+
+
+                    <!-- NAME -->
+
+                    <div class="profile-info">
+
+                        <span>
+                            Name
+                        </span>
+
+                        <strong th:text="${admin.name}">
+
+                            Admin
+
+                        </strong>
+
+                    </div>
+
+
+                    <!-- USERNAME -->
+
+                    <div class="profile-info">
+
+                        <span>
+                            Username
+                        </span>
+
+                        <strong th:text="${admin.username}">
+
+                            admin
+
+                        </strong>
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="profile-info">
+
+                        <span>
+                            Email
+                        </span>
+
+                        <strong th:text="${admin.email}">
+
+                            admin@example.com
+
+                        </strong>
+
+                    </div>
+
+
+                    <!-- ROLE -->
+
+                    <div class="profile-info">
+
+                        <span>
+                            Role
+                        </span>
+
+                        <strong th:text="${admin.role}">
+
+                            ADMIN
+
+                        </strong>
+
+                    </div>
+
+
+                    <div class="profile-divider"></div>
+
+
+                    <!-- LOGOUT -->
+
+                    <a href="/logout"
+                       class="profile-logout">
+
+                        🚪 Logout
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         CONTENT
+         ===================================================== -->
+
+    <div class="content">
+
+
+        <!-- PAGE TITLE -->
+
+        <h1 class="page-title">
+
+            Book Management
+
+        </h1>
+
+
+        <p class="page-subtitle">
+
+            Add, update and manage all books available in the library.
+
+        </p>
+
+
+        <div class="breadcrumb">
+
+            Home / Manage Books
+
+        </div>
+
+
+
+        <!-- =================================================
+             HEADER ACTION
+             ================================================= -->
+
+        <div class="panel">
+
+
+            <div style="display:flex;
+                        justify-content:space-between;
+                        align-items:center;
+                        gap:15px;
+                        flex-wrap:wrap;">
+
+
+                <div>
+
+
+                    <div class="panel-title"
+                         style="margin-bottom:5px;">
+
+                        📚 Library Catalogue
+
+                    </div>
+
+
+                    <p style="margin:0;
+                              font-size:10px;
+                              color:#718096;">
+
+                        Manage your complete book collection.
+
+                    </p>
+
+
+                </div>
+
+
+                <!-- HEADER ADD NEW BOOK - KEPT SAME -->
+
+                <a href="/admin/books/add"
                    class="btn">
 
-                    Edit
+                    ➕ Add New Book
 
                 </a>
 
 
-                <!-- DELETE -->
-
-                <form
-                    th:action="@{/admin/books/delete/{id}(id=${book.id})}"
-                    method="post"
-                    style="display: inline;">
-
-                    <button type="submit"
-                            onclick="return confirm('Are you sure you want to delete this book?');">
-
-                        Delete
-
-                    </button>
-
-                </form>
-
-            </td>
-
-        </tr>
+            </div>
 
 
-        <!-- ================================================= -->
-        <!-- NO BOOKS -->
-        <!-- ================================================= -->
-
-        <tr th:if="${#lists.isEmpty(books)}">
-
-            <td colspan="8"
-                style="text-align: center;">
-
-                No books found.
-
-            </td>
-
-        </tr>
-
-        </tbody>
-
-    </table>
+        </div>
 
 
-    <br>
+
+        <!-- =================================================
+             BOOK SUMMARY
+             ================================================= -->
+
+        <div class="card-grid">
 
 
-    <!-- ================================================= -->
-    <!-- NAVIGATION -->
-    <!-- ================================================= -->
+            <!-- TOTAL BOOKS -->
 
-    <div class="button-group">
-
-        <a href="/admin/dashboard"
-           class="btn">
-
-            Dashboard
-
-        </a>
+            <div class="stat-card stat-blue">
 
 
-        <a href="/admin/issued-books"
-           class="btn">
+                <div class="stat-icon">
 
-            Issued Books
+                    📚
 
-        </a>
-
-
-        <a href="/admin/fines"
-           class="btn">
-
-            Fine Management
-
-        </a>
+                </div>
 
 
-        <a href="/admin/members"
-           class="btn">
+                <div class="stat-label">
 
-            Members
+                    Total Books
 
-        </a>
-
-
-        <a href="/admin/queries"
-           class="btn">
-
-            Queries
-
-        </a>
+                </div>
 
 
-        <a href="/logout"
-           class="btn">
+                <div class="stat-value"
+                     th:text="${#lists.size(books)}">
 
-            Logout
+                    0
 
-        </a>
+                </div>
+
+
+                <p>
+
+                    Books in catalogue
+
+                </p>
+
+
+            </div>
+
+
+
+            <!-- AVAILABLE -->
+
+            <div class="stat-card stat-green">
+
+
+                <div class="stat-icon">
+
+                    ✓
+
+                </div>
+
+
+                <div class="stat-label">
+
+                    Available
+
+                </div>
+
+
+                <div class="stat-value">
+
+                    <span
+                        th:text="${#aggregates.sum(books.![availableQuantity])}">
+
+                        0
+
+                    </span>
+
+                </div>
+
+
+                <p>
+
+                    Copies currently available
+
+                </p>
+
+
+            </div>
+
+
+
+            <!-- TOTAL COPIES -->
+
+            <div class="stat-card stat-purple">
+
+
+                <div class="stat-icon">
+
+                    📖
+
+                </div>
+
+
+                <div class="stat-label">
+
+                    Total Copies
+
+                </div>
+
+
+                <div class="stat-value">
+
+                    <span
+                        th:text="${#aggregates.sum(books.![quantity])}">
+
+                        0
+
+                    </span>
+
+                </div>
+
+
+                <p>
+
+                    Total library copies
+
+                </p>
+
+
+            </div>
+
+
+
+            <!-- CATEGORIES -->
+
+            <div class="stat-card stat-orange">
+
+
+                <div class="stat-icon">
+
+                    🔖
+
+                </div>
+
+
+                <div class="stat-label">
+
+                    Categories
+
+                </div>
+
+
+                <div class="stat-value">
+
+                    📚
+
+                </div>
+
+
+                <p>
+
+                    Library collection
+
+                </p>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             BOOK TABLE
+             ================================================= -->
+
+        <div class="panel">
+
+
+            <div class="panel-title">
+
+                All Books
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+
+                <table>
+
+
+                    <thead>
+
+                    <tr>
+
+                        <th>
+                            ID
+                        </th>
+
+                        <th>
+                            Book
+                        </th>
+
+                        <th>
+                            Author
+                        </th>
+
+                        <th>
+                            ISBN
+                        </th>
+
+                        <th>
+                            Category
+                        </th>
+
+                        <th>
+                            Total
+                        </th>
+
+                        <th>
+                            Available
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Actions
+                        </th>
+
+                    </tr>
+
+                    </thead>
+
+
+
+                    <tbody>
+
+
+                    <!-- =================================================
+                         BOOK ROW
+                         ================================================= -->
+
+                    <tr th:each="book : ${books}">
+
+
+                        <!-- ID -->
+
+                        <td th:text="${book.id}">
+
+                            1
+
+                        </td>
+
+
+                        <!-- TITLE -->
+
+                        <td>
+
+                            <strong th:text="${book.title}">
+
+                                Effective Java
+
+                            </strong>
+
+                        </td>
+
+
+                        <!-- AUTHOR -->
+
+                        <td th:text="${book.author}">
+
+                            Joshua Bloch
+
+                        </td>
+
+
+                        <!-- ISBN -->
+
+                        <td th:text="${book.isbn}">
+
+                            9780000000000
+
+                        </td>
+
+
+                        <!-- CATEGORY -->
+
+                        <td>
+
+                            <span class="badge badge-blue"
+                                  th:text="${book.category}">
+
+                                Programming
+
+                            </span>
+
+                        </td>
+
+
+                        <!-- TOTAL -->
+
+                        <td th:text="${book.quantity}">
+
+                            10
+
+                        </td>
+
+
+                        <!-- AVAILABLE -->
+
+                        <td th:text="${book.availableQuantity}">
+
+                            8
+
+                        </td>
+
+
+                        <!-- STATUS -->
+
+                        <td>
+
+
+                            <span th:if="${book.availableQuantity > 0}"
+                                  class="badge badge-green">
+
+                                AVAILABLE
+
+                            </span>
+
+
+                            <span th:if="${book.availableQuantity == 0}"
+                                  class="badge badge-red">
+
+                                OUT OF STOCK
+
+                            </span>
+
+
+                        </td>
+
+
+                        <!-- ACTIONS -->
+
+                        <td>
+
+
+                            <div style="display:flex;
+                                        gap:6px;
+                                        flex-wrap:wrap;">
+
+
+                                <!-- EDIT -->
+
+                                <a th:href="@{/admin/books/edit/{id}(id=${book.id})}"
+                                   class="btn-small btn-success">
+
+                                    ✏ Edit
+
+                                </a>
+
+
+                                <!-- DELETE -->
+
+                                <form th:action="@{/admin/books/delete/{id}(id=${book.id})}"
+                                      method="post"
+                                      style="display:inline;">
+
+
+                                    <button type="submit"
+                                            class="btn-small btn-danger"
+                                            onclick="return confirm('Are you sure you want to delete this book?');">
+
+                                        🗑 Delete
+
+                                    </button>
+
+
+                                </form>
+
+
+                            </div>
+
+
+                        </td>
+
+
+                    </tr>
+
+
+
+                    <!-- =================================================
+                         NO BOOKS
+                         ================================================= -->
+
+                    <tr th:if="${#lists.isEmpty(books)}">
+
+
+                        <td colspan="9"
+                            class="empty-state">
+
+
+                            <div style="font-size:40px;">
+
+                                📚
+
+                            </div>
+
+
+                            <br>
+
+
+                            <strong>
+
+                                No Books Found
+
+                            </strong>
+
+
+                            <p style="font-size:9px;
+                                      color:#94a3b8;">
+
+                                Your library catalogue is currently empty.
+
+                            </p>
+
+
+                            <a href="/admin/books/add"
+                               class="btn">
+
+                                ➕ Add First Book
+
+                            </a>
+
+
+                        </td>
+
+
+                    </tr>
+
+
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             MANAGEMENT INFORMATION
+             ================================================= -->
+
+        <div class="panel">
+
+
+            <div class="panel-title">
+
+                Book Management
+
+            </div>
+
+
+            <div style="display:grid;
+                        grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+                        gap:15px;">
+
+
+                <!-- =================================================
+                     ADD BOOKS
+                     ================================================= -->
+
+                <div style="padding:15px;
+                            border:1px solid #e2e8f0;
+                            border-radius:10px;">
+
+
+                    <strong>
+
+                        ➕ Add Books
+
+                    </strong>
+
+
+                    <p style="font-size:9px;
+                              color:#718096;
+                              line-height:1.6;">
+
+                        Add new books with title,
+                        author, ISBN, category and quantity.
+
+                    </p>
+
+
+                    <!-- ADD BOOK BUTTON REMOVED -->
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     UPDATE BOOKS
+                     ================================================= -->
+
+                <div style="padding:15px;
+                            border:1px solid #e2e8f0;
+                            border-radius:10px;">
+
+
+                    <strong>
+
+                        ✏ Update Books
+
+                    </strong>
+
+
+                    <p style="font-size:9px;
+                              color:#718096;
+                              line-height:1.6;">
+
+                        Update book information and
+                        available quantities.
+
+                    </p>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     REMOVE BOOKS
+                     ================================================= -->
+
+                <div style="padding:15px;
+                            border:1px solid #e2e8f0;
+                            border-radius:10px;">
+
+
+                    <strong>
+
+                        🗑 Remove Books
+
+                    </strong>
+
+
+                    <p style="font-size:9px;
+                              color:#718096;
+                              line-height:1.6;">
+
+                        Remove books that are no longer
+                        part of the library catalogue.
+
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             BOTTOM NAVIGATION REMOVED
+             
+             Dashboard / Add Book / Logout
+             ================================================= -->
+
 
     </div>
 
+
 </div>
+
+
+
+<!-- =========================================================
+     ADMIN PROFILE JAVASCRIPT
+     ========================================================= -->
+
+<script>
+
+    function toggleAdminProfile(event) {
+
+        event.stopPropagation();
+
+        const dropdown =
+            document.getElementById("adminProfileDropdown");
+
+        if (dropdown) {
+
+            dropdown.classList.toggle("show");
+
+        }
+
+    }
+
+
+    document.addEventListener(
+        "click",
+        function(event) {
+
+            const profile =
+                document.querySelector(".profile");
+
+            const dropdown =
+                document.getElementById("adminProfileDropdown");
+
+
+            if (
+                profile &&
+                dropdown &&
+                !profile.contains(event.target)
+            ) {
+
+                dropdown.classList.remove("show");
+
+            }
+
+        }
+    );
+
+</script>
+
 
 </body>
 

@@ -10,7 +10,7 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>Notifications - Digital Library</title>
+    <title>Notifications - DigiLibrary</title>
 
     <link rel="stylesheet"
           href="/css/style.css">
@@ -20,195 +20,308 @@
 
 <body>
 
-<div class="container"
-     style="max-width: 900px;">
+
+<!-- =========================================================
+     SIDEBAR
+     ========================================================= -->
+
+<div class="sidebar">
 
 
-    <!-- ================================================= -->
-    <!-- PAGE TITLE -->
-    <!-- ================================================= -->
+    <!-- LOGO -->
 
-    <h1>Notifications</h1>
+    <div class="logo">
 
+        <span class="logo-icon">📖</span>
 
-    <!-- ================================================= -->
-    <!-- WELCOME -->
-    <!-- ================================================= -->
+        DigiLibrary
 
-    <p>
-
-        Welcome,
-
-        <strong th:text="${user.name}">
-            User
-        </strong>
-
-    </p>
+    </div>
 
 
-    <!-- ================================================= -->
-    <!-- UNREAD COUNT -->
-    <!-- ================================================= -->
+    <div class="nav-title">
+        Main Menu
+    </div>
 
-    <p>
 
-        <strong>
-            Unread Notifications:
-        </strong>
+    <!-- DASHBOARD -->
 
-        <span th:text="${unreadCount}">
-            0
+    <a href="/user/dashboard">
+
+        📊
+
+        <span>
+            Dashboard
         </span>
 
-    </p>
+    </a>
 
 
-    <!-- ================================================= -->
-    <!-- MARK ALL AS READ -->
-    <!-- ================================================= -->
+    <!-- BROWSE BOOKS -->
 
-    <form th:if="${unreadCount > 0}"
-          action="/user/notifications/read-all"
-          method="post">
+    <a href="/user/books">
 
-        <button type="submit">
-            Mark All as Read
-        </button>
+        📚
 
-    </form>
+        <span>
+            Browse Books
+        </span>
+
+    </a>
 
 
-    <br>
+    <!-- MY BOOKS -->
+
+    <a href="/user/my-books">
+
+        📖
+
+        <span>
+            My Books
+        </span>
+
+    </a>
 
 
-    <!-- ================================================= -->
-    <!-- NOTIFICATIONS LIST -->
-    <!-- ================================================= -->
+    <!-- RESERVATIONS -->
 
-    <div th:if="${!#lists.isEmpty(notifications)}">
+    <a href="/user/reservations">
 
+        📋
 
-        <div th:each="notification : ${notifications}"
-             style="border: 1px solid #ccc;
-                    padding: 15px;
-                    margin-bottom: 12px;">
+        <span>
+            Reservations
+        </span>
 
-
-            <!-- ========================================= -->
-            <!-- UNREAD NOTIFICATION -->
-            <!-- ========================================= -->
-
-            <div th:if="${!notification.read}">
-
-                <p>
-
-                    <strong>
-                        🔔 New Notification
-                    </strong>
-
-                </p>
+    </a>
 
 
-                <p>
+    <!-- NOTIFICATIONS -->
 
-                    <span th:text="${notification.message}">
-                        Notification message
-                    </span>
+    <a href="/user/notifications"
+       class="active">
 
-                </p>
+        🔔
 
+        <span>
+            Notifications
+        </span>
 
-                <p>
+        <span th:if="${unreadCount > 0}"
+              th:text="${unreadCount}">
 
-                    <small
-                        th:text="${notification.createdAt}">
-                        Date
-                    </small>
+            0
 
-                </p>
+        </span>
 
-
-                <!-- MARK AS READ -->
-
-                <form
-                    th:action="@{/user/notifications/read/{id}(id=${notification.id})}"
-                    method="post">
-
-                    <button type="submit">
-                        Mark as Read
-                    </button>
-
-                </form>
+    </a>
 
 
-                <br>
+    <!-- FINES -->
+
+    <a href="/user/fines">
+
+        💰
+
+        <span>
+            My Fines
+        </span>
+
+    </a>
 
 
-                <!-- DELETE -->
+    <!-- QUERY -->
 
-                <form
-                    th:action="@{/user/notifications/delete/{id}(id=${notification.id})}"
-                    method="post">
+    <a href="/user/query">
 
-                    <button type="submit">
-                        Delete
-                    </button>
+        ❓
 
-                </form>
+        <span>
+            Ask a Query
+        </span>
 
-            </div>
+    </a>
 
 
-            <!-- ========================================= -->
-            <!-- READ NOTIFICATION -->
-            <!-- ========================================= -->
+    <!-- LOGOUT -->
 
-            <div th:if="${notification.read}">
+    <a href="/logout"
+       class="logout">
 
-                <p>
+        🚪
 
-                    <strong>
-                        ✓ Notification
-                    </strong>
+        <span>
+            Logout
+        </span>
 
-                </p>
-
-
-                <p>
-
-                    <span th:text="${notification.message}">
-                        Notification message
-                    </span>
-
-                </p>
+    </a>
 
 
-                <p>
-
-                    <small
-                        th:text="${notification.createdAt}">
-                        Date
-                    </small>
-
-                </p>
+</div>
 
 
-                <p>
-                    ✓ Read
-                </p>
+
+<!-- =========================================================
+     MAIN
+     ========================================================= -->
+
+<div class="main">
 
 
-                <!-- DELETE -->
+    <!-- =====================================================
+         TOPBAR
+         ===================================================== -->
 
-                <form
-                    th:action="@{/user/notifications/delete/{id}(id=${notification.id})}"
-                    method="post">
+    <div class="topbar">
 
-                    <button type="submit">
-                        Delete
-                    </button>
 
-                </form>
+        <h2>
+
+            Notifications
+
+        </h2>
+
+
+        <div class="topbar-right">
+
+
+            <!-- NOTIFICATIONS -->
+
+            <a href="/user/notifications"
+               class="notification-icon">
+
+                🔔
+
+            </a>
+
+
+            <!-- =================================================
+                 USER PROFILE
+                 ================================================= -->
+
+            <div class="profile"
+                 onclick="toggleProfileMenu()">
+
+
+                <div class="profile-avatar">
+
+                    👤
+
+                </div>
+
+
+                <span th:text="${user.name}">
+
+                    User
+
+                </span>
+
+
+                <span>
+
+                    ▾
+
+                </span>
+
+
+                <!-- =================================================
+                     PROFILE DROPDOWN
+                     ================================================= -->
+
+                <div class="profile-dropdown"
+                     id="profileDropdown">
+
+
+                    <div class="profile-dropdown-title">
+
+                        My Account
+
+                    </div>
+
+
+                    <!-- USERNAME -->
+
+                    <div class="profile-info">
+
+                        <span>
+                            Username
+                        </span>
+
+                        <strong th:text="${user.username}">
+
+                            user
+
+                        </strong>
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="profile-info">
+
+                        <span>
+                            Email
+                        </span>
+
+                        <strong th:text="${user.email}">
+
+                            user@library.com
+
+                        </strong>
+
+                    </div>
+
+
+                    <!-- ROLE -->
+
+                    <div class="profile-info">
+
+                        <span>
+                            Role
+                        </span>
+
+                        <strong th:text="${user.role}">
+
+                            USER
+
+                        </strong>
+
+                    </div>
+
+
+                    <!-- UNREAD NOTIFICATIONS -->
+
+                    <div class="profile-info">
+
+                        <span>
+                            Unread Notifications
+                        </span>
+
+                        <strong th:text="${unreadCount}">
+
+                            0
+
+                        </strong>
+
+                    </div>
+
+
+                    <div class="profile-divider"></div>
+
+
+                    <!-- LOGOUT -->
+
+                    <a href="/logout"
+                       class="profile-logout">
+
+                        🚪 Logout
+
+                    </a>
+
+
+                </div>
+
 
             </div>
 
@@ -219,81 +332,523 @@
     </div>
 
 
-    <!-- ================================================= -->
-    <!-- NO NOTIFICATIONS -->
-    <!-- ================================================= -->
 
-    <div th:if="${#lists.isEmpty(notifications)}">
+    <!-- =====================================================
+         CONTENT
+         ===================================================== -->
 
-        <p>
-            You have no notifications.
+    <div class="content">
+
+
+        <!-- PAGE TITLE -->
+
+        <h1 class="page-title">
+
+            Notifications
+
+        </h1>
+
+
+        <p class="page-subtitle">
+
+            Stay updated with your library activities and account updates.
+
         </p>
 
-    </div>
+
+        <div class="breadcrumb">
+
+            Home / Notifications
+
+        </div>
 
 
-    <br>
+
+        <!-- =================================================
+             NOTIFICATION SUMMARY
+             ================================================= -->
+
+        <div class="card-grid">
 
 
-    <!-- ================================================= -->
-    <!-- NAVIGATION -->
-    <!-- ================================================= -->
+            <!-- TOTAL -->
 
-    <div class="button-group">
+            <div class="stat-card stat-blue">
 
+                <div class="stat-label">
 
-        <a href="/user/books"
-           class="btn">
+                    Total Notifications
 
-            Browse Books
-
-        </a>
+                </div>
 
 
-        <a href="/user/my-books"
-           class="btn">
+                <div class="stat-value"
+                     th:text="${#lists.size(notifications)}">
 
-            My Books
+                    0
 
-        </a>
+                </div>
 
-
-        <a href="/user/reservations"
-           class="btn">
-
-            My Reservations
-
-        </a>
+            </div>
 
 
-        <a href="/user/fines"
-           class="btn">
+            <!-- UNREAD -->
 
-            My Fines
+            <div class="stat-card stat-orange">
 
-        </a>
+                <div class="stat-label">
 
+                    Unread Notifications
 
-        <a href="/user/dashboard"
-           class="btn">
-
-            Dashboard
-
-        </a>
+                </div>
 
 
-        <a href="/logout"
-           class="btn">
+                <div class="stat-value"
+                     th:text="${unreadCount}">
 
-            Logout
+                    0
 
-        </a>
+                </div>
+
+            </div>
+
+
+            <!-- STATUS -->
+
+            <div class="stat-card stat-green">
+
+                <div class="stat-label">
+
+                    Account Status
+
+                </div>
+
+
+                <div class="stat-value">
+
+                    ✓
+
+                </div>
+
+            </div>
+
+
+            <!-- LIBRARY -->
+
+            <div class="stat-card stat-purple">
+
+                <div class="stat-label">
+
+                    Library Updates
+
+                </div>
+
+
+                <div class="stat-value">
+
+                    📚
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             NOTIFICATION PANEL
+             ================================================= -->
+
+        <div class="panel">
+
+
+            <!-- HEADER -->
+
+            <div style="display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        gap: 15px;
+                        margin-bottom: 18px;">
+
+
+                <div class="panel-title"
+                     style="margin-bottom: 0;">
+
+                    Your Notifications
+
+                </div>
+
+
+                <!-- MARK ALL AS READ -->
+
+                <form th:if="${unreadCount > 0}"
+                      action="/user/notifications/read-all"
+                      method="post">
+
+
+                    <button type="submit"
+                            class="btn-small btn-success">
+
+                        ✓ Mark All as Read
+
+                    </button>
+
+
+                </form>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 NOTIFICATIONS LIST
+                 ================================================= -->
+
+            <div th:if="${!#lists.isEmpty(notifications)}">
+
+
+                <div th:each="notification : ${notifications}"
+                     style="border: 1px solid #e2e8f0;
+                            border-radius: 12px;
+                            padding: 18px;
+                            margin-bottom: 12px;">
+
+
+                    <!-- =================================================
+                         UNREAD NOTIFICATION
+                         ================================================= -->
+
+                    <div th:if="${!notification.read}">
+
+
+                        <div style="display: flex;
+                                    justify-content: space-between;
+                                    align-items: flex-start;
+                                    gap: 15px;">
+
+
+                            <!-- ICON -->
+
+                            <div style="font-size: 25px;
+                                        min-width: 35px;">
+
+                                🔔
+
+                            </div>
+
+
+                            <!-- CONTENT -->
+
+                            <div style="flex: 1;">
+
+
+                                <div style="margin-bottom: 7px;">
+
+
+                                    <strong>
+
+                                        New Notification
+
+                                    </strong>
+
+
+                                    <span class="badge badge-orange"
+                                          style="margin-left: 8px;">
+
+                                        NEW
+
+                                    </span>
+
+
+                                </div>
+
+
+                                <p style="margin: 0 0 8px;
+                                          color: #334155;
+                                          font-size: 10px;
+                                          line-height: 1.6;"
+                                   th:text="${notification.message}">
+
+                                    Notification message
+
+                                </p>
+
+
+                                <small style="color: #94a3b8;"
+                                       th:text="${notification.createdAt}">
+
+                                    Date
+
+                                </small>
+
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- ACTIONS -->
+
+                        <div style="margin-top: 15px;
+                                    padding-left: 50px;
+                                    display: flex;
+                                    gap: 8px;
+                                    flex-wrap: wrap;">
+
+
+                            <!-- MARK AS READ -->
+
+                            <form th:action="@{/user/notifications/read/{id}(id=${notification.id})}"
+                                  method="post">
+
+
+                                <button type="submit"
+                                        class="btn-small btn-success">
+
+                                    ✓ Mark as Read
+
+                                </button>
+
+
+                            </form>
+
+
+                            <!-- DELETE -->
+
+                            <form th:action="@{/user/notifications/delete/{id}(id=${notification.id})}"
+                                  method="post">
+
+
+                                <button type="submit"
+                                        class="btn-small btn-danger"
+                                        onclick="return confirm('Are you sure you want to delete this notification?');">
+
+                                    🗑 Delete
+
+                                </button>
+
+
+                            </form>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         READ NOTIFICATION
+                         ================================================= -->
+
+                    <div th:if="${notification.read}">
+
+
+                        <div style="display: flex;
+                                    justify-content: space-between;
+                                    align-items: flex-start;
+                                    gap: 15px;">
+
+
+                            <!-- ICON -->
+
+                            <div style="font-size: 25px;
+                                        min-width: 35px;">
+
+                                ✓
+
+                            </div>
+
+
+                            <!-- CONTENT -->
+
+                            <div style="flex: 1;">
+
+
+                                <div style="margin-bottom: 7px;">
+
+
+                                    <strong>
+
+                                        Notification
+
+                                    </strong>
+
+
+                                    <span class="badge badge-blue"
+                                          style="margin-left: 8px;">
+
+                                        READ
+
+                                    </span>
+
+
+                                </div>
+
+
+                                <p style="margin: 0 0 8px;
+                                          color: #64748b;
+                                          font-size: 10px;
+                                          line-height: 1.6;"
+                                   th:text="${notification.message}">
+
+                                    Notification message
+
+                                </p>
+
+
+                                <small style="color: #94a3b8;"
+                                       th:text="${notification.createdAt}">
+
+                                    Date
+
+                                </small>
+
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- DELETE -->
+
+                        <div style="margin-top: 15px;
+                                    padding-left: 50px;">
+
+
+                            <form th:action="@{/user/notifications/delete/{id}(id=${notification.id})}"
+                                  method="post">
+
+
+                                <button type="submit"
+                                        class="btn-small btn-danger"
+                                        onclick="return confirm('Are you sure you want to delete this notification?');">
+
+                                    🗑 Delete
+
+                                </button>
+
+
+                            </form>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 NO NOTIFICATIONS
+                 ================================================= -->
+
+            <div th:if="${#lists.isEmpty(notifications)}"
+                 class="empty-state">
+
+
+                <div style="font-size: 40px;">
+
+                    🔔
+
+                </div>
+
+
+                <br>
+
+
+                <strong>
+
+                    No Notifications
+
+                </strong>
+
+
+                <p style="font-size: 9px;
+                          color: #94a3b8;">
+
+                    You don't have any notifications yet.
+
+                    <br>
+
+                    New library updates will appear here.
+
+                </p>
+
+
+            </div>
+
+
+        </div>
 
 
     </div>
 
 
 </div>
+
+
+
+<!-- =====================================================
+     PROFILE DROPDOWN JAVASCRIPT
+     ===================================================== -->
+
+<script>
+
+    function toggleProfileMenu() {
+
+        const dropdown =
+            document.getElementById("profileDropdown");
+
+        if (dropdown) {
+
+            dropdown.classList.toggle("show");
+
+        }
+
+    }
+
+
+    document.addEventListener(
+        "click",
+        function(event) {
+
+            const profile =
+                document.querySelector(".profile");
+
+            const dropdown =
+                document.getElementById("profileDropdown");
+
+
+            if (
+                profile &&
+                dropdown &&
+                !profile.contains(event.target)
+            ) {
+
+                dropdown.classList.remove("show");
+
+            }
+
+        }
+    );
+
+</script>
+
 
 </body>
 
