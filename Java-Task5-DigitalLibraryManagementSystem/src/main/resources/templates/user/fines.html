@@ -176,12 +176,16 @@
 
 
         <h2>
+
             My Fines
+
         </h2>
 
 
         <div class="topbar-right">
 
+
+            <!-- NOTIFICATIONS -->
 
             <a href="/user/notifications"
                class="notification-icon">
@@ -191,7 +195,10 @@
             </a>
 
 
-            <div class="profile">
+            <!-- PROFILE -->
+
+            <div class="profile"
+                 onclick="toggleProfileMenu()">
 
 
                 <div class="profile-avatar">
@@ -209,8 +216,121 @@
 
 
                 <span>
+
                     ▾
+
                 </span>
+
+
+                <!-- =================================================
+                     PROFILE DROPDOWN
+                     ================================================= -->
+
+                <div class="profile-dropdown"
+                     id="profileDropdown">
+
+
+                    <div class="profile-dropdown-title">
+
+                        My Account
+
+                    </div>
+
+
+                    <!-- USERNAME -->
+
+                    <div class="profile-info">
+
+                        <span>
+
+                            Username
+
+                        </span>
+
+
+                        <strong th:text="${user.username}">
+
+                            user
+
+                        </strong>
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="profile-info">
+
+                        <span>
+
+                            Email
+
+                        </span>
+
+
+                        <strong th:text="${user.email}">
+
+                            user@library.com
+
+                        </strong>
+
+                    </div>
+
+
+                    <!-- ROLE -->
+
+                    <div class="profile-info">
+
+                        <span>
+
+                            Role
+
+                        </span>
+
+
+                        <strong th:text="${user.role}">
+
+                            USER
+
+                        </strong>
+
+                    </div>
+
+
+                    <!-- UNREAD NOTIFICATIONS -->
+
+                    <div class="profile-info">
+
+                        <span>
+
+                            Unread Notifications
+
+                        </span>
+
+
+                        <strong th:text="${unreadCount}">
+
+                            0
+
+                        </strong>
+
+                    </div>
+
+
+                    <div class="profile-divider"></div>
+
+
+                    <!-- LOGOUT -->
+
+                    <a href="/logout"
+                       class="profile-logout">
+
+                        🚪 Logout
+
+                    </a>
+
+
+                </div>
 
 
             </div>
@@ -656,108 +776,58 @@
 
 
 
-        <!-- =================================================
-             QUICK NAVIGATION
-             ================================================= -->
-
-        <div class="panel">
-
-
-            <div class="panel-title">
-
-                Quick Navigation
-
-            </div>
-
-
-            <div class="quick-actions">
-
-
-                <a href="/user/dashboard"
-                   class="blue">
-
-                    📊 Dashboard
-
-                </a>
-
-
-                <a href="/user/books"
-                   class="green">
-
-                    📚 Browse Books
-
-                </a>
-
-
-                <a href="/user/my-books"
-                   class="purple">
-
-                    📖 My Books
-
-                </a>
-
-
-                <a href="/user/reservations"
-                   class="orange">
-
-                    📋 Reservations
-
-                </a>
-
-
-                <a href="/user/notifications"
-                   class="blue">
-
-                    🔔 Notifications
-
-                </a>
-
-
-                <a href="/user/query"
-                   class="green">
-
-                    ❓ Ask a Query
-
-                </a>
-
-
-            </div>
-
-
-        </div>
-
-
-
-        <!-- =================================================
-             BOTTOM NAVIGATION
-             ================================================= -->
-
-        <div style="margin-top: 20px;">
-
-
-            <a href="/user/dashboard"
-               class="btn">
-
-                📊 Dashboard
-
-            </a>
-
-
-            <a href="/logout"
-               class="btn btn-danger">
-
-                🚪 Logout
-
-            </a>
-
-
-        </div>
-
-
     </div>
 
 
 </div>
+
+
+
+<!-- =====================================================
+     PROFILE DROPDOWN JAVASCRIPT
+     ===================================================== -->
+
+<script>
+
+    function toggleProfileMenu() {
+
+        const dropdown =
+            document.getElementById("profileDropdown");
+
+        if (dropdown) {
+
+            dropdown.classList.toggle("show");
+
+        }
+
+    }
+
+
+    document.addEventListener(
+        "click",
+        function(event) {
+
+            const profile =
+                document.querySelector(".profile");
+
+            const dropdown =
+                document.getElementById("profileDropdown");
+
+
+            if (
+                profile &&
+                dropdown &&
+                !profile.contains(event.target)
+            ) {
+
+                dropdown.classList.remove("show");
+
+            }
+
+        }
+    );
+
+</script>
 
 
 </body>

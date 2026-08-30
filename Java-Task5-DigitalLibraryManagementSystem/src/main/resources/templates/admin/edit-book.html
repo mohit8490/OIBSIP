@@ -15,44 +15,548 @@
     <link rel="stylesheet"
           href="/css/style.css">
 
+
+    <!-- =====================================================
+         EDIT BOOK PAGE + ADMIN PROFILE STYLES
+         ===================================================== -->
+
+    <style>
+
+        /* =================================================
+           PAGE LAYOUT
+           ================================================= */
+
+        .edit-book-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+
+        /* =================================================
+           TOPBAR
+           ================================================= */
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .topbar h1 {
+            margin: 0;
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+        }
+
+
+        /* =================================================
+           ADMIN PROFILE
+           ================================================= */
+
+        .profile {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .profile-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e0ecff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .profile-name {
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+
+        /* =================================================
+           PROFILE DROPDOWN
+           ================================================= */
+
+        .profile-dropdown {
+            display: none;
+            position: absolute;
+            top: 52px;
+            right: 0;
+            width: 260px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            z-index: 1000;
+        }
+
+        .profile-dropdown.show {
+            display: block;
+        }
+
+        .profile-dropdown-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 12px;
+        }
+
+        .profile-info {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 8px 0;
+            font-size: 11px;
+        }
+
+        .profile-info span {
+            color: #64748b;
+        }
+
+        .profile-info strong {
+            color: #0f172a;
+            text-align: right;
+            word-break: break-word;
+        }
+
+        .profile-divider {
+            height: 1px;
+            background: #e2e8f0;
+            margin: 10px 0;
+        }
+
+        .profile-logout {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 9px 12px;
+            border-radius: 8px;
+            background: #ef4444;
+            color: #ffffff;
+            text-align: center;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .profile-logout:hover {
+            opacity: 0.9;
+        }
+
+
+        /* =================================================
+           EDIT BOOK PANEL
+           ================================================= */
+
+        .edit-book-panel {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 28px;
+            box-shadow: 0 8px 25px rgba(15, 23, 42, 0.05);
+        }
+
+        .edit-book-header {
+            margin-bottom: 24px;
+        }
+
+        .edit-book-header h2 {
+            margin: 0 0 6px;
+            color: #0f172a;
+            font-size: 20px;
+        }
+
+        .edit-book-header p {
+            margin: 0;
+            color: #64748b;
+            font-size: 12px;
+        }
+
+
+        /* =================================================
+           ERROR
+           ================================================= */
+
+        .error-message {
+            background: #fff1f2;
+            border: 1px solid #fecdd3;
+            color: #be123c;
+            border-radius: 8px;
+            padding: 10px 12px;
+            margin-bottom: 20px;
+            font-size: 12px;
+        }
+
+
+        /* =================================================
+           BOOK INFORMATION
+           ================================================= */
+
+        .book-id-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px 14px;
+            margin-bottom: 22px;
+            font-size: 12px;
+            color: #475569;
+        }
+
+        .book-id-box strong {
+            color: #0f172a;
+        }
+
+
+        /* =================================================
+           FORM
+           ================================================= */
+
+        .edit-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            margin-bottom: 7px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #334155;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 11px 12px;
+            border: 1px solid #dbe3ee;
+            border-radius: 8px;
+            background: #ffffff;
+            color: #334155;
+            font-size: 12px;
+            outline: none;
+            transition: border-color 0.2s ease,
+                        box-shadow 0.2s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+        }
+
+
+        /* =================================================
+           AVAILABLE QUANTITY
+           ================================================= */
+
+        .available-box {
+            grid-column: 1 / -1;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 14px;
+            margin-top: 2px;
+        }
+
+        .available-box p {
+            margin: 0;
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .available-box .available-number {
+            color: #16a34a;
+            font-size: 18px;
+            font-weight: 700;
+            margin-left: 4px;
+        }
+
+        .available-note {
+            margin-top: 6px !important;
+            font-size: 11px !important;
+        }
+
+
+        /* =================================================
+           FORM BUTTONS
+           ================================================= */
+
+        .form-actions {
+            grid-column: 1 / -1;
+            display: flex;
+            gap: 10px;
+            margin-top: 5px;
+        }
+
+        .form-actions button,
+        .form-actions a {
+            display: inline-block;
+            padding: 10px 18px;
+            border-radius: 8px;
+            border: none;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+
+        .update-btn {
+            background: #2563eb;
+            color: #ffffff;
+        }
+
+        .update-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .cancel-btn {
+            background: #f1f5f9;
+            color: #334155;
+            border: 1px solid #dbe3ee !important;
+        }
+
+        .cancel-btn:hover {
+            background: #e2e8f0;
+        }
+
+
+        /* =================================================
+           MOBILE
+           ================================================= */
+
+        @media (max-width: 700px) {
+
+            .edit-book-container {
+                max-width: 100%;
+            }
+
+            .topbar {
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .edit-form {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full-width,
+            .available-box,
+            .form-actions {
+                grid-column: 1;
+            }
+
+            .profile-dropdown {
+                right: -10px;
+                width: 240px;
+            }
+
+        }
+
+    </style>
+
 </head>
 
 
 <body>
 
-<div class="container"
-     style="max-width: 700px;">
 
-    <!-- ================================================= -->
-    <!-- PAGE TITLE -->
-    <!-- ================================================= -->
-
-    <h1>Edit Book</h1>
+<div class="container edit-book-container">
 
 
-    <!-- ================================================= -->
-    <!-- WELCOME -->
-    <!-- ================================================= -->
+    <!-- =================================================
+         TOPBAR
+         ================================================= -->
 
-    <p>
-
-        Welcome,
-
-        <strong th:text="${admin.name}">
-            Admin
-        </strong>
-
-    </p>
+    <div class="topbar">
 
 
-    <!-- ================================================= -->
-    <!-- ERROR MESSAGE -->
-    <!-- ================================================= -->
+        <!-- PAGE TITLE -->
+
+        <h1>
+            Edit Book
+        </h1>
+
+
+        <!-- =================================================
+             ADMIN PROFILE
+             ================================================= -->
+
+        <div class="topbar-right">
+
+            <div class="profile"
+                 onclick="toggleAdminProfile(event)">
+
+
+                <!-- ADMIN ICON -->
+
+                <div class="profile-avatar">
+                    👨‍💼
+                </div>
+
+
+                <!-- ADMIN NAME -->
+
+                <span class="profile-name"
+                      th:text="${admin.name}">
+                    Admin
+                </span>
+
+
+                <span>
+                    ▾
+                </span>
+
+
+                <!-- =================================================
+                     ADMIN INFORMATION DROPDOWN
+                     ================================================= -->
+
+                <div class="profile-dropdown"
+                     id="adminProfileDropdown"
+                     onclick="event.stopPropagation();">
+
+
+                    <div class="profile-dropdown-title">
+                        My Account
+                    </div>
+
+
+                    <!-- NAME -->
+
+                    <div class="profile-info">
+
+                        <span>
+                            Name
+                        </span>
+
+                        <strong th:text="${admin.name}">
+                            Admin
+                        </strong>
+
+                    </div>
+
+
+                    <!-- USERNAME -->
+
+                    <div class="profile-info">
+
+                        <span>
+                            Username
+                        </span>
+
+                        <strong th:text="${admin.username}">
+                            admin
+                        </strong>
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="profile-info">
+
+                        <span>
+                            Email
+                        </span>
+
+                        <strong th:text="${admin.email}">
+                            admin@example.com
+                        </strong>
+
+                    </div>
+
+
+                    <!-- ROLE -->
+
+                    <div class="profile-info">
+
+                        <span>
+                            Role
+                        </span>
+
+                        <strong th:text="${admin.role}">
+                            ADMIN
+                        </strong>
+
+                    </div>
+
+
+                    <div class="profile-divider"></div>
+
+
+                    <!-- LOGOUT -->
+
+                    <a href="/logout"
+                       class="profile-logout">
+
+                        🚪 Logout
+
+                    </a>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         WELCOME
+         ================================================= -->
+
+    <div class="edit-book-header">
+
+        <h2>
+            Update Book Information
+        </h2>
+
+        <p>
+
+            Welcome,
+
+            <strong th:text="${admin.name}">
+                Admin
+            </strong>
+
+        </p>
+
+    </div>
+
+
+    <!-- =================================================
+         ERROR MESSAGE
+         ================================================= -->
 
     <div th:if="${error}"
          class="error-message">
 
-        <strong>Error:</strong>
+        <strong>
+            Error:
+        </strong>
 
         <span th:text="${error}">
             Something went wrong.
@@ -61,267 +565,264 @@
     </div>
 
 
-    <br>
+    <!-- =================================================
+         EDIT BOOK PANEL
+         ================================================= -->
+
+    <div class="edit-book-panel">
 
 
-    <!-- ================================================= -->
-    <!-- EDIT BOOK FORM -->
-    <!-- ================================================= -->
+        <!-- =================================================
+             BOOK ID
+             ================================================= -->
 
-    <form th:action="@{/admin/books/edit/{id}(id=${book.id})}"
-          method="post"
-          th:object="${book}">
+        <div class="book-id-box">
 
-
-        <!-- ================================================= -->
-        <!-- BOOK ID -->
-        <!-- ================================================= -->
-
-        <p>
-
-            <strong>Book ID:</strong>
+            <strong>
+                Book ID:
+            </strong>
 
             <span th:text="${book.id}">
                 1
             </span>
 
-        </p>
+        </div>
 
 
-        <!-- ================================================= -->
-        <!-- TITLE -->
-        <!-- ================================================= -->
+        <!-- =================================================
+             EDIT BOOK FORM
+             ================================================= -->
 
-        <label for="title">
-            Book Title
-        </label>
+        <form th:action="@{/admin/books/edit/{id}(id=${book.id})}"
+              method="post"
+              th:object="${book}"
+              class="edit-form">
 
-        <br>
 
-        <input type="text"
-               id="title"
-               th:field="*{title}"
-               placeholder="Enter book title"
-               required>
+            <!-- =================================================
+                 TITLE
+                 ================================================= -->
 
-        <br><br>
+            <div class="form-group">
 
+                <label for="title">
+                    Book Title
+                </label>
 
-        <!-- ================================================= -->
-        <!-- AUTHOR -->
-        <!-- ================================================= -->
+                <input type="text"
+                       id="title"
+                       th:field="*{title}"
+                       placeholder="Enter book title"
+                       required>
 
-        <label for="author">
-            Author
-        </label>
+            </div>
 
-        <br>
 
-        <input type="text"
-               id="author"
-               th:field="*{author}"
-               placeholder="Enter author name"
-               required>
+            <!-- =================================================
+                 AUTHOR
+                 ================================================= -->
 
-        <br><br>
+            <div class="form-group">
 
+                <label for="author">
+                    Author
+                </label>
 
-        <!-- ================================================= -->
-        <!-- ISBN -->
-        <!-- ================================================= -->
+                <input type="text"
+                       id="author"
+                       th:field="*{author}"
+                       placeholder="Enter author name"
+                       required>
 
-        <label for="isbn">
-            ISBN
-        </label>
+            </div>
 
-        <br>
 
-        <input type="text"
-               id="isbn"
-               th:field="*{isbn}"
-               placeholder="Enter ISBN"
-               required>
+            <!-- =================================================
+                 ISBN
+                 ================================================= -->
 
-        <br><br>
+            <div class="form-group">
 
+                <label for="isbn">
+                    ISBN
+                </label>
 
-        <!-- ================================================= -->
-        <!-- CATEGORY -->
-        <!-- ================================================= -->
+                <input type="text"
+                       id="isbn"
+                       th:field="*{isbn}"
+                       placeholder="Enter ISBN"
+                       required>
 
-        <label for="category">
-            Category
-        </label>
+            </div>
 
-        <br>
 
-        <select id="category"
-                th:field="*{category}"
-                required>
+            <!-- =================================================
+                 CATEGORY
+                 ================================================= -->
 
-            <option value="">
-                Select Category
-            </option>
+            <div class="form-group">
 
-            <option value="Programming">
-                Programming
-            </option>
+                <label for="category">
+                    Category
+                </label>
 
-            <option value="Computer Science">
-                Computer Science
-            </option>
+                <select id="category"
+                        th:field="*{category}"
+                        required>
 
-            <option value="Database">
-                Database
-            </option>
+                    <option value="">
+                        Select Category
+                    </option>
 
-            <option value="Fiction">
-                Fiction
-            </option>
+                    <option value="Programming">
+                        Programming
+                    </option>
 
-        </select>
+                    <option value="Computer Science">
+                        Computer Science
+                    </option>
 
-        <br><br>
+                    <option value="Database">
+                        Database
+                    </option>
 
+                    <option value="Fiction">
+                        Fiction
+                    </option>
 
-        <!-- ================================================= -->
-        <!-- TOTAL QUANTITY -->
-        <!-- ================================================= -->
+                </select>
 
-        <label for="quantity">
-            Total Quantity
-        </label>
+            </div>
 
-        <br>
 
-        <input type="number"
-               id="quantity"
-               th:field="*{quantity}"
-               min="1"
-               required>
+            <!-- =================================================
+                 TOTAL QUANTITY
+                 ================================================= -->
 
-        <br><br>
+            <div class="form-group">
 
+                <label for="quantity">
+                    Total Quantity
+                </label>
 
-        <!-- ================================================= -->
-        <!-- AVAILABLE QUANTITY -->
-        <!-- ================================================= -->
+                <input type="number"
+                       id="quantity"
+                       th:field="*{quantity}"
+                       min="1"
+                       required>
 
-        <p>
+            </div>
 
-            <strong>
-                Current Available Quantity:
-            </strong>
 
-            <span th:text="${book.availableQuantity}">
-                0
-            </span>
+            <!-- =================================================
+                 AVAILABLE QUANTITY
+                 ================================================= -->
 
-        </p>
+            <div class="available-box">
 
-        <p>
-            Available quantity will be calculated automatically
-            after updating the total quantity.
-        </p>
+                <p>
 
+                    <strong>
+                        Current Available Quantity:
+                    </strong>
 
-        <br>
+                    <span class="available-number"
+                          th:text="${book.availableQuantity}">
+                        0
+                    </span>
 
+                </p>
 
-        <!-- ================================================= -->
-        <!-- UPDATE -->
-        <!-- ================================================= -->
+                <p class="available-note">
 
-        <button type="submit">
+                    Available quantity will be calculated automatically
+                    after updating the total quantity.
 
-            Update Book
+                </p>
 
-        </button>
+            </div>
 
 
-        <!-- ================================================= -->
-        <!-- CANCEL -->
-        <!-- ================================================= -->
+            <!-- =================================================
+                 ACTION BUTTONS
+                 ================================================= -->
 
-        <a href="/admin/books"
-           class="btn">
+            <div class="form-actions">
 
-            Cancel
+                <button type="submit"
+                        class="update-btn">
 
-        </a>
+                    Update Book
 
-    </form>
+                </button>
 
 
-    <br>
+                <a href="/admin/books"
+                   class="cancel-btn">
 
+                    Cancel
 
-    <!-- ================================================= -->
-    <!-- NAVIGATION -->
-    <!-- ================================================= -->
+                </a>
 
-    <div class="button-group">
+            </div>
 
 
-        <a href="/admin/dashboard"
-           class="btn">
-
-            Dashboard
-
-        </a>
-
-
-        <a href="/admin/books"
-           class="btn">
-
-            Manage Books
-
-        </a>
-
-
-        <a href="/admin/issued-books"
-           class="btn">
-
-            Issued Books
-
-        </a>
-
-
-        <a href="/admin/reservations"
-           class="btn">
-
-            Reservations
-
-        </a>
-
-
-        <a href="/admin/fines"
-           class="btn">
-
-            Fine Management
-
-        </a>
-
-
-        <a href="/admin/queries"
-           class="btn">
-
-            Queries
-
-        </a>
-
-
-        <a href="/logout"
-           class="btn">
-
-            Logout
-
-        </a>
+        </form>
 
 
     </div>
 
+
 </div>
+
+
+<!-- =========================================================
+     ADMIN PROFILE JAVASCRIPT
+     ========================================================= -->
+
+<script>
+
+    function toggleAdminProfile(event) {
+
+        event.stopPropagation();
+
+        const dropdown =
+            document.getElementById("adminProfileDropdown");
+
+        if (dropdown) {
+
+            dropdown.classList.toggle("show");
+
+        }
+
+    }
+
+
+    document.addEventListener(
+        "click",
+        function(event) {
+
+            const profile =
+                document.querySelector(".profile");
+
+            const dropdown =
+                document.getElementById("adminProfileDropdown");
+
+            if (
+                profile &&
+                dropdown &&
+                !profile.contains(event.target)
+            ) {
+
+                dropdown.classList.remove("show");
+
+            }
+
+        }
+    );
+
+</script>
+
 
 </body>
 

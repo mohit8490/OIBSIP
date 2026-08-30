@@ -15,6 +15,106 @@
     <link rel="stylesheet"
           href="/css/style.css">
 
+
+    <!-- =====================================================
+         ADMIN PROFILE DROPDOWN
+         ===================================================== -->
+
+    <style>
+
+        .profile {
+            position: relative;
+            cursor: pointer;
+        }
+
+
+        .profile-dropdown {
+            display: none;
+            position: absolute;
+            top: 52px;
+            right: 0;
+            width: 260px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            z-index: 1000;
+        }
+
+
+        .profile-dropdown.show {
+            display: block;
+        }
+
+
+        .profile-dropdown-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            color: #0f172a;
+        }
+
+
+        .profile-info {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 8px 0;
+            font-size: 11px;
+        }
+
+
+        .profile-info span {
+            color: #64748b;
+        }
+
+
+        .profile-info strong {
+            color: #0f172a;
+            text-align: right;
+            word-break: break-word;
+        }
+
+
+        .profile-divider {
+            height: 1px;
+            background: #e2e8f0;
+            margin: 10px 0;
+        }
+
+
+        .profile-logout {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 9px 12px;
+            border-radius: 8px;
+            background: #ef4444;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+
+        .profile-logout:hover {
+            opacity: 0.9;
+        }
+
+
+        @media (max-width: 600px) {
+
+            .profile-dropdown {
+                right: -10px;
+                width: 240px;
+            }
+
+        }
+
+    </style>
+
 </head>
 
 
@@ -38,9 +138,13 @@
 
 
     <div class="nav-title">
+
         Administration
+
     </div>
 
+
+    <!-- DASHBOARD -->
 
     <a href="/admin/dashboard">
 
@@ -52,6 +156,8 @@
 
     </a>
 
+
+    <!-- MANAGE BOOKS -->
 
     <a href="/admin/books"
        class="active">
@@ -65,6 +171,8 @@
     </a>
 
 
+    <!-- ISSUED BOOKS -->
+
     <a href="/admin/issued-books">
 
         📖
@@ -75,6 +183,8 @@
 
     </a>
 
+
+    <!-- RESERVATIONS -->
 
     <a href="/admin/reservations">
 
@@ -87,6 +197,8 @@
     </a>
 
 
+    <!-- MEMBERS -->
+
     <a href="/admin/members">
 
         👥
@@ -97,6 +209,8 @@
 
     </a>
 
+
+    <!-- FINES -->
 
     <a href="/admin/fines">
 
@@ -109,6 +223,8 @@
     </a>
 
 
+    <!-- QUERIES -->
+
     <a href="/admin/queries">
 
         ❓
@@ -119,6 +235,8 @@
 
     </a>
 
+
+    <!-- SIDEBAR LOGOUT -->
 
     <a href="/logout"
        class="logout">
@@ -151,14 +269,21 @@
 
 
         <h2>
+
             Manage Books
+
         </h2>
 
 
         <div class="topbar-right">
 
 
-            <div class="profile">
+            <!-- =================================================
+                 ADMIN PROFILE
+                 ================================================= -->
+
+            <div class="profile"
+                 onclick="toggleAdminProfile(event)">
 
 
                 <div class="profile-avatar">
@@ -176,8 +301,110 @@
 
 
                 <span>
+
                     ▾
+
                 </span>
+
+
+                <!-- =================================================
+                     PROFILE DROPDOWN
+                     ================================================= -->
+
+                <div class="profile-dropdown"
+                     id="adminProfileDropdown"
+                     onclick="event.stopPropagation();">
+
+
+                    <div class="profile-dropdown-title">
+
+                        My Account
+
+                    </div>
+
+
+                    <!-- NAME -->
+
+                    <div class="profile-info">
+
+                        <span>
+                            Name
+                        </span>
+
+                        <strong th:text="${admin.name}">
+
+                            Admin
+
+                        </strong>
+
+                    </div>
+
+
+                    <!-- USERNAME -->
+
+                    <div class="profile-info">
+
+                        <span>
+                            Username
+                        </span>
+
+                        <strong th:text="${admin.username}">
+
+                            admin
+
+                        </strong>
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="profile-info">
+
+                        <span>
+                            Email
+                        </span>
+
+                        <strong th:text="${admin.email}">
+
+                            admin@example.com
+
+                        </strong>
+
+                    </div>
+
+
+                    <!-- ROLE -->
+
+                    <div class="profile-info">
+
+                        <span>
+                            Role
+                        </span>
+
+                        <strong th:text="${admin.role}">
+
+                            ADMIN
+
+                        </strong>
+
+                    </div>
+
+
+                    <div class="profile-divider"></div>
+
+
+                    <!-- LOGOUT -->
+
+                    <a href="/logout"
+                       class="profile-logout">
+
+                        🚪 Logout
+
+                    </a>
+
+
+                </div>
 
 
             </div>
@@ -196,6 +423,8 @@
 
     <div class="content">
 
+
+        <!-- PAGE TITLE -->
 
         <h1 class="page-title">
 
@@ -256,6 +485,8 @@
                 </div>
 
 
+                <!-- HEADER ADD NEW BOOK - KEPT SAME -->
+
                 <a href="/admin/books/add"
                    class="btn">
 
@@ -277,6 +508,8 @@
 
         <div class="card-grid">
 
+
+            <!-- TOTAL BOOKS -->
 
             <div class="stat-card stat-blue">
 
@@ -313,6 +546,8 @@
             </div>
 
 
+
+            <!-- AVAILABLE -->
 
             <div class="stat-card stat-green">
 
@@ -354,6 +589,8 @@
 
 
 
+            <!-- TOTAL COPIES -->
+
             <div class="stat-card stat-purple">
 
 
@@ -393,6 +630,8 @@
             </div>
 
 
+
+            <!-- CATEGORIES -->
 
             <div class="stat-card stat-orange">
 
@@ -735,9 +974,14 @@
                         gap:15px;">
 
 
+                <!-- =================================================
+                     ADD BOOKS
+                     ================================================= -->
+
                 <div style="padding:15px;
                             border:1px solid #e2e8f0;
                             border-radius:10px;">
+
 
                     <strong>
 
@@ -756,20 +1000,21 @@
                     </p>
 
 
-                    <a href="/admin/books/add"
-                       class="btn-small btn-success">
+                    <!-- ADD BOOK BUTTON REMOVED -->
 
-                        Add Book
-
-                    </a>
 
                 </div>
 
 
 
+                <!-- =================================================
+                     UPDATE BOOKS
+                     ================================================= -->
+
                 <div style="padding:15px;
                             border:1px solid #e2e8f0;
                             border-radius:10px;">
+
 
                     <strong>
 
@@ -792,9 +1037,14 @@
 
 
 
+                <!-- =================================================
+                     REMOVE BOOKS
+                     ================================================= -->
+
                 <div style="padding:15px;
                             border:1px solid #e2e8f0;
                             border-radius:10px;">
+
 
                     <strong>
 
@@ -824,43 +1074,66 @@
 
 
         <!-- =================================================
-             NAVIGATION
+             BOTTOM NAVIGATION REMOVED
+             
+             Dashboard / Add Book / Logout
              ================================================= -->
-
-        <div style="margin-top:20px;">
-
-
-            <a href="/admin/dashboard"
-               class="btn">
-
-                📊 Dashboard
-
-            </a>
-
-
-            <a href="/admin/books/add"
-               class="btn">
-
-                ➕ Add Book
-
-            </a>
-
-
-            <a href="/logout"
-               class="btn btn-danger">
-
-                🚪 Logout
-
-            </a>
-
-
-        </div>
 
 
     </div>
 
 
 </div>
+
+
+
+<!-- =========================================================
+     ADMIN PROFILE JAVASCRIPT
+     ========================================================= -->
+
+<script>
+
+    function toggleAdminProfile(event) {
+
+        event.stopPropagation();
+
+        const dropdown =
+            document.getElementById("adminProfileDropdown");
+
+        if (dropdown) {
+
+            dropdown.classList.toggle("show");
+
+        }
+
+    }
+
+
+    document.addEventListener(
+        "click",
+        function(event) {
+
+            const profile =
+                document.querySelector(".profile");
+
+            const dropdown =
+                document.getElementById("adminProfileDropdown");
+
+
+            if (
+                profile &&
+                dropdown &&
+                !profile.contains(event.target)
+            ) {
+
+                dropdown.classList.remove("show");
+
+            }
+
+        }
+    );
+
+</script>
 
 
 </body>

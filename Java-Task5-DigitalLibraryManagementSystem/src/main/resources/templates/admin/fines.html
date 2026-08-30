@@ -15,6 +15,96 @@
     <link rel="stylesheet"
           href="/css/style.css">
 
+
+    <!-- =====================================================
+         ADMIN PROFILE DROPDOWN
+         ===================================================== -->
+
+    <style>
+
+        .profile {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .profile-dropdown {
+            display: none;
+            position: absolute;
+            top: 52px;
+            right: 0;
+            width: 260px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            z-index: 1000;
+        }
+
+        .profile-dropdown.show {
+            display: block;
+        }
+
+        .profile-dropdown-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 12px;
+        }
+
+        .profile-info {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 8px 0;
+            font-size: 11px;
+        }
+
+        .profile-info span {
+            color: #64748b;
+        }
+
+        .profile-info strong {
+            color: #0f172a;
+            text-align: right;
+            word-break: break-word;
+        }
+
+        .profile-divider {
+            height: 1px;
+            background: #e2e8f0;
+            margin: 10px 0;
+        }
+
+        .profile-logout {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 9px 12px;
+            border-radius: 8px;
+            background: #ef4444;
+            color: #ffffff;
+            text-align: center;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .profile-logout:hover {
+            opacity: 0.9;
+        }
+
+        @media (max-width: 600px) {
+
+            .profile-dropdown {
+                right: -10px;
+                width: 240px;
+            }
+
+        }
+
+    </style>
+
 </head>
 
 
@@ -28,9 +118,15 @@
 <div class="sidebar">
 
 
+    <!-- LOGO -->
+
     <div class="logo">
 
-        <span class="logo-icon">📖</span>
+        <span class="logo-icon">
+
+            📖
+
+        </span>
 
         DigiLibrary
 
@@ -44,70 +140,127 @@
     </div>
 
 
+    <!-- DASHBOARD -->
+
     <a href="/admin/dashboard">
 
         📊
-        <span>Dashboard</span>
+
+        <span>
+
+            Dashboard
+
+        </span>
 
     </a>
 
+
+    <!-- MANAGE BOOKS -->
 
     <a href="/admin/books">
 
         📚
-        <span>Manage Books</span>
+
+        <span>
+
+            Manage Books
+
+        </span>
 
     </a>
 
+
+    <!-- ISSUED BOOKS -->
 
     <a href="/admin/issued-books">
 
         📖
-        <span>Issued Books</span>
+
+        <span>
+
+            Issued Books
+
+        </span>
 
     </a>
 
+
+    <!-- RESERVATIONS -->
 
     <a href="/admin/reservations">
 
         📋
-        <span>Reservations</span>
+
+        <span>
+
+            Reservations
+
+        </span>
 
     </a>
 
+
+    <!-- MEMBERS -->
 
     <a href="/admin/members">
 
         👥
-        <span>Members</span>
+
+        <span>
+
+            Members
+
+        </span>
 
     </a>
 
+
+    <!-- FINE MANAGEMENT -->
 
     <a href="/admin/fines"
        class="active">
 
         💰
-        <span>Fine Management</span>
+
+        <span>
+
+            Fine Management
+
+        </span>
 
     </a>
 
+
+    <!-- QUERIES -->
 
     <a href="/admin/queries">
 
         ❓
-        <span>User Queries</span>
+
+        <span>
+
+            User Queries
+
+        </span>
 
     </a>
 
+
+    <!-- SIDEBAR LOGOUT -->
 
     <a href="/logout"
        class="logout">
 
         🚪
-        <span>Logout</span>
+
+        <span>
+
+            Logout
+
+        </span>
 
     </a>
+
 
 </div>
 
@@ -128,14 +281,21 @@
 
 
         <h2>
+
             Fine Management
+
         </h2>
 
 
         <div class="topbar-right">
 
 
-            <div class="profile">
+            <!-- =================================================
+                 ADMIN PROFILE
+                 ================================================= -->
+
+            <div class="profile"
+                 onclick="toggleAdminProfile(event)">
 
 
                 <div class="profile-avatar">
@@ -152,7 +312,119 @@
                 </span>
 
 
-                <span>▾</span>
+                <span>
+
+                    ▾
+
+                </span>
+
+
+                <!-- =================================================
+                     ADMIN INFORMATION DROPDOWN
+                     ================================================= -->
+
+                <div class="profile-dropdown"
+                     id="adminProfileDropdown"
+                     onclick="event.stopPropagation();">
+
+
+                    <div class="profile-dropdown-title">
+
+                        My Account
+
+                    </div>
+
+
+                    <!-- NAME -->
+
+                    <div class="profile-info">
+
+                        <span>
+
+                            Name
+
+                        </span>
+
+                        <strong th:text="${admin.name}">
+
+                            Admin
+
+                        </strong>
+
+                    </div>
+
+
+                    <!-- USERNAME -->
+
+                    <div class="profile-info">
+
+                        <span>
+
+                            Username
+
+                        </span>
+
+                        <strong th:text="${admin.username}">
+
+                            admin
+
+                        </strong>
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="profile-info">
+
+                        <span>
+
+                            Email
+
+                        </span>
+
+                        <strong th:text="${admin.email}">
+
+                            admin@example.com
+
+                        </strong>
+
+                    </div>
+
+
+                    <!-- ROLE -->
+
+                    <div class="profile-info">
+
+                        <span>
+
+                            Role
+
+                        </span>
+
+                        <strong th:text="${admin.role}">
+
+                            ADMIN
+
+                        </strong>
+
+                    </div>
+
+
+                    <div class="profile-divider"></div>
+
+
+                    <!-- LOGOUT -->
+
+                    <a href="/logout"
+                       class="profile-logout">
+
+                        🚪 Logout
+
+                    </a>
+
+
+                </div>
 
 
             </div>
@@ -171,6 +443,8 @@
 
     <div class="content">
 
+
+        <!-- PAGE TITLE -->
 
         <h1 class="page-title">
 
@@ -448,13 +722,11 @@
 
                         <td>
 
-
                             <strong th:text="${fine.issue.user.username}">
 
                                 username
 
                             </strong>
-
 
                         </td>
 
@@ -472,13 +744,11 @@
 
                         <td>
 
-
                             <strong th:text="${fine.issue.book.title}">
 
                                 Book Title
 
                             </strong>
-
 
                         </td>
 
@@ -505,7 +775,6 @@
 
                         <td>
 
-
                             <span th:if="${fine.issue.returnDate != null}"
                                   th:text="${fine.issue.returnDate}">
 
@@ -520,14 +789,12 @@
 
                             </span>
 
-
                         </td>
 
 
                         <!-- AMOUNT -->
 
                         <td>
-
 
                             <strong>
 
@@ -539,14 +806,12 @@
 
                             </strong>
 
-
                         </td>
 
 
                         <!-- STATUS -->
 
                         <td>
-
 
                             <span th:if="${fine.paid}"
                                   class="badge badge-green">
@@ -562,7 +827,6 @@
                                 ⚠ UNPAID
 
                             </span>
-
 
                         </td>
 
@@ -735,117 +999,72 @@
         </div>
 
 
-
-        <!-- =================================================
-             QUICK NAVIGATION
-             ================================================= -->
-
-        <div class="panel">
+        <!-- =====================================================
+             QUICK NAVIGATION REMOVED
+             ===================================================== -->
 
 
-            <div class="panel-title">
-
-                Quick Navigation
-
-            </div>
-
-
-            <div class="quick-actions">
-
-
-                <a href="/admin/dashboard"
-                   class="blue">
-
-                    📊 Dashboard
-
-                </a>
-
-
-                <a href="/admin/books"
-                   class="green">
-
-                    📚 Books
-
-                </a>
-
-
-                <a href="/admin/issued-books"
-                   class="purple">
-
-                    📖 Issued Books
-
-                </a>
-
-
-                <a href="/admin/reservations"
-                   class="orange">
-
-                    📋 Reservations
-
-                </a>
-
-
-                <a href="/admin/members"
-                   class="blue">
-
-                    👥 Members
-
-                </a>
-
-
-                <a href="/admin/queries"
-                   class="green">
-
-                    ❓ Queries
-
-                </a>
-
-
-            </div>
-
-
-        </div>
-
-
-
-        <!-- =================================================
-             NAVIGATION
-             ================================================= -->
-
-        <div style="margin-top:20px;">
-
-
-            <a href="/admin/dashboard"
-               class="btn">
-
-                📊 Dashboard
-
-            </a>
-
-
-            <a href="/admin/issued-books"
-               class="btn">
-
-                📖 Issued Books
-
-            </a>
-
-
-            <a href="/logout"
-               class="btn btn-danger">
-
-                🚪 Logout
-
-            </a>
-
-
-        </div>
+        <!-- =====================================================
+             BOTTOM NAVIGATION REMOVED
+             
+             Dashboard / Issued Books / Logout
+             ===================================================== -->
 
 
     </div>
 
 
 </div>
+
+
+
+<!-- =========================================================
+     ADMIN PROFILE JAVASCRIPT
+     ========================================================= -->
+
+<script>
+
+    function toggleAdminProfile(event) {
+
+        event.stopPropagation();
+
+        const dropdown =
+            document.getElementById("adminProfileDropdown");
+
+        if (dropdown) {
+
+            dropdown.classList.toggle("show");
+
+        }
+
+    }
+
+
+    document.addEventListener(
+        "click",
+        function(event) {
+
+            const profile =
+                document.querySelector(".profile");
+
+            const dropdown =
+                document.getElementById("adminProfileDropdown");
+
+
+            if (
+                profile &&
+                dropdown &&
+                !profile.contains(event.target)
+            ) {
+
+                dropdown.classList.remove("show");
+
+            }
+
+        }
+    );
+
+</script>
 
 
 </body>

@@ -1,19 +1,154 @@
 <!DOCTYPE html>
 
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Admin Dashboard - DigiLibrary</title>
 
-    <link rel="stylesheet"
-          href="/css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
+
+
+    <!-- =====================================================
+         ONLY REQUIRED ADMIN PROFILE / SMALL UI CSS
+         ===================================================== -->
+
+    <style>
+        /* Profile dropdown */
+
+        .profile {
+            position: relative;
+            cursor: pointer;
+        }
+
+
+        .profile-dropdown {
+            display: none;
+            position: absolute;
+            top: 52px;
+            right: 0;
+            width: 260px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            z-index: 1000;
+        }
+
+
+        .profile-dropdown.show {
+            display: block;
+        }
+
+
+        .profile-dropdown-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            color: #0f172a;
+        }
+
+
+        .profile-info {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 8px 0;
+            font-size: 11px;
+        }
+
+
+        .profile-info span {
+            color: #64748b;
+        }
+
+
+        .profile-info strong {
+            color: #0f172a;
+            text-align: right;
+            word-break: break-word;
+        }
+
+
+        .profile-divider {
+            height: 1px;
+            background: #e2e8f0;
+            margin: 10px 0;
+        }
+
+
+        .profile-logout {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 9px 12px;
+            border-radius: 8px;
+            background: #ef4444;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+
+        .profile-logout:hover {
+            opacity: 0.9;
+        }
+
+
+        /* Slightly smaller description text in statistics */
+
+        .stat-card p {
+            font-size: 10px;
+        }
+
+
+        /* Library management buttons slightly narrower */
+
+        .admin-management-actions {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(170px, 1fr));
+            gap: 12px;
+            width: 92%;
+        }
+
+
+        .admin-management-actions a {
+            min-width: 0;
+        }
+
+
+        @media (max-width: 900px) {
+
+            .admin-management-actions {
+                grid-template-columns: repeat(2, minmax(160px, 1fr));
+                width: 100%;
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .admin-management-actions {
+                grid-template-columns: 1fr;
+                width: 100%;
+            }
+
+
+            .profile-dropdown {
+                right: -10px;
+                width: 240px;
+            }
+
+        }
+    </style>
 
 </head>
 
@@ -21,170 +156,328 @@
 <body>
 
 
-<!-- =========================================================
+    <!-- =========================================================
      SIDEBAR
      ========================================================= -->
 
-<div class="sidebar">
+    <div class="sidebar">
 
 
-    <!-- LOGO -->
+        <!-- LOGO -->
 
-    <div class="logo">
+        <div class="logo">
 
-        <span class="logo-icon">📖</span>
+            <span class="logo-icon">📖</span>
 
-        DigiLibrary
+            DigiLibrary
+
+        </div>
+
+
+        <div class="nav-title">
+
+            Administration
+
+        </div>
+
+
+        <!-- =====================================================
+         DASHBOARD
+         ===================================================== -->
+
+        <a href="/admin/dashboard" class="active">
+
+            📊
+
+            <span>
+                Dashboard
+            </span>
+
+        </a>
+
+
+        <!-- =====================================================
+         MANAGE BOOKS
+         ===================================================== -->
+
+        <a href="/admin/books">
+
+            📚
+
+            <span>
+                Manage Books
+            </span>
+
+        </a>
+
+
+        <!-- =====================================================
+         ISSUED BOOKS
+         ===================================================== -->
+
+        <a href="/admin/issued-books">
+
+            📖
+
+            <span>
+                Issued Books
+            </span>
+
+        </a>
+
+
+        <!-- =====================================================
+         RESERVATIONS
+         ===================================================== -->
+
+        <a href="/admin/reservations">
+
+            📋
+
+            <span>
+                Reservations
+            </span>
+
+        </a>
+
+
+        <!-- =====================================================
+         MEMBERS
+         ===================================================== -->
+
+        <a href="/admin/members">
+
+            👥
+
+            <span>
+                Members
+            </span>
+
+        </a>
+
+
+        <!-- =====================================================
+         FINES
+         ===================================================== -->
+
+        <a href="/admin/fines">
+
+            💰
+
+            <span>
+                Fine Management
+            </span>
+
+        </a>
+
+
+        <!-- =====================================================
+         QUERIES
+         ===================================================== -->
+
+        <a href="/admin/queries">
+
+            ❓
+
+            <span>
+                User Queries
+            </span>
+
+        </a>
+
+
+        <!-- =====================================================
+         SIDEBAR LOGOUT
+         ===================================================== -->
+
+        <a href="/logout" class="logout">
+
+            🚪
+
+            <span>
+                Logout
+            </span>
+
+        </a>
+
 
     </div>
 
 
-    <div class="nav-title">
-        Administration
-    </div>
 
-
-    <!-- DASHBOARD -->
-
-    <a href="/admin/dashboard"
-       class="active">
-
-        📊
-
-        <span>
-            Dashboard
-        </span>
-
-    </a>
-
-
-    <!-- MANAGE BOOKS -->
-
-    <a href="/admin/books">
-
-        📚
-
-        <span>
-            Manage Books
-        </span>
-
-    </a>
-
-
-    <!-- ISSUED BOOKS -->
-
-    <a href="/admin/issued-books">
-
-        📖
-
-        <span>
-            Issued Books
-        </span>
-
-    </a>
-
-
-    <!-- RESERVATIONS -->
-
-    <a href="/admin/reservations">
-
-        📋
-
-        <span>
-            Reservations
-        </span>
-
-    </a>
-
-
-    <!-- MEMBERS -->
-
-    <a href="/admin/members">
-
-        👥
-
-        <span>
-            Members
-        </span>
-
-    </a>
-
-
-    <!-- FINES -->
-
-    <a href="/admin/fines">
-
-        💰
-
-        <span>
-            Fine Management
-        </span>
-
-    </a>
-
-
-    <!-- QUERIES -->
-
-    <a href="/admin/queries">
-
-        ❓
-
-        <span>
-            User Queries
-        </span>
-
-    </a>
-
-
-    <!-- LOGOUT -->
-
-    <a href="/logout"
-       class="logout">
-
-        🚪
-
-        <span>
-            Logout
-        </span>
-
-    </a>
-
-
-</div>
-
-
-
-<!-- =========================================================
+    <!-- =========================================================
      MAIN CONTENT
      ========================================================= -->
 
-<div class="main">
+    <div class="main">
 
 
-    <!-- =====================================================
+        <!-- =====================================================
          TOP BAR
          ===================================================== -->
 
-    <div class="topbar">
+        <div class="topbar">
 
 
-        <h2>
-            Admin Dashboard
-        </h2>
+            <h2>
+
+                Admin Dashboard
+
+            </h2>
 
 
-        <div class="topbar-right">
+            <div class="topbar-right">
 
 
-            <div class="profile">
+                <!-- =================================================
+                 ADMIN PROFILE
+                 ================================================= -->
+
+                <div class="profile" onclick="toggleAdminProfile(event)">
 
 
-                <div class="profile-avatar">
+                    <div class="profile-avatar">
 
-                    👨‍💼
+                        👨‍💼
+
+                    </div>
+
+
+                    <span th:text="${admin.name}">
+
+                        Admin
+
+                    </span>
+
+
+                    <span>
+
+                        ▾
+
+                    </span>
+
+
+                    <!-- =================================================
+                     ADMIN PROFILE DROPDOWN
+                     ================================================= -->
+
+                    <div class="profile-dropdown" id="adminProfileDropdown" onclick="event.stopPropagation();">
+
+
+                        <div class="profile-dropdown-title">
+
+                            My Account
+
+                        </div>
+
+
+                        <!-- NAME -->
+
+                        <div class="profile-info">
+
+                            <span>
+                                Name
+                            </span>
+
+                            <strong th:text="${admin.name}">
+
+                                Admin
+
+                            </strong>
+
+                        </div>
+
+
+                        <!-- USERNAME -->
+
+                        <div class="profile-info">
+
+                            <span>
+                                Username
+                            </span>
+
+                            <strong th:text="${admin.username}">
+
+                                admin
+
+                            </strong>
+
+                        </div>
+
+
+                        <!-- EMAIL -->
+
+                        <div class="profile-info">
+
+                            <span>
+                                Email
+                            </span>
+
+                            <strong th:text="${admin.email}">
+
+                                admin@example.com
+
+                            </strong>
+
+                        </div>
+
+
+                        <!-- ROLE -->
+
+                        <div class="profile-info">
+
+                            <span>
+                                Role
+                            </span>
+
+                            <strong th:text="${admin.role}">
+
+                                ADMIN
+
+                            </strong>
+
+                        </div>
+
+
+                        <div class="profile-divider"></div>
+
+
+                        <!-- LOGOUT -->
+
+                        <a href="/logout" class="profile-logout">
+
+                            🚪 Logout
+
+                        </a>
+
+
+                    </div>
+
 
                 </div>
 
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =====================================================
+         PAGE CONTENT
+         ===================================================== -->
+
+        <div class="content">
+
+
+            <!-- =================================================
+             PAGE TITLE
+             ================================================= -->
+
+            <h1 class="page-title">
+
+                Welcome back,
 
                 <span th:text="${admin.name}">
 
@@ -192,523 +485,218 @@
 
                 </span>
 
+            </h1>
 
-                <span>
 
-                    ▾
+            <p class="page-subtitle">
 
-                </span>
+                Here's what's happening in your digital library today.
 
+            </p>
+
+
+            <div class="breadcrumb">
+
+                Home / Admin Dashboard
 
             </div>
 
 
-        </div>
 
-
-    </div>
-
-
-
-    <!-- =====================================================
-         PAGE CONTENT
-         ===================================================== -->
-
-    <div class="content">
-
-
-        <!-- PAGE TITLE -->
-
-        <h1 class="page-title">
-
-            Welcome back,
-
-            <span th:text="${admin.name}">
-
-                Admin
-
-            </span>
-
-        </h1>
-
-
-        <p class="page-subtitle">
-
-            Here's what's happening in your digital library today.
-
-        </p>
-
-
-        <div class="breadcrumb">
-
-            Home / Admin Dashboard
-
-        </div>
-
-
-
-        <!-- =================================================
+            <!-- =================================================
              LIBRARY STATISTICS
              ================================================= -->
 
-        <div class="card-grid">
+            <div class="card-grid">
 
 
-            <!-- TOTAL BOOKS -->
+                <!-- TOTAL BOOKS -->
 
-            <div class="stat-card stat-blue">
+                <div class="stat-card stat-blue">
 
 
-                <div class="stat-icon">
+                    <div class="stat-icon">
 
-                    📚
+                        📚
 
-                </div>
+                    </div>
 
 
-                <div class="stat-label">
+                    <div class="stat-label">
 
-                    Total Books
+                        Total Books
 
-                </div>
+                    </div>
 
 
-                <div class="stat-value"
-                     th:text="${totalBooks}">
-
-                    0
-
-                </div>
-
-
-                <p>
-
-                    Books available in library
-
-                </p>
-
-
-            </div>
-
-
-
-            <!-- TOTAL MEMBERS -->
-
-            <div class="stat-card stat-purple">
-
-
-                <div class="stat-icon">
-
-                    👥
-
-                </div>
-
-
-                <div class="stat-label">
-
-                    Total Members
-
-                </div>
-
-
-                <div class="stat-value"
-                     th:text="${totalUsers}">
-
-                    0
-
-                </div>
-
-
-                <p>
-
-                    Registered library users
-
-                </p>
-
-
-            </div>
-
-
-
-            <!-- ISSUED BOOKS -->
-
-            <div class="stat-card stat-green">
-
-
-                <div class="stat-icon">
-
-                    📖
-
-                </div>
-
-
-                <div class="stat-label">
-
-                    Issued Books
-
-                </div>
-
-
-                <div class="stat-value"
-                     th:text="${totalIssuedBooks}">
-
-                    0
-
-                </div>
-
-
-                <p>
-
-                    Currently issued books
-
-                </p>
-
-
-            </div>
-
-
-
-            <!-- FINE RECORDS -->
-
-            <div class="stat-card stat-orange">
-
-
-                <div class="stat-icon">
-
-                    💰
-
-                </div>
-
-
-                <div class="stat-label">
-
-                    Fine Records
-
-                </div>
-
-
-                <div class="stat-value"
-                     th:text="${totalFines}">
-
-                    0
-
-                </div>
-
-
-                <p>
-
-                    Total fine records
-
-                </p>
-
-
-            </div>
-
-
-        </div>
-
-
-
-        <!-- =================================================
-             FINE OVERVIEW
-             ================================================= -->
-
-        <div class="card-grid">
-
-
-            <!-- UNPAID FINES -->
-
-            <div class="stat-card stat-red">
-
-
-                <div class="stat-icon">
-
-                    ⚠️
-
-                </div>
-
-
-                <div class="stat-label">
-
-                    Unpaid Fines
-
-                </div>
-
-
-                <div class="stat-value"
-                     th:text="${unpaidFines}">
-
-                    0
-
-                </div>
-
-
-                <p>
-
-                    Pending fine records
-
-                </p>
-
-
-            </div>
-
-
-
-            <!-- UNPAID AMOUNT -->
-
-            <div class="stat-card stat-red">
-
-
-                <div class="stat-icon">
-
-                    ₹
-
-                </div>
-
-
-                <div class="stat-label">
-
-                    Unpaid Fine Amount
-
-                </div>
-
-
-                <div class="stat-value">
-
-
-                    ₹<span th:text="${unpaidFineAmount}">
+                    <div class="stat-value" th:text="${totalBooks}">
 
                         0
 
-                    </span>
+                    </div>
+
+
+                    <p>
+
+                        Books available in library
+
+                    </p>
 
 
                 </div>
 
 
-                <p>
 
-                    Total amount pending
+                <!-- TOTAL MEMBERS -->
 
-                </p>
+                <div class="stat-card stat-purple">
+
+
+                    <div class="stat-icon">
+
+                        👥
+
+                    </div>
+
+
+                    <div class="stat-label">
+
+                        Total Members
+
+                    </div>
+
+
+                    <div class="stat-value" th:text="${totalUsers}">
+
+                        0
+
+                    </div>
+
+
+                    <p>
+
+                        Registered library users
+
+                    </p>
+
+
+                </div>
+
+
+
+                <!-- ISSUED BOOKS -->
+
+                <div class="stat-card stat-green">
+
+
+                    <div class="stat-icon">
+
+                        📖
+
+                    </div>
+
+
+                    <div class="stat-label">
+
+                        Issued Books
+
+                    </div>
+
+
+                    <div class="stat-value" th:text="${totalIssuedBooks}">
+
+                        0
+
+                    </div>
+
+
+                    <p>
+
+                        Currently issued books
+
+                    </p>
+
+
+                </div>
+
+
+
+                <!-- FINE RECORDS -->
+
+                <div class="stat-card stat-orange">
+
+
+                    <div class="stat-icon">
+
+                        💰
+
+                    </div>
+
+
+                    <div class="stat-label">
+
+                        Fine Records
+
+                    </div>
+
+
+                    <div class="stat-value" th:text="${totalFines}">
+
+                        0
+
+                    </div>
+
+
+                    <p>
+
+                        Total fine records
+
+                    </p>
+
+
+                </div>
 
 
             </div>
 
 
 
-            <!-- SYSTEM STATUS -->
-
-            <div class="stat-card stat-green">
-
-
-                <div class="stat-icon">
-
-                    ✓
-
-                </div>
-
-
-                <div class="stat-label">
-
-                    Library Status
-
-                </div>
-
-
-                <div class="stat-value">
-
-                    Active
-
-                </div>
-
-
-                <p>
-
-                    System is operational
-
-                </p>
-
-
-            </div>
-
-
-
-            <!-- ADMIN ROLE -->
-
-            <div class="stat-card stat-blue">
-
-
-                <div class="stat-icon">
-
-                    👨‍💼
-
-                </div>
-
-
-                <div class="stat-label">
-
-                    Current Role
-
-                </div>
-
-
-                <div class="stat-value"
-                     style="font-size: 20px;"
-                     th:text="${admin.role}">
-
-                    ADMIN
-
-                </div>
-
-
-                <p>
-
-                    Administrator access
-
-                </p>
-
-
-            </div>
-
-
-        </div>
-
-
-
-        <!-- =================================================
-             QUICK ACTIONS
+            <!-- =================================================
+             FINE OVERVIEW
              ================================================= -->
 
-        <div class="panel">
+            <div class="card-grid">
 
 
-            <div class="panel-title">
+                <!-- UNPAID FINES -->
 
-                Quick Actions
+                <div class="stat-card stat-red">
 
-            </div>
 
+                    <div class="stat-icon">
 
-            <div class="quick-actions">
+                        ⚠️
 
+                    </div>
 
-                <!-- ADD BOOK -->
 
-                <a href="/admin/books/add"
-                   class="blue">
+                    <div class="stat-label">
 
-                    ➕ Add New Book
+                        Unpaid Fines
 
-                </a>
+                    </div>
 
 
-                <!-- MANAGE BOOKS -->
+                    <div class="stat-value" th:text="${unpaidFines}">
 
-                <a href="/admin/books"
-                   class="green">
+                        0
 
-                    📚 Manage Books
+                    </div>
 
-                </a>
 
+                    <p>
 
-                <!-- ISSUED -->
-
-                <a href="/admin/issued-books"
-                   class="purple">
-
-                    📖 Issued Books
-
-                </a>
-
-
-                <!-- RESERVATIONS -->
-
-                <a href="/admin/reservations"
-                   class="orange">
-
-                    📋 Reservations
-
-                </a>
-
-
-                <!-- MEMBERS -->
-
-                <a href="/admin/members"
-                   class="blue">
-
-                    👥 Members
-
-                </a>
-
-
-                <!-- QUERIES -->
-
-                <a href="/admin/queries"
-                   class="green">
-
-                    ❓ User Queries
-
-                </a>
-
-
-                <!-- FINES -->
-
-                <a href="/admin/fines"
-                   class="red">
-
-                    💰 Fine Management
-
-                </a>
-
-
-            </div>
-
-
-        </div>
-
-
-
-        <!-- =================================================
-             ADMIN INFORMATION
-             ================================================= -->
-
-        <div class="panel">
-
-
-            <div class="panel-title">
-
-                Administrator Information
-
-            </div>
-
-
-            <div style="display: grid;
-                        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                        gap: 18px;">
-
-
-                <!-- NAME -->
-
-                <div>
-
-
-                    <span style="font-size: 9px;
-                                 color: #94a3b8;
-                                 text-transform: uppercase;">
-
-                        Name
-
-                    </span>
-
-
-                    <p style="margin: 6px 0;
-                              font-weight: 600;
-                              font-size: 12px;"
-                       th:text="${admin.name}">
-
-                        Admin
+                        Pending fine records
 
                     </p>
 
@@ -717,87 +705,116 @@
 
 
 
-                <!-- USERNAME -->
+                <!-- UNPAID AMOUNT -->
 
-                <div>
-
-
-                    <span style="font-size: 9px;
-                                 color: #94a3b8;
-                                 text-transform: uppercase;">
-
-                        Username
-
-                    </span>
+                <div class="stat-card stat-red">
 
 
-                    <p style="margin: 6px 0;
-                              font-weight: 600;
-                              font-size: 12px;"
-                       th:text="${admin.username}">
+                    <div class="stat-icon">
 
-                        admin
+                        ₹
 
-                    </p>
+                    </div>
 
 
-                </div>
+                    <div class="stat-label">
+
+                        Unpaid Fine Amount
+
+                    </div>
 
 
-
-                <!-- EMAIL -->
-
-                <div>
+                    <div class="stat-value">
 
 
-                    <span style="font-size: 9px;
-                                 color: #94a3b8;
-                                 text-transform: uppercase;">
+                        ₹<span th:text="${unpaidFineAmount}">
 
-                        Email
-
-                    </span>
-
-
-                    <p style="margin: 6px 0;
-                              font-weight: 600;
-                              font-size: 12px;"
-                       th:text="${admin.email}">
-
-                        admin@example.com
-
-                    </p>
-
-
-                </div>
-
-
-
-                <!-- ROLE -->
-
-                <div>
-
-
-                    <span style="font-size: 9px;
-                                 color: #94a3b8;
-                                 text-transform: uppercase;">
-
-                        Role
-
-                    </span>
-
-
-                    <p style="margin: 6px 0;">
-
-
-                        <span class="badge badge-blue"
-                              th:text="${admin.role}">
-
-                            ADMIN
+                            0
 
                         </span>
 
 
+                    </div>
+
+
+                    <p>
+
+                        Total amount pending
+
+                    </p>
+
+
+                </div>
+
+
+
+                <!-- SYSTEM STATUS -->
+
+                <div class="stat-card stat-green">
+
+
+                    <div class="stat-icon">
+
+                        ✓
+
+                    </div>
+
+
+                    <div class="stat-label">
+
+                        Library Status
+
+                    </div>
+
+
+                    <div class="stat-value">
+
+                        Active
+
+                    </div>
+
+
+                    <p>
+
+                        System is operational
+
+                    </p>
+
+
+                </div>
+
+
+
+                <!-- ADMIN ROLE -->
+
+                <div class="stat-card stat-blue">
+
+
+                    <div class="stat-icon">
+
+                        👨‍💼
+
+                    </div>
+
+
+                    <div class="stat-label">
+
+                        Current Role
+
+                    </div>
+
+
+                    <div class="stat-value" style="font-size: 20px;" th:text="${admin.role}">
+
+                        ADMIN
+
+                    </div>
+
+
+                    <p>
+
+                        Administrator access
+
                     </p>
 
 
@@ -807,113 +824,285 @@
             </div>
 
 
-        </div>
 
-
-
-        <!-- =================================================
-             ADMIN MENU
+            <!-- =================================================
+             LIBRARY MANAGEMENT
+             MOVED TO QUICK ACTIONS PLACE
              ================================================= -->
 
-        <div class="panel">
+            <div class="panel">
+
+                <div class="panel-title">
+
+                    Library Management
+
+                </div>
 
 
-            <div class="panel-title">
+                <div class="quick-actions">
 
-                Library Management
+
+                    <a href="/admin/books" class="blue">
+
+                        📚
+
+                        <span>
+                            Books
+                        </span>
+
+                    </a>
+
+
+                    <a href="/admin/issued-books" class="green">
+
+                        📖
+
+                        <span>
+                            Issued Books
+                        </span>
+
+                    </a>
+
+
+                    <a href="/admin/reservations" class="purple">
+
+                        📋
+
+                        <span>
+                            Reservations
+                        </span>
+
+                    </a>
+
+
+                    <a href="/admin/members" class="orange">
+
+                        👥
+
+                        <span>
+                            Members
+                        </span>
+
+                    </a>
+
+
+                    <a href="/admin/fines" class="red">
+
+                        💰
+
+                        <span>
+                            Fines
+                        </span>
+
+                    </a>
+
+
+                    <a href="/admin/queries" class="blue">
+
+                        ❓
+
+                        <span>
+                            Queries
+                        </span>
+
+                    </a>
+
+
+                </div>
 
             </div>
 
 
-            <div class="quick-actions">
+
+            <!-- =================================================
+     LIBRARY OVERVIEW
+     ================================================= -->
+
+            <div class="panel">
+
+                <div class="panel-title">
+
+                    📚 Library Overview
+
+                </div>
 
 
-                <a href="/admin/books"
-                   class="blue">
-
-                    📚
-                    <span>
-                        Books
-                    </span>
-
-                </a>
+                <div style="
+        display:grid;
+        grid-template-columns:repeat(3, minmax(0, 1fr));
+        gap:15px;
+    ">
 
 
-                <a href="/admin/issued-books"
-                   class="green">
+                    <!-- BOOK COLLECTION -->
 
-                    📖
-                    <span>
-                        Issued Books
-                    </span>
+                    <div style="
+            padding:18px;
+            border:1px solid #e2e8f0;
+            border-radius:10px;
+            background:#f8fafc;
+        ">
 
-                </a>
+                        <div style="
+                font-size:28px;
+                margin-bottom:8px;
+            ">
 
+                            📚
 
-                <a href="/admin/reservations"
-                   class="purple">
-
-                    📋
-                    <span>
-                        Reservations
-                    </span>
-
-                </a>
+                        </div>
 
 
-                <a href="/admin/members"
-                   class="orange">
+                        <strong style="
+                font-size:13px;
+                color:#0f172a;
+            ">
 
-                    👥
-                    <span>
-                        Members
-                    </span>
+                            Library Collection
 
-                </a>
-
-
-                <a href="/admin/fines"
-                   class="red">
-
-                    💰
-                    <span>
-                        Fines
-                    </span>
-
-                </a>
+                        </strong>
 
 
-                <a href="/admin/queries"
-                   class="blue">
+                        <p style="
+                margin:7px 0 0;
+                font-size:10px;
+                color:#64748b;
+                line-height:1.6;
+            ">
 
-                    ❓
-                    <span>
-                        Queries
-                    </span>
+                            Manage books, monitor availability
+                            and keep the library collection
+                            organized.
 
-                </a>
+                        </p>
 
+                    </div>
+
+
+
+                    <!-- MEMBER SERVICES -->
+
+                    <div style="
+            padding:18px;
+            border:1px solid #e2e8f0;
+            border-radius:10px;
+            background:#f8fafc;
+        ">
+
+                        <div style="
+                font-size:28px;
+                margin-bottom:8px;
+            ">
+
+                            👥
+
+                        </div>
+
+
+                        <strong style="
+                font-size:13px;
+                color:#0f172a;
+            ">
+
+                            Member Services
+
+                        </strong>
+
+
+                        <p style="
+                margin:7px 0 0;
+                font-size:10px;
+                color:#64748b;
+                line-height:1.6;
+            ">
+
+                            Manage registered members,
+                            issued books, reservations
+                            and user activities.
+
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- LIBRARY SUPPORT -->
+
+                    <div style="
+            padding:18px;
+            border:1px solid #e2e8f0;
+            border-radius:10px;
+            background:#f8fafc;
+        ">
+
+                        <div style="
+                font-size:28px;
+                margin-bottom:8px;
+            ">
+
+                            💬
+
+                        </div>
+
+
+                        <strong style="
+                font-size:13px;
+                color:#0f172a;
+            ">
+
+                            Library Support
+
+                        </strong>
+
+
+                        <p style="
+                margin:7px 0 0;
+                font-size:10px;
+                color:#64748b;
+                line-height:1.6;
+            ">
+
+                            Review user queries, respond
+                            to members and keep track of
+                            library support requests.
+
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- SMALL STATUS MESSAGE -->
+
+                <div style="
+        margin-top:15px;
+        padding:12px 15px;
+        border-radius:8px;
+        background:#f1f5f9;
+        font-size:10px;
+        color:#64748b;
+    ">
+
+                    ✓
+
+                    <strong style="color:#334155;">
+
+                        Library system is active.
+
+                    </strong>
+
+                    All major library management services
+                    are available from the navigation menu.
+
+                </div>
 
             </div>
 
 
-        </div>
 
 
-
-        <!-- =================================================
-             LOGOUT
-             ================================================= -->
-
-        <div style="margin-top: 20px;">
-
-
-            <a href="/logout"
-               class="btn btn-danger">
-
-                🚪 Logout
-
-            </a>
 
 
         </div>
@@ -922,7 +1111,54 @@
     </div>
 
 
-</div>
+
+    <!-- =========================================================
+     ADMIN PROFILE JAVASCRIPT
+     ========================================================= -->
+
+    <script>
+
+        function toggleAdminProfile(event) {
+
+            event.stopPropagation();
+
+            const dropdown =
+                document.getElementById("adminProfileDropdown");
+
+            if (dropdown) {
+
+                dropdown.classList.toggle("show");
+
+            }
+
+        }
+
+
+        document.addEventListener(
+            "click",
+            function (event) {
+
+                const profile =
+                    document.querySelector(".profile");
+
+                const dropdown =
+                    document.getElementById("adminProfileDropdown");
+
+
+                if (
+                    profile &&
+                    dropdown &&
+                    !profile.contains(event.target)
+                ) {
+
+                    dropdown.classList.remove("show");
+
+                }
+
+            }
+        );
+
+    </script>
 
 
 </body>

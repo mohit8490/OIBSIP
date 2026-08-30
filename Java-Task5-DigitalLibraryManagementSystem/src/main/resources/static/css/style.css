@@ -1145,3 +1145,330 @@ textarea {
         display: none;
     }
 }
+
+
+/* =========================================================
+   USER DASHBOARD - PROFILE DROPDOWN
+   ========================================================= */
+
+.profile {
+    position: relative;
+}
+
+
+/* PROFILE BUTTON */
+
+.profile-button {
+    border: none;
+
+    background: transparent;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 3px 5px;
+
+    color: var(--text);
+
+    font-family: inherit;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+.profile-button:hover {
+
+    background: #f5f8fc;
+
+    border-radius: 6px;
+
+}
+
+
+/* =========================================================
+   PROFILE DROPDOWN
+   ========================================================= */
+
+.profile-dropdown {
+
+    position: absolute;
+
+    top: 42px;
+
+    right: 0;
+
+    width: 260px;
+
+    background: white;
+
+    border: 1px solid var(--border);
+
+    border-radius: 9px;
+
+    padding: 15px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(20, 40, 70, .12);
+
+    display: none;
+
+    z-index: 2000;
+
+}
+
+
+/* SHOW DROPDOWN */
+
+.profile-dropdown.show {
+
+    display: block;
+
+}
+
+
+/* DROPDOWN TITLE */
+
+.profile-dropdown-title {
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    margin-bottom: 12px;
+
+}
+
+
+/* USER INFORMATION */
+
+.profile-info {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    padding: 8px 0;
+
+    font-size: 10px;
+
+}
+
+
+.profile-info span {
+
+    color: var(--muted);
+
+}
+
+
+.profile-info strong {
+
+    color: var(--text);
+
+    text-align: right;
+
+    word-break: break-word;
+
+}
+
+
+/* DIVIDER */
+
+.profile-divider {
+
+    height: 1px;
+
+    background: var(--border);
+
+    margin: 8px 0 12px;
+
+}
+
+
+/* DROPDOWN LOGOUT */
+
+.profile-logout {
+
+    display: block;
+
+    text-align: center;
+
+    padding: 8px;
+
+    border-radius: 6px;
+
+    background: var(--red);
+
+    color: white !important;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+}
+
+
+.profile-logout:hover {
+
+    background: #dc2626;
+
+    color: white !important;
+
+}
+
+
+/* =========================================================
+   QUICK ACTIONS
+   Equal spacing + slightly bigger buttons
+   ========================================================= */
+
+.quick-actions {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 9px;
+
+}
+
+
+.quick-actions a {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 40px;
+
+    padding: 10px 14px;
+
+    text-align: center;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .quick-actions {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+    }
+
+
+    .profile-dropdown {
+
+        width: 245px;
+
+    }
+
+}
+
+
+@media (max-width: 450px) {
+
+    .quick-actions {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}
+
+/* =========================================================
+   PROFILE DROPDOWN
+   ========================================================= */
+
+.profile {
+    position: relative;
+    cursor: pointer;
+}
+
+.profile-dropdown {
+    display: none;
+    position: absolute;
+    top: 55px;
+    right: 0;
+    width: 280px;
+    background: #ffffff;
+    border: 1px solid #e1e7ef;
+    border-radius: 10px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    padding: 16px;
+    z-index: 1000;
+}
+
+.profile-dropdown.show {
+    display: block;
+}
+
+.profile-dropdown-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #102a43;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.profile-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 9px 0;
+    font-size: 14px;
+}
+
+.profile-info span {
+    color: #64748b;
+}
+
+.profile-info strong {
+    color: #102a43;
+    text-align: right;
+    word-break: break-word;
+}
+
+.profile-divider {
+    height: 1px;
+    background: #e5e7eb;
+    margin: 8px 0;
+}
+
+.profile-logout {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    text-decoration: none;
+    background: #ef4444;
+    color: white;
+    padding: 9px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.profile-logout:hover {
+    background: #dc2626;
+}
